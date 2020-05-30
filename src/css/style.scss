@@ -1,0 +1,116 @@
+/*
+-----------------------------------------------
+	Common
+	-----------------------------------------------
+*/
+html, body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+}
+body {
+	background-color: #000;
+	overflow: hidden;
+}
+
+.common_container {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	// width: 100%;
+	// height: 100%;
+}
+
+#content_container {
+	position: relative;
+}
+
+/*
+-----------------------------------------------
+	Gallery
+	-----------------------------------------------
+*/
+#gallery_container {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 10;
+	visibility: visible;
+}
+
+#dialog {
+	position: fixed;
+	top: 0;
+	left: 0;
+	color: #fff;
+}
+#dialog button {
+	padding: 1em;
+	font-size: 1em;
+}
+
+#buttons {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  background: white;
+}
+
+
+
+/*
+-----------------------------------------------
+	Detail
+	-----------------------------------------------
+*/
+
+#detail_container {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 20;
+	visibility: hidden;
+}
+
+
+#blocker {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+
+
+/*
+-----------------------------------------------
+	Background
+	-----------------------------------------------
+*/
+
+#background_container {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 5;
+}
+
+#WebGL-output {
+	width: 100%;
+	height: 100%;
+}
+
+
+
+/*
+-----------------------------------------------
+	XR
+	-----------------------------------------------
+*/
+
+#xr_container {
+	z-index: 200;
+}

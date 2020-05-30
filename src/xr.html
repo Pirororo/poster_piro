@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>XR Test | Poster Session | Open House 2020</title>
+  <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+</head>
+<body>
+  <a-scene id="xr_container" class="common_container"
+  module-background
+  module-gallery
+  >
+
+  <a-entity id="xr_rig"
+  position="0 0 0"
+  >
+  <a-entity id="xr_player"
+  collider-check
+  >
+      <a-entity id="xr_camera"
+      camera
+      wasd-controls look-controls
+      raycaster="objects: .collidable; showLine: true; far: 10"
+      line="color: orange; opacity: 1"
+      rotation-reader
+      >
+        <a-entity cursor="fuse: true; fuseTimeout: 500"
+        position="0 0 -1"
+        geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+        material="color: red; shader: flat"
+        ></a-entity>
+      </a-entity>
+    </a-entity>
+  </a-entity>
+
+
+</a-scene>
+
+</body>
+</html>
