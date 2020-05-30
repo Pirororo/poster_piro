@@ -1,0 +1,14 @@
+.htaccess
+*~
+.DS_Store
+.svn
+.cvs
+*.bak
+*.swp
+Thumbs.db
+test/
+*copy*.*
+*backup*.*
+
+node_modules
+node_modules/
