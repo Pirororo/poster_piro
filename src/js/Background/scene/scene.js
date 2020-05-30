@@ -120,7 +120,7 @@ export class Scene extends THREE.Scene
             if(this.camTargetBool_BACKSPACE == false){
                 this.camTargetBool_BACKSPACE = true;
                 this.camera.camTarget = new THREE.Vector3(-300,70,300);
-                
+                this.camera.lookTarget = new THREE.Vector3(140, 70, 140);//斜めのときの中心
                 this.camTargetBool_A = false;
                 this.camTargetBool_B = false;
                 this.camTargetBool_C = false;

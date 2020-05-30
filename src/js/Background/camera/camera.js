@@ -65,7 +65,7 @@ export class Camera extends THREE.PerspectiveCamera{
 
       //lookTargetの初期化とcamPosの取得
       if(this.frame== 1370){
-        this.lookTarget = new THREE.Vector3(140, 70, 140);
+        this.lookTarget = new THREE.Vector3(140, 70, 140);//斜めのときの中心
       }
 
       //camTargetの初期化とcamPosの取得
