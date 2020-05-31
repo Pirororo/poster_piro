@@ -15,18 +15,29 @@ export default class Line extends THREE.Object3D {
             
             this.frame = 0;
     
-
+            //この中からconstructer外部のmethodを呼び出すためにはbindする必要がある
+            // this.init = this.init.bind(this);
+            // this.check = this.check.bind(this);
             this.prepareMesh = this.prepareMesh.bind(this);
             this.checkIntersection = this.checkIntersection.bind(this);
-
-
+    
             this.meshes = {};//planeけしてみた
-
+    
+            // var colors = [
+            //     0xed6a5a,
+            //     0x70c1b3
+            // ];
+    
             if( !this.meshes[ 0 ] ) { this.meshes[ 0 ] = this.prepareMesh(); }
-
+    
+            // this.check();
         }
-
-
+    
+    
+        // check() {
+        //     for( var i in this.meshes ) { this.checkIntersection( i ); }
+        //     setTimeout( this.check, 80 );//ここの時間ごとに次の点が打たれて更新される
+        // }
     
         prepareMesh() {
     
@@ -36,13 +47,18 @@ export default class Line extends THREE.Object3D {
             }
     
             var g = new MeshLine();
-            g.setGeometry( geo, function( p ) { return p; } );//function( p ) 
-
-
+            g.setGeometry( geo, function( p ) { return p; } );//function( p ) { return p; }はgeometryのwidthに関与、materialでlinewidth決めてるから気にしなくていい。
+    
             let material = new MeshLineMaterial( {
-                color: 0xffff00,
+    
+                // color: 0x70c1b3,
+                color: 0xACBCFA,
+                // color: new THREE.Color( new THREE.Color( colors[ ~~Maf.randomInRange( 0, colors.length ) ] ) ),
+                // opacity: 0.8,
                 lineWidth: 0.6,//0.4
                 depthTest: false,//これがないと隠れちゃって描画されなかった。。。
+                // blending: THREE.AddBlending,
+                // transparent: true,
             });
     
             
@@ -63,13 +79,13 @@ export default class Line extends THREE.Object3D {
             var g = this.mesh.g;
     
             //これがないと生えていかない。
+            //点の座標を配列の一個まえの点の座標にずらす、geo[ geo.length + 3 ]+4,+5 が空く
             for( var j = 0; j < geo.length; j+= 3 ) {
                 geo[ j ] = geo[ j + 3 ] * 1.0;
                 geo[ j + 1 ] = geo[ j + 4 ] * 1.0;
                 geo[ j + 2 ] = geo[ j + 5 ] * 1.0;
             }
     
-            
             let Randomselect = Math.random();
             let lineLength = 100 * (2*Math.random()-1) ;
     
@@ -106,7 +122,7 @@ export default class Line extends THREE.Object3D {
         update(){
     
             this.frame += 1;
-            if(this.frame% 4 == 0){for( var i in this.meshes ) { this.checkIntersection(); }}
+            if(this.frame% 4 == 0){for( var i in this.meshes ) { this.checkIntersection( i ); }}
             
         }
     

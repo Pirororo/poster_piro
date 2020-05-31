@@ -42,6 +42,7 @@ export class Scene extends THREE.Scene
     }
 
     update()
+    // update(Where,InOut)
     {
         //this.scene0.scene2.openingIsEndは、最初はfalseだけどオープニングのframecountがある値にきたらtrueになる。
         if (this.scene0.scene2.openingIsEnd == true){
@@ -51,6 +52,7 @@ export class Scene extends THREE.Scene
             //OP終わったからVR使うかどうか選択してね
             console.log("Opening is end and select VR or not");
             this.scene0.scene2.openingIsEnd = false;
+            this.camTargetBool_openingIsEnd = true;
 
         //   }
         }
@@ -64,10 +66,16 @@ export class Scene extends THREE.Scene
         if (e.keyCode == KEYCODE.SPACE){//PC版で７枚パネル出すからカメラズームアウトしてね
             console.log("show 7 panels!");
         //   if (show7Panels == true){ //キーの代わりにくる変数
-                if(this.camTargetBool_openingIsEnd == false){
+                if(this.camTargetBool_openingIsEnd == true){
                     // console.log("zoom out for 7 panels");
-                    this.camTargetBool_openingIsEnd = true;
+                    this.camTargetBool_openingIsEnd = false;
                     this.camera.camTarget = new THREE.Vector3(-200,70,400);
+
+                    this.camTargetBool_A = true;
+                    this.camTargetBool_B = true;
+                    this.camTargetBool_C = true;
+                    this.camTargetBool_BACKSPACE = true;
+
                 }
         }
         
@@ -75,26 +83,26 @@ export class Scene extends THREE.Scene
         if (e.keyCode == KEYCODE.A){//Aの部屋に移動してね
             console.log("Please go to room_A!");
         //   if (goRoom_A == true){ //キーの代わりにくる変数
-            if(this.camTargetBool_A == false){
-                this.camTargetBool_A = true;
+            if(this.camTargetBool_A == true){
+                this.camTargetBool_A = false;
                 this.camera.camTarget = new THREE.Vector3(28*1,25+(15*1),28*1);
                 this.camera.lookTarget = new THREE.Vector3(30*1,25+(15*1),30*1);
-                this.camTargetBool_BACKSPACE = false;
-                this.camTargetBool_B = true;
-                this.camTargetBool_C = true;
+                this.camTargetBool_BACKSPACE = true;
+                this.camTargetBool_B = false;
+                this.camTargetBool_C = false;
             }
         }
 
         if (e.keyCode == KEYCODE.B){//Bの部屋に移動してね
             console.log("Please go to room_B!");
         //   if (goRoom_B == true){ //キーの代わりにくる変数
-            if(this.camTargetBool_B == false){
-                this.camTargetBool_B = true;
+            if(this.camTargetBool_B == true){
+                this.camTargetBool_B = false;
                 this.camera.camTarget = new THREE.Vector3(28*4,25+(15*4),28*4);//175,75,175
                 this.camera.lookTarget = new THREE.Vector3(30*4,25+(15*4),30*4);
-                this.camTargetBool_BACKSPACE = false;
-                this.camTargetBool_A = true;
-                this.camTargetBool_C = true;
+                this.camTargetBool_BACKSPACE = true;
+                this.camTargetBool_A = false;
+                this.camTargetBool_C = false;
                 
             }
         }
@@ -102,13 +110,13 @@ export class Scene extends THREE.Scene
         if (e.keyCode == KEYCODE.C){//Cの部屋に移動してね
             console.log("Please go to room_C!");
         //   if (goRoom_C == true){ //キーの代わりにくる変数
-            if(this.camTargetBool_C == false){
-                this.camTargetBool_C = true;
+            if(this.camTargetBool_C == true){
+                this.camTargetBool_C = false;
                 this.camera.camTarget = new THREE.Vector3(28*7,25+(15*7),28*7);
                 this.camera.lookTarget = new THREE.Vector3(30*7,25+(15*7),30*7);
-                this.camTargetBool_BACKSPACE = false;
-                this.camTargetBool_B = true;
-                this.camTargetBool_A = true;
+                this.camTargetBool_BACKSPACE = true;
+                this.camTargetBool_B = false;
+                this.camTargetBool_A = false;
                 
             }
         }
@@ -117,13 +125,13 @@ export class Scene extends THREE.Scene
         if (e.keyCode == KEYCODE.BACKSPACE){//今部屋の中だけど違う部屋いきたいから７枚パネルのとこ戻ってね
             console.log("Please back to 7 panels!");
         //   if (backToPanels == true){ //キーの代わりにくる変数
-            if(this.camTargetBool_BACKSPACE == false){
-                this.camTargetBool_BACKSPACE = true;
+            if(this.camTargetBool_BACKSPACE == true){
+                this.camTargetBool_BACKSPACE = false;
                 this.camera.camTarget = new THREE.Vector3(-300,70,300);
                 this.camera.lookTarget = new THREE.Vector3(140, 70, 140);//斜めのときの中心
-                this.camTargetBool_A = false;
-                this.camTargetBool_B = false;
-                this.camTargetBool_C = false;
+                this.camTargetBool_A = true;
+                this.camTargetBool_B = true;
+                this.camTargetBool_C = true;
             }
 
         }
@@ -142,21 +150,21 @@ export class Scene0 extends THREE.Scene {
 
         //カメラは上で読むことにしたよ
 
-        // 環境光源
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+        // // 環境光源
+        // const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
 
-        //スポットライト
-        var spotLight = new THREE.SpotLight(0xffffff);
-        spotLight.position.set(80, 60, 50);
-        spotLight.intensity = 1;
+        // //スポットライト
+        // var spotLight = new THREE.SpotLight(0xffffff);
+        // spotLight.position.set(80, 60, 50);
+        // spotLight.intensity = 1;
 
-        //シェーダーのエフェクトをマスクするためシーン２種類にわけた
+        // シェーダーのエフェクトをマスクするためシーン２種類にわけた
         this.scene1 = new Scene1();
         this.add(this.scene1);
 
         this.scene2 = new Scene2();
-        this.scene2.add(ambientLight);
-        this.scene2.add(spotLight);
+        // this.scene2.add(ambientLight);
+        // this.scene2.add(spotLight);
         this.add(this.scene2);
 
     }
@@ -217,7 +225,7 @@ export class Scene2 extends THREE.Scene {
             color: 0xffffff, 
             wireframe: true,
             // wireframeLinewidth:3.5,//いみなかった
-            opacity: 0.9,
+            opacity: 0.95,
             transparent: true,
         } );
 
@@ -632,10 +640,6 @@ export class Scene2 extends THREE.Scene {
                 this.openingIsEnd = true;
             }
         }
-
-        // if(this.frame == 1621){
-        //     if(this.openingIsEnd == true){this.openingIsEnd = false;}
-        // }
 
     }
 
