@@ -1,7 +1,7 @@
 
 import * as THREE from "three";
-import Line from '../objects/line.js';
-import { EVENT, KEYCODE } from "../props.js";
+import Line from '../old/line_detailed.js';
+import { EVENT, KEYCODE } from "../utils/props.js";
 
 
 export class Scene extends THREE.Scene
@@ -21,7 +21,7 @@ export class Scene extends THREE.Scene
         this.camTarget = new THREE.Vector3(-50,-25,-50);
 
         //Target指定なので都度１回だけ読むようにする
-        this.camTargetBool_openingIsEnd = false;
+        this.camTargetBool_openingIsEnd = true;
         this.camTargetBool_A = false;
         this.camTargetBool_B = false;
         this.camTargetBool_C = false;
@@ -70,23 +70,6 @@ export class Scene extends THREE.Scene
         this.scene0.update();
 
 
-        // //this.scene0.scene2.openingIsEndは、最初はfalseだけどオープニングのframecountがある値にきたらtrueになる。
-        // if (this.scene0.scene2.openingIsEnd == true){
-
-        //     //   if (this.showPanels == false){ 
-        //     //     this.showPanels = true; //送る変数
-
-        //     //OP終わったから７枚パネルだしてね
-        //     console.log("Opening is end and Please show me 7 panels!");
-        //     this.scene0.scene2.openingIsEnd = false;
-
-        //         if(this.camTargetBool_openingIsEnd == false){
-                    
-        //             this.camTargetBool_openingIsEnd = true;
-        //             this.camTarget = new THREE.Vector3(-220-50,-30-25,-300-50);
-        //         }
-        // //   }
-        // }
 
     }
 
@@ -97,46 +80,51 @@ export class Scene extends THREE.Scene
         if (e.keyCode == KEYCODE.SPACE){//PC版で７枚パネル出すからカメラズームアウトしてね
             console.log("show 7 panels!");
         //   if (show7Panels == true){ //キーの代わりにくる変数
-                if(this.camTargetBool_openingIsEnd == false){
+                if(this.camTargetBool_openingIsEnd == true){
                     // console.log("zoom out for 7 panels");
-                    this.camTargetBool_openingIsEnd = true;
+                    this.camTargetBool_openingIsEnd = false;
                     this.camTarget = new THREE.Vector3(-220-50,-30-25,-300-50);
+
+                    this.camTargetBool_A = true;
+                    this.camTargetBool_B = true;
+                    this.camTargetBool_C = true;
+                    this.camTargetBool_BACKSPACE = true;
                 }
         }
         
         if (e.keyCode == KEYCODE.A){//Aの部屋に移動してね
             console.log("Please go to room_A!");
         //   if (goRoom_A == true){ //キーの代わりにくる変数
-            if(this.camTargetBool_A == false){
-                this.camTargetBool_A = true;
+            if(this.camTargetBool_A == true){
+                this.camTargetBool_A = false;
                 this.camTarget = new THREE.Vector3(-50-(36*2), -25-(15*1), -50+(4*2));
-                this.camTargetBool_BACKSPACE = false;
-                this.camTargetBool_B = true;
-                this.camTargetBool_C = true;
+                this.camTargetBool_BACKSPACE = true;
+                this.camTargetBool_B = false;
+                this.camTargetBool_C = false;
             }
         }
 
         if (e.keyCode == KEYCODE.B){//Bの部屋に移動してね
             console.log("Please go to room_B!");
         //   if (goRoom_B == true){ //キーの代わりにくる変数
-            if(this.camTargetBool_B == false){
-                this.camTargetBool_B = true;
+            if(this.camTargetBool_B == true){
+                this.camTargetBool_B = false;
                 this.camTarget = new THREE.Vector3(-50-(36*5), -25-(15*4), -50+(4*5));
-                this.camTargetBool_BACKSPACE = false;
-                this.camTargetBool_A = true;
-                this.camTargetBool_C = true;
+                this.camTargetBool_BACKSPACE = true;
+                this.camTargetBool_A = false;
+                this.camTargetBool_C = false;
             }
         }
 
         if (e.keyCode == KEYCODE.C){//Cの部屋に移動してね
             console.log("Please go to room_C!");
         //   if (goRoom_C == true){ //キーの代わりにくる変数
-            if(this.camTargetBool_C == false){
-                this.camTargetBool_C = true;
+            if(this.camTargetBool_C == true){
+                this.camTargetBool_C = false;
                 this.camTarget = new THREE.Vector3(-50-(36*8), -25-(15*8), -50+(4*8));
-                this.camTargetBool_BACKSPACE = false;
-                this.camTargetBool_B = true;
-                this.camTargetBool_A = true;
+                this.camTargetBool_BACKSPACE = true;
+                this.camTargetBool_B = false;
+                this.camTargetBool_A = false;
             }
         }
 
@@ -144,13 +132,13 @@ export class Scene extends THREE.Scene
         if (e.keyCode == KEYCODE.BACKSPACE){//今部屋の中にいるんだけど違う部屋いきたいから７枚パネルのとこ戻ってね
             console.log("Please back to 7 panels!");
         //   if (backToPanels == true){ //キーの代わりにくる変数
-            if(this.camTargetBool_BACKSPACE == false){
-                this.camTargetBool_BACKSPACE = true;
+            if(this.camTargetBool_BACKSPACE == true){
+                this.camTargetBool_BACKSPACE = false;
                 this.camTarget = new THREE.Vector3(-220-50,-30-25,-300-50);
                 
-                this.camTargetBool_A = false;
-                this.camTargetBool_B = false;
-                this.camTargetBool_C = false;
+                this.camTargetBool_A = true;
+                this.camTargetBool_B = true;
+                this.camTargetBool_C = true;
             }
 
         }
