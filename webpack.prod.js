@@ -49,3 +49,4 @@ config.module.rules[3] = {
 };
 
 module.exports = config;
+

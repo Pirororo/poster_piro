@@ -15,7 +15,7 @@ const Facade =
 	},
 	init()
 	{
-		this.props.instance = App;
+		this.props.instance = App.init();
 		return this;
   },
 	setup()

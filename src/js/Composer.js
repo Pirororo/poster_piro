@@ -10,6 +10,7 @@ import Detail from "./Detail/Facade"; // will be created by Shinagawa
 import XRHelper from "./XR/Facade"; // will be created by Beharu
 
 import { isVR } from "./Utils/Helper";
+import { convertCSVtoArray2D, loadCSV } from "./Utils/AssetsLoader";
 
 const Composer =
 {
@@ -31,6 +32,9 @@ const Composer =
 
 		this.addEvent();
 		this.setup();
+
+		// This is just test code
+		this.loadCSVandConvertToArray2D();
 
 		return this;
   },
@@ -89,6 +93,21 @@ const Composer =
 	addEvent(events)
 	{
 
+	},
+
+	// This is just test code
+	loadCSVandConvertToArray2D()
+	{
+		loadCSV("../data/kanto_hokkaido.csv", e =>
+		{
+			const result = e.result;
+			const data = convertCSVtoArray2D(result)
+
+			console.group();
+			console.log("Data from csv");
+			console.dir(data);
+			console.groupEnd();
+		});
 	}
 };
 
