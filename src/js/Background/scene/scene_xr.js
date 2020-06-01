@@ -1,7 +1,7 @@
 
 import * as THREE from "three";
 import Line from '../old/line_detailed.js';
-import { EVENT, KEYCODE } from "../props.js";
+import { EVENT, KEYCODE } from "../utils/props.js";
 
 
 export class Scene extends THREE.Scene

@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import {Camera} from '../camera/camera.js';
-import Line from '../objects/line2.js';
-import { EVENT, KEYCODE } from "../props.js";
+import Line from '../objects/line.js';
+import { EVENT, KEYCODE } from "../utils/props.js";
 
 /**
  * シーンクラス：カメラとライト
@@ -42,7 +42,6 @@ export class Scene extends THREE.Scene
     }
 
     update()
-    // update(Where,InOut)
     {
         //this.scene0.scene2.openingIsEndは、最初はfalseだけどオープニングのframecountがある値にきたらtrueになる。
         if (this.scene0.scene2.openingIsEnd == true){
@@ -184,22 +183,33 @@ export class Scene1 extends THREE.Scene {
 
         super();
 
+        // //ライン
+        // this._line = new Line();
+        // this._line.position.set(150,70,150);
+        // this.add(this._line);
 
-        //ライン
-        this._line = new Line();
-        this._line.position.set(150,70,150);
-        this.add(this._line);
+        this._line = [this._line1in, this._line1out,this._line2in, this._line2out];
 
-        //ライン2
-        this._line2 = new Line();
-        this._line.position.set(150,70,150);
-        this.add(this._line2);
+        //今は関東ー北海道だけなのでi<1
+        for (let i = 0 ; i < this._line.length/2; i++){
+            for (let j= 0 ; j < 2 ; j++){
+                this._line[2*i+j] = new Line(i,j);
+                this._line[2*i+j].position.set(150,70,150);
+                this.add(this._line[2*i+j]);
+            }
+        }
+
+        // //meshにまとめようかな、、、groupとか、mergeとか
 
     }
     
     update(){
-        this._line.update();
-        this._line2.update();
+        // this._line.update();
+
+        for (let i = 0 ; i < this._line.length ; i++){
+            this._line[i].update();
+        }
+
     }
 }
 
