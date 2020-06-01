@@ -29,7 +29,6 @@ export default class Line extends THREE.Object3D {
             this.lineLength = 0;
             this.where = where;
             this.inout = inout;
-            console.log(this.inout);
 
             this.data = [
                 ['0001','50','13','50','13','20','15','20','15'],
@@ -97,7 +96,7 @@ export default class Line extends THREE.Object3D {
             let RandomDir = Math.random();
             if(RandomDir <0.5){this.lineLength *= -1;}
             else{this.lineLength *= 1;}//なぜかわかんないけどこれいれないとマイナスにしかライン走らなくなる
-            console.log(this.lineLength);
+            // console.log(this.lineLength);
 
 
             if(Randomselect >0.66){	

@@ -202,6 +202,8 @@ export class Scene1 extends THREE.Scene {
         // //meshにまとめようかな、、、groupとか、mergeとか
 
     }
+
+    setup(){}
     
     update(){
         // this._line.update();
