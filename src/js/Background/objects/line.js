@@ -1,6 +1,6 @@
 import {MeshLine, MeshLineMaterial} from "three.meshline";
 import * as THREE from "three";
-
+import { convertCSVtoArray2D, loadCSV } from "../../Utils/AssetsLoader";
 
 export default class Line extends THREE.Object3D {
 
@@ -20,6 +20,7 @@ export default class Line extends THREE.Object3D {
             this.prepareMesh = this.prepareMesh.bind(this);
             this.checkIntersection = this.checkIntersection.bind(this);
             this.getlineLength = this.getlineLength.bind(this);
+            this.loadCSVandConvertToArray2D = this.loadCSVandConvertToArray2D.bind(this);
 
 
             this.meshes = {};//planeけしてみた
@@ -29,21 +30,24 @@ export default class Line extends THREE.Object3D {
             this.lineLength = 0;
             this.where = where;
             this.inout = inout;
+            
+            // this.data = [];
+            this.loadCSVandConvertToArray2D();
 
-            this.data = [
-                ['0001','50','13','50','13','20','15','20','15'],
-                ['0002','20','15','20','15','50','13','50','13'],
-                ['0003','30','42','30','42','20','15','20','15'],
-                ['0004','50','13','50','13','50','13','50','13'],
-                ['0005','20','15','20','15','30','42','30','42'],
-                ['0006','30','42','30','42','30','42','30','42'],
-                ['0007','50','13','50','13','20','15','20','15'],
-                ['0008','20','15','20','15','50','13','50','13'],
-                ['0009','30','42','30','42','50','13','50','13'],
-                ['00010','50','13','50','13','20','15','20','15'],
-                ['00011','20','15','20','15','30','42','30','42'],
-                ['00012','30','42','30','42','20','15','20','15']
-            ];
+            // this.data = [
+            //     ['0001','50','13','50','13','20','15','20','15'],
+            //     ['0002','20','15','20','15','50','13','50','13'],
+            //     ['0003','30','42','30','42','20','15','20','15'],
+            //     ['0004','50','13','50','13','50','13','50','13'],
+            //     ['0005','20','15','20','15','30','42','30','42'],
+            //     ['0006','30','42','30','42','30','42','30','42'],
+            //     ['0007','50','13','50','13','20','15','20','15'],
+            //     ['0008','20','15','20','15','50','13','50','13'],
+            //     ['0009','30','42','30','42','50','13','50','13'],
+            //     ['00010','50','13','50','13','20','15','20','15'],
+            //     ['00011','20','15','20','15','30','42','30','42'],
+            //     ['00012','30','42','30','42','20','15','20','15']
+            // ];
 
         }
 
@@ -96,7 +100,7 @@ export default class Line extends THREE.Object3D {
             let RandomDir = Math.random();
             if(RandomDir <0.5){this.lineLength *= -1;}
             else{this.lineLength *= 1;}//なぜかわかんないけどこれいれないとマイナスにしかライン走らなくなる
-            // console.log(this.lineLength);
+            console.log(this.lineLength);
 
 
             if(Randomselect >0.66){	
@@ -143,15 +147,14 @@ export default class Line extends THREE.Object3D {
             // count60frm +=1;
             // if(count60frm%(60/4) ==0){
                 
-                //Where: 関東ー北海道 = 0, 関東ー中部 = 2,,,
+                //Where: 関東ー北海道 = 0, 関東ー中部 = 1,,,
                 //InOut: in=1, out=2;
 
 
-                this.lineLength = this.data[this.Times][2*this.where + this.inout]
-                // //10^-9して小さくしてる
+                // this.lineLength = this.data[this.Times][2*this.where + this.inout];
+                this.lineLength = this.data[0][0];
+                // //10^-8して小さくしてる
                 // this.lineLength = this.data[this.Times][2*this.where + this.inout]*pow(10,-9);
-
-
 
 
 
@@ -164,6 +167,24 @@ export default class Line extends THREE.Object3D {
 
                 
             // }
+        }
+
+        loadCSVandConvertToArray2D()//2回よばれるの気になる
+        {
+            loadCSV("../../../data/kanto_hokkaido.csv", e =>
+            {
+                const result = e.result;
+                this.data = convertCSVtoArray2D(result);
+
+                console.group();
+                // console.log("Data from csv");
+                // console.dir(this.data);
+                // console.log(this.data[0][0]);
+                console.groupEnd();
+            });
+
+            console.log(this.data[0][0]);
+            // return(this.data);
         }
     
     }

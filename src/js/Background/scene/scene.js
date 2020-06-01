@@ -188,16 +188,27 @@ export class Scene1 extends THREE.Scene {
         // this._line.position.set(150,70,150);
         // this.add(this._line);
 
-        this._line = [this._line1in, this._line1out,this._line2in, this._line2out];
+        // this._line = [this._line1in, this._line1out,this._line2in, this._line2out];
+        this._line = [this._line1in, this._line1out];
+
+        // //今は関東ー北海道だけなのでi<1
+        // for (let i = 0 ; i < this._line.length/2; i++){
+        //     for (let j= 0 ; j < 2 ; j++){
+        //         this._line[2*i+j] = new Line(i,j);
+        //         this._line[2*i+j].position.set(150,70,150);
+        //         this.add(this._line[2*i+j]);
+        //     }
+        // }
 
         //今は関東ー北海道だけなのでi<1
-        for (let i = 0 ; i < this._line.length/2; i++){
-            for (let j= 0 ; j < 2 ; j++){
-                this._line[2*i+j] = new Line(i,j);
-                this._line[2*i+j].position.set(150,70,150);
-                this.add(this._line[2*i+j]);
-            }
-        }
+        
+                this._line1in = new Line(0,1);
+                this._line1out = new Line(0,2);
+                this._line1in.position.set(150,70,150);
+                this._line1out.position.set(150,70,150);
+                this.add(this._line1in);
+                this.add(this._line1out);
+
 
         // //meshにまとめようかな、、、groupとか、mergeとか
 
@@ -208,9 +219,12 @@ export class Scene1 extends THREE.Scene {
     update(){
         // this._line.update();
 
-        for (let i = 0 ; i < this._line.length ; i++){
-            this._line[i].update();
-        }
+        this._line1in.update();
+        this._line1out.update();
+
+        // for (let i = 0 ; i < this._line.length ; i++){
+        //     this._line[i].update();
+        // }
 
     }
 }
