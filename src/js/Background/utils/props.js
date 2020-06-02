@@ -4,6 +4,7 @@
 
 const KEYCODE =
 {
+	S : 83,
 	SPACE: 32,
 
 	A: 65,
