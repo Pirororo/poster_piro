@@ -10,7 +10,7 @@ import Detail from "./Detail/Facade"; // will be created by Shinagawa
 import XRHelper from "./XR/Facade"; // will be created by Beharu
 
 import { isVR } from "./Utils/Helper";
-import { convertCSVtoArray2D, loadCSV } from "./Utils/AssetsLoader";
+// import { convertCSVtoArray2D, loadCSV } from "./Utils/AssetsLoader";
 
 const Composer =
 {
@@ -33,8 +33,8 @@ const Composer =
 		this.addEvent();
 		this.setup();
 
-		// This is just test code
-		this.loadCSVandConvertToArray2D();
+		// // This is just test code
+		// this.loadCSVandConvertToArray2D();
 
 		return this;
   },
@@ -95,20 +95,30 @@ const Composer =
 
 	},
 
-	// This is just test code
-	loadCSVandConvertToArray2D()
-	{
-		loadCSV("../data/kanto_hokkaido.csv", e =>
-		{
-			const result = e.result;
-			const data = convertCSVtoArray2D(result)
+	// // This is just test code
+	// loadCSVandConvertToArray2D()
+	// {
+	// 	loadCSV("../data/kanto_hokkaido.csv", e =>
+	// 	{
+	// 		const result = e.result;
+	// 		let data = convertCSVtoArray2D(result);
+	// 		this.doSomething(data);
 
-			console.group();
-			console.log("Data from csv");
-			console.dir(data);
-			console.groupEnd();
-		});
-	}
+	// 		console.group();
+	// 		console.log("Data from csv");
+	// 		console.dir(data);
+	// 		// console.log(this.data[0][0]);//こっちは値が取得できる
+	// 		console.groupEnd();
+	// 	});
+
+	// 	// console.log(data[0][0]);//こっちは値が取得できない
+
+	// },
+
+	// doSomething(data)
+	// {
+	// 	console.log(data[0][0]);//こっちは値が取得できる
+	// }
 };
 
 export default Composer;

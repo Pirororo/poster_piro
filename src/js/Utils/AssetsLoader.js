@@ -18,6 +18,7 @@ const loadCSV = (path, callback) =>
 };
 
 const convertCSVtoArray2D = (str, column = 3) =>
+// const convertCSVtoArray2D = (str, column = 3) =>
 {
 	if (str == null) { return []; }
 
