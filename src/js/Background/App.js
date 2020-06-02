@@ -1,15 +1,13 @@
 import * as THREE from "three";
 
 //fps表示とDAT表示に必要なjs
-// import {GUI} from 'three/examples/jsm/libs/dat.gui.module';
+import {GUI} from 'three/examples/jsm/libs/dat.gui.module';
 import Stats from "three/examples/jsm/libs/stats.module";
 // カメラ系に必要なjs
 // import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 //シェーダーに必要なjs
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
-import { MaskPass } from "three/examples/jsm/postprocessing/MaskPass";
-import { ClearPass } from "three/examples/jsm/postprocessing/ClearPass";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass";
 import { BloomPass } from "three/examples/jsm/postprocessing/BloomPass";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer"
@@ -63,18 +61,11 @@ export default class App
 
     // シェーダー
     //レンダーパス
-    var renderPass = new RenderPass(this._scene.scene0, this._scene.camera);
-    // renderPass.clear = true;
-
-    // var renderPass1 = new RenderPass(this._scene.scene0.scene1, this._scene.camera);
-    // renderPass1.clear = true;//Lineは線が更新されていくのでtrueにする、falseだと線最初から全部のこっちゃう
-    // var renderPass2 = new RenderPass(this._scene.scene0.scene2, this._scene.camera);
-    // renderPass2.clear = true;//trueで色がでる
-    // //**********renderPass両方falseだとopasity0みたいに明るくなりすぎる、ライト二重？ */
-
-    //マスクパス、クリアマスクパス
-    // let sceneMask = new MaskPass(this._scene.scene0, this._scene.camera);
-    // let clearMask = new ClearPass();
+    var renderPass1 = new RenderPass(this._scene.scene0.scene1, this._scene.camera);
+    renderPass1.clear = true;//Lineは線が更新されていくのでtrueにする、falseだと線最初から全部のこっちゃう
+    var renderPass2 = new RenderPass(this._scene.scene0.scene2, this._scene.camera);
+    renderPass2.clear = false;//trueで色がでる
+    //**********renderPass両方falseだとopasity0みたいに明るくなりすぎる、ライト二重？ */
 
 
     //エフェクトパス（出力パスの前にかく）
@@ -102,57 +93,54 @@ export default class App
     this.composer.renderTarget2.stencilBuffer = true;//?
 
     //コンポーザーに入れていく
-    this.composer.addPass(renderPass);//Scene1(Line)のレンダー
-    // this.composer.addPass(renderPass1);//Scene1(Line)のレンダー
-    // this.composer.addPass(renderPass2);//Scene2(Plate)のレンダー
+    this.composer.addPass(renderPass1);//Scene1(Line)のレンダー
+    this.composer.addPass(renderPass2);//Scene2(Plate)のレンダー
 
-    // this.composer.addPass(sceneMask);
     this.composer.addPass(colorify);//Scene2(Plate)のマスクのエフェクト
     this.composer.addPass(bloomPass);
-    // this.composer.addPass(clearMask);
     this.composer.addPass(effectCopy);
 
 
-    // var controls = new function () {
+    var controls = new function () {
 
-    //     this.select = 'Colorify';
+        this.select = 'Colorify';
 
-    //     //グラデパス
-    //     this.color = 0x4ea78e;
-    //     this.color2 = 0x2c7d96;
+        //グラデパス
+        this.color = 0x4ea78e;
+        this.color2 = 0x2c7d96;
 
-    //     //ブルームパス
-    //     this.strength = 0.1;
-    //     this.kernelSize = 5;
-    //     this.sigma = 1.0;
-    //     this.resolution = 64;
+        //ブルームパス
+        this.strength = 0.1;
+        this.kernelSize = 5;
+        this.sigma = 1.0;
+        this.resolution = 64;
 
-    //     // this.rotate = false;
+        // this.rotate = false;
 
-    //     this.changeColor = function () {
-    //         colorify.uniforms.color.value = new THREE.Color(controls.color);
-    //     };
-    //     this.changeColor2 = function () {
-    //         colorify.uniforms.color2.value = new THREE.Color(controls.color2);
-    //     };
+        this.changeColor = function () {
+            colorify.uniforms.color.value = new THREE.Color(controls.color);
+        };
+        this.changeColor2 = function () {
+            colorify.uniforms.color2.value = new THREE.Color(controls.color2);
+        };
 
-    // };
+    };
 
 
 
-    // const gui = new GUI();
+    const gui = new GUI();
 
-    // gui.add(controls, "select", [ "colorify" , 'BloomPass']).onChange(controls.switchShader);
+    gui.add(controls, "select", [ "colorify" , 'BloomPass']).onChange(controls.switchShader);
 
-    // var clFolder = gui.addFolder("Colorify");
-    // clFolder.addColor(controls, "color").onChange(controls.changeColor);
-    // clFolder.addColor(controls, "color2").onChange(controls.changeColor2);
+    var clFolder = gui.addFolder("Colorify");
+    clFolder.addColor(controls, "color").onChange(controls.changeColor);
+    clFolder.addColor(controls, "color2").onChange(controls.changeColor2);
 
-    // var bpFolder = gui.addFolder("BloomPass");
-    // bpFolder.add(controls, "strength", 1, 10).onChange(controls.updateEffectBloom);
-    // bpFolder.add(controls, "kernelSize", 1, 100).onChange(controls.updateEffectBloom);
-    // bpFolder.add(controls, "sigma", 1, 10).onChange(controls.updateEffectBloom);
-    // bpFolder.add(controls, "resolution", 0, 1024).onChange(controls.updateEffectBloom);
+    var bpFolder = gui.addFolder("BloomPass");
+    bpFolder.add(controls, "strength", 1, 10).onChange(controls.updateEffectBloom);
+    bpFolder.add(controls, "kernelSize", 1, 100).onChange(controls.updateEffectBloom);
+    bpFolder.add(controls, "sigma", 1, 10).onChange(controls.updateEffectBloom);
+    bpFolder.add(controls, "resolution", 0, 1024).onChange(controls.updateEffectBloom);
 
     // フレーム毎の更新
     this.update();

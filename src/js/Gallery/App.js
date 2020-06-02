@@ -7,8 +7,8 @@ import GalleryModel from './GalleryModel';
 import PosterBoard from './elements/posterBoard';
 import { EVENT, SELECTORS } from "./../Utils/Props";
 
-export default class App　{
-  constructor(){}
+export default class App {
+  constructor() { }
 
   init() {
     this.setup();

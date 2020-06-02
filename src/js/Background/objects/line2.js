@@ -106,7 +106,7 @@ export default class Line extends THREE.Object3D {
         update(){
     
             this.frame += 1;
-            if(this.frame% 4 == 0){for( var i in this.meshes ) { this.checkIntersection(); }}
+            if(this.frame% 4 == 0){for( var i in this.meshes ) { this.checkIntersection( i ); }}
             
         }
     
