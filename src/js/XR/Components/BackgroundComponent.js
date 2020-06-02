@@ -31,5 +31,9 @@ export default AFRAME.registerComponent(COMPONENTS.Background,
 	onClick(e)
 	{
 		console.log("click");
-	}
+	},
+	onKeyUp(e)
+	{
+		this.modules.scene.onKeyUp(e);
+	},
 });

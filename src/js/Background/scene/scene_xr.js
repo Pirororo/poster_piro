@@ -1,6 +1,6 @@
 
 import * as THREE from "three";
-import Line from '../old/line_detailed.js';
+import Line from '../objects/line.js';
 import { EVENT, KEYCODE } from "../utils/props.js";
 
 
@@ -184,17 +184,26 @@ export class Scene1 extends THREE.Scene
     {
         super();
 
-        this._line = new Line();
-        this._line.position.set(150,70,150);
-        this.add(this._line);
+        // this._line = [this._line1in, this._line1out,this._line2in, this._line2out];
+        this._line = [this._line1in, this._line1out];
 
-        this._line2 = new Line();
-        this._line.position.set(150,70,150);
-        this.add(this._line2);
+        //今は関東ー北海道だけなのでi<1
+        for (let i = 0 ; i < this._line.length/2; i++){
+            for (let j= 0 ; j < 2 ; j++){
+                this._line[2*i+j] = new Line(i,j);
+                if(j%2 ==0){this._line[2*i+j].position.set(0,0,0);}//outは0,0,0から
+                else{this._line[2*i+j].position.set(150,70,150);}//inは離れたとこから
+                this.add(this._line[2*i+j]);
+            }
+        }
+        
     }
     update(){
-        this._line.update();
-        this._line2.update();
+
+        for (let i = 0 ; i < this._line.length ; i++){
+            this._line[i].update();
+        }
+
     }
 
 }

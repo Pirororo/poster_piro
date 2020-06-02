@@ -57,8 +57,8 @@ const App =
 
 	onKeyUp(e)
 	{
-		// this.components.background.prototype.onKeyUp(e);
-		this.components.gallery.prototype.onKeyUp(e);
+		this.components.background.prototype.onKeyUp(e);
+		// this.components.gallery.prototype.onKeyUp(e);
 	}
 
 };

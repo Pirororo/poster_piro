@@ -70,7 +70,7 @@ export default class Line extends THREE.Object3D {
 
 
             let material = new MeshLineMaterial( {
-                color: 0xffff00,
+                color: 0xF549C1,
                 lineWidth: 0.6,//0.4
                 depthTest: false,//これがないと隠れちゃって描画されなかった。。。
             });
