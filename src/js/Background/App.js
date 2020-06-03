@@ -20,19 +20,14 @@ import { CopyShader } from "three/examples/jsm/shaders/CopyShader";
 import { ColorifyGradientShader } from "./shaders/ColorifyGradientShader.mine";
 
 
-/**
- * メインアプリクラスです。
- */
+
 export default class App
 {
-//  export default class App{
-    /**
-   * @constructor
-   * @param sceneInstance
-   */
+
   constructor(sceneInstance){
 
     this._initStats = this._initStats.bind(this);
+    this.chooseRoomColor = this.chooseRoomColor.bind(this);
 
     //fps表示
     this._stats = this._initStats();
@@ -88,7 +83,7 @@ export default class App
 
     this.colorify.uniforms.color.value = new THREE.Color(this.gradColor1);//0x4ea78e
     this.colorify.uniforms.color2.value = new THREE.Color(this.gradColor2);//e0x648
-    this.colorify.uniforms.alpha = 0.8;
+    this.colorify.uniforms.alpha = 0.9;
     this.colorify.enabled = true;
 
     //ブルームパス
@@ -169,11 +164,6 @@ export default class App
   }
 
 
-
-
-  /**
-  * フレーム毎の更新をします。
-  */
   update()
   {
 
@@ -198,42 +188,47 @@ export default class App
   {
       if (e.keyCode == KEYCODE.A){//Aの部屋に移動してね
       //   if (this.goRoom_A == true){ //キーの代わりにくる変数
-          if(this._scene.camTargetBool_A == true){//これはsceneで読むからfalseにしない
-              this.colorify.uniforms.color.value = new THREE.Color(0x9629CC);
-              this.colorify.uniforms.color2.value = new THREE.Color(0x9629CC);//4ea780
-              console.log("change A color!");
-          }
+          this.chooseRoomColor(this._scene.camTargetBool_A, 0x9629CC, 0x9629CC);//4ea780
       }
-
-      if (e.keyCode == KEYCODE.B){//Aの部屋に移動してね
+      if (e.keyCode == KEYCODE.B){//Bの部屋に移動してね
       //   if (this.goRoom_B == true){ //キーの代わりにくる変数
-          if(this._scene.camTargetBool_B == true){//これはsceneで読むからfalseにしない
-              this.colorify.uniforms.color.value = new THREE.Color(0x295FCC);
-              this.colorify.uniforms.color2.value = new THREE.Color(0x295FCC);
-              console.log("change B color!");
-          }
+          this.chooseRoomColor(this._scene.camTargetBool_B, 0x295FCC, 0x295FCC);
       }
-
-      if (e.keyCode == KEYCODE.C){//Aの部屋に移動してね
+      if (e.keyCode == KEYCODE.C){//Cの部屋に移動してね
       //   if (this.goRoom_C == true){ //キーの代わりにくる変数
-          if(this._scene.camTargetBool_C == true){//これはsceneで読むからfalseにしない
-              this.colorify.uniforms.color.value = new THREE.Color(0x24B253);
-              this.colorify.uniforms.color2.value = new THREE.Color(0x24B253);
-              console.log("change C color!");
-          }
+          this.chooseRoomColor(this._scene.camTargetBool_C, 0x24B253, 0x24B253);
       }
-
+      if (e.keyCode == KEYCODE.D){
+      //   if (this.goRoom_D == true){ //キーの代わりにくる変数
+          this.chooseRoomColor(this._scene.camTargetBool_D, 0x2EC7E5, 0x2EC7E5);
+      }
+      if (e.keyCode == KEYCODE.E){
+      //   if (this.goRoom_E == true){ //キーの代わりにくる変数
+          this.chooseRoomColor(this._scene.camTargetBool_E, 0x29CCBE, 0x29CCBE);
+      }
+      if (e.keyCode == KEYCODE.F){
+      //   if (this.goRoom_F == true){ //キーの代わりにくる変数
+          this.chooseRoomColor(this._scene.camTargetBool_F, 0x4429CC, 0x4429CC);
+      }
+      if (e.keyCode == KEYCODE.G){
+      //   if (this.goRoom_G == true){ //キーの代わりにくる変数
+          this.chooseRoomColor(this._scene.camTargetBool_G, 0xCC2995, 0xCC2995);
+      }
       if (e.keyCode == KEYCODE.BACKSPACE){
       //   if (this.backToPanels == true){ //キーの代わりにくる変数
-          if(this._scene.camTargetBool_BACKSPACE == true){
-                this.colorify.uniforms.color.value = new THREE.Color(this.gradColor1);
-                this.colorify.uniforms.color2.value = new THREE.Color(this.gradColor2);
-                console.log("reset color!");
-          }
+          this.chooseRoomColor(this._scene.camTargetBool_BACKSPACE, this.gradColor1, this.gradColor2);
       }
 
 
-      this._scene.onKeyUp(e);
+      this._scene.onKeyUp(e);//これがcamTargetBoolをfalseにするから最後にかく
+
+  }
+
+  chooseRoomColor(camTargetBool,color1,color2){
+    if(camTargetBool == true){//これはsceneで読むからfalseにしない
+        this.colorify.uniforms.color.value = new THREE.Color(color1);
+        this.colorify.uniforms.color2.value = new THREE.Color(color2);
+    }
   }
 
   addEvent()

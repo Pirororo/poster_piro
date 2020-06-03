@@ -47,12 +47,6 @@ export default class Line extends THREE.Object3D {
             //     ['0004','50','13','50','13','50','13','50','13'],
             //     ['0005','20','15','20','15','30','42','30','42'],
             //     ['0006','30','42','30','42','30','42','30','42'],
-            //     ['0007','50','13','50','13','20','15','20','15'],
-            //     ['0008','20','15','20','15','50','13','50','13'],
-            //     ['0009','30','42','30','42','50','13','50','13'],
-            //     ['00010','50','13','50','13','20','15','20','15'],
-            //     ['00011','20','15','20','15','30','42','30','42'],
-            //     ['00012','30','42','30','42','20','15','20','15']
             // ];
 
         }
@@ -71,7 +65,7 @@ export default class Line extends THREE.Object3D {
 
             let material = new MeshLineMaterial( {
                 color: 0xF549C1,
-                lineWidth: 0.6,//0.4
+                lineWidth: 0.8,//0.6
                 depthTest: false,//これがないと隠れちゃって描画されなかった。。。
             });
     
@@ -148,7 +142,7 @@ export default class Line extends THREE.Object3D {
                 //InOut: in=1, out=2;
 
 
-                this.lineLength = this.data[this.Times][2*this.where + this.inout]/10000000*0.8;
+                this.lineLength = this.data[this.Times][2*this.where + this.inout]/10000000*0.5;
                 // this.lineLength = this.data[0][0];
                 // //10^-8して小さくしてる
                 // this.lineLength = this.data[this.Times][2*this.where + this.inout]*pow(10,-9);

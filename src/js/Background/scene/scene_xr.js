@@ -24,7 +24,6 @@ export class Scene extends THREE.Scene
         this.camTarget = new THREE.Vector3(-50,-25,-50);
 
         //Target指定なので都度１回だけ読むようにする
-
         this.keyBool_startVRanime = true;
         this.updateBool = false;
         // this.camTargetBool_SPACE = false;//☆VRでは不要！！！
@@ -36,7 +35,7 @@ export class Scene extends THREE.Scene
         this.show7panels = false;
 
         //☆☆☆【trueで受け取りたい変数】
-        // this.startVRanime = true;//VRのプチアニメをはじめるスイッチ  <S>
+        // this.startVRanime = true;//VRのプチアニメをはじまるスイッチ。終わったら this.show7panels = trueが送信される  <S>
         // this.goRoom_A = true;// Aの部屋に近づくスイッチ  <A>
         // this.goRoom_B = true;// Bの部屋に近づくスイッチ  <B>
         // this.goRoom_C = true;// Cの部屋に近づくスイッチ  <C>
