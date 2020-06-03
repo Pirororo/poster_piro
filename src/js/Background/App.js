@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { EVENT, KEYCODE } from "./utils/props.js";
 
 //fps表示とDAT表示に必要なjs
 import {GUI} from 'three/examples/jsm/libs/dat.gui.module';
@@ -81,12 +82,14 @@ export default class App
 
     //エフェクトパス（出力パスの前にかく）
     //グラデパス
-    var colorify = new ShaderPass(ColorifyGradientShader);
-    colorify.uniforms.color.value = new THREE.Color(0x734ca4);//0x4ea78e
-    colorify.uniforms.color2.value = new THREE.Color(0x4ea78);//e0x648
-    // colorify.uniforms.color2.value = new THREE.Color(0x9629CC);//e0x648
-    colorify.uniforms.alpha = 0.8;
-    colorify.enabled = true;
+    this.colorify = new ShaderPass(ColorifyGradientShader);
+    this.gradColor1 = 0x734ca4;
+    this.gradColor2 = 0x4ea78;
+
+    this.colorify.uniforms.color.value = new THREE.Color(this.gradColor1);//0x4ea78e
+    this.colorify.uniforms.color2.value = new THREE.Color(this.gradColor2);//e0x648
+    this.colorify.uniforms.alpha = 0.8;
+    this.colorify.enabled = true;
 
     //ブルームパス
     // var bloomPass = new BloomPass(1.5, 15, 3.0, 64);
@@ -110,65 +113,58 @@ export default class App
     // this.composer.addPass(renderPass2);//Scene2(Plate)のレンダー
 
     // this.composer.addPass(sceneMask);
-    this.composer.addPass(colorify);//Scene2(Plate)のマスクのエフェクト
+    this.composer.addPass(this.colorify);//Scene2(Plate)のマスクのエフェクト
     
     // this.composer.addPass(clearMask);
     this.composer.addPass(bloomPass);
     this.composer.addPass(effectCopy);
 
 
-    var controls = new function () {
+    // var controls = new function () {
 
-        this.select = 'Colorify';
+    //     this.select = 'Colorify';
 
-        //グラデパス
-        this.color = 0x734ca4;
-        this.color2 = 0x4ea78;
+    //     //グラデパス
+    //     this.color = 0x734ca4;
+    //     this.color2 = 0x4ea78;
 
-        // //ブルームパス
-        // this.strength = 0.1;
-        // this.kernelSize = 5;
-        // this.sigma = 1.0;
-        // this.resolution = 64;
+    //     // //ブルームパス
+    //     // this.strength = 0.1;
+    //     // this.kernelSize = 5;
+    //     // this.sigma = 1.0;
+    //     // this.resolution = 64;
 
-        // this.rotate = false;
+    //     // this.rotate = false;
 
-        this.changeColor = function () {
-            // colorify.uniforms.color.value = new THREE.Color(controls.color);
-            colorify.uniforms.color.value = controls.color;
+    //     this.changeColor = function () {
+    //         // this.colorify.uniforms.color.value = new THREE.Color(controls.color);
+    //         this.colorify.uniforms.color.value = controls.color;
 
-        };
-        this.changeColor2 = function () {
-            colorify.uniforms.color2.value = new THREE.Color(controls.color2);
-        };
-
-    };
-
+    //     };
+    //     this.changeColor2 = function () {
+    //         this.colorify.uniforms.color2.value = new THREE.Color(controls.color2);
+    //     };
+    // };
 
 
-    const gui = new GUI();
+    // const gui = new GUI();
 
-    gui.add(controls, "select", [ "colorify" , 'BloomPass']).onChange(controls.switchShader);
+    // gui.add(controls, "select", [ "colorify" , 'BloomPass']).onChange(controls.switchShader);
 
-    var clFolder = gui.addFolder("Colorify");
-    clFolder.addColor(controls, "color").onChange(controls.changeColor);
+    // var clFolder = gui.addFolder("Colorify");
     // clFolder.addColor(controls, "color").onChange(controls.changeColor);
-    // clFolder.addColor(controls, "color").onChange(controls.changeColor);
-    // clFolder.addColor(controls, "color").onChange(controls.changeColor);
+    // // clFolder.addColor(controls, "color").onChange(controls.changeColor);
+    // // clFolder.addColor(controls, "color").onChange(controls.changeColor);
+    // // clFolder.addColor(controls, "color").onChange(controls.changeColor);
 
-    clFolder.addColor(controls, "color2").onChange(controls.changeColor2);
-    clFolder.open();
+    // clFolder.addColor(controls, "color2").onChange(controls.changeColor2);
+    // clFolder.open();
 
-    var bpFolder = gui.addFolder("BloomPass");
-    // bpFolder.add(controls, "strength", 1, 10).onChange(controls.updateEffectBloom);
-    // bpFolder.add(controls, "kernelSize", 1, 100).onChange(controls.updateEffectBloom);
-    // bpFolder.add(controls, "sigma", 1, 10).onChange(controls.updateEffectBloom);
-    // bpFolder.add(controls, "resolution", 0, 1024).onChange(controls.updateEffectBloom);
-
-
-
-    // フレーム毎の更新
-    // this.update();
+    // var bpFolder = gui.addFolder("BloomPass");
+    // // bpFolder.add(controls, "strength", 1, 10).onChange(controls.updateEffectBloom);
+    // // bpFolder.add(controls, "kernelSize", 1, 100).onChange(controls.updateEffectBloom);
+    // // bpFolder.add(controls, "sigma", 1, 10).onChange(controls.updateEffectBloom);
+    // // bpFolder.add(controls, "resolution", 0, 1024).onChange(controls.updateEffectBloom);
 
   }
 
@@ -187,11 +183,8 @@ export default class App
 
     this._stats.update();
 
-    // //sphere.rotation.y=step+=0.01;
-
     // var delta = this.clock.getDelta();
     // this.orbitControls.update(delta);
-
 
     this._renderer.autoClear = false;//これ大事〜！trueだと色が毎回背景白にクリアされちゃう
 
@@ -201,14 +194,51 @@ export default class App
 
   }
 
-  onKeyUp(e)
+  onKeyUp(e)//グラデめも    0x5de2ff, 0x3333a7
   {
-    this._scene.onKeyUp(e);
+      if (e.keyCode == KEYCODE.A){//Aの部屋に移動してね
+      //   if (this.goRoom_A == true){ //キーの代わりにくる変数
+          if(this._scene.camTargetBool_A == true){//これはsceneで読むからfalseにしない
+              this.colorify.uniforms.color.value = new THREE.Color(0x9629CC);
+              this.colorify.uniforms.color2.value = new THREE.Color(0x9629CC);//4ea780
+              console.log("change A color!");
+          }
+      }
+
+      if (e.keyCode == KEYCODE.B){//Aの部屋に移動してね
+      //   if (this.goRoom_B == true){ //キーの代わりにくる変数
+          if(this._scene.camTargetBool_B == true){//これはsceneで読むからfalseにしない
+              this.colorify.uniforms.color.value = new THREE.Color(0x295FCC);
+              this.colorify.uniforms.color2.value = new THREE.Color(0x295FCC);
+              console.log("change B color!");
+          }
+      }
+
+      if (e.keyCode == KEYCODE.C){//Aの部屋に移動してね
+      //   if (this.goRoom_C == true){ //キーの代わりにくる変数
+          if(this._scene.camTargetBool_C == true){//これはsceneで読むからfalseにしない
+              this.colorify.uniforms.color.value = new THREE.Color(0x24B253);
+              this.colorify.uniforms.color2.value = new THREE.Color(0x24B253);
+              console.log("change C color!");
+          }
+      }
+
+      if (e.keyCode == KEYCODE.BACKSPACE){
+      //   if (this.backToPanels == true){ //キーの代わりにくる変数
+          if(this._scene.camTargetBool_BACKSPACE == true){
+                this.colorify.uniforms.color.value = new THREE.Color(this.gradColor1);
+                this.colorify.uniforms.color2.value = new THREE.Color(this.gradColor2);
+                console.log("reset color!");
+          }
+      }
+
+
+      this._scene.onKeyUp(e);
   }
 
   addEvent()
 	{
-		this._scene.addEvent(); 
+    this._scene.addEvent(); 
 	}
 
   draw()
