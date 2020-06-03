@@ -1,9 +1,6 @@
 import * as THREE from "three";
-
-//fps表示とDAT表示に必要なjs
-// import Stats from "three/examples/jsm/libs/stats.module";
-
 import { getWidth, getHeight } from "../Utils/Helper"
+// import Stats from "three/examples/jsm/libs/stats.module";
 
 
 
@@ -20,19 +17,12 @@ export default class App
     this._renderer.setSize(getWidth() , getHeight());
     this._renderer.setPixelRatio(1);
     this.clock = new THREE.Clock();
-
   }
 
   update()
   {
     //this._stats.update();
-    // var delta = this.clock.getDelta();
-    // this.orbitControls.update(delta);
-    // this._renderer.autoClear = false;//これ大事〜！trueだと色が毎回背景白にクリアされちゃう
-
     this._scene.update();
-    // this.composer.render();
-
   }
 
   onKeyUp(e)
@@ -40,13 +30,10 @@ export default class App
     this._scene.onKeyUp(e);
   }
 
-
-
   // _initStats()
   // {
   //   this._stats = new Stats();
   //   this._stats.setMode(0); // 0: fps, 1: ms
-
 
   //   // Align top-left
   //   this._stats.domElement.style.position = 'absolute';

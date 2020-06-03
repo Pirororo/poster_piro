@@ -26,8 +26,8 @@ const Composer =
 		else
 		{
 			this.instances.background = Background.init();
-			this.instances.gallery = Gallery.init();
-			this.instances.detail = Detail.init();
+			// this.instances.gallery = Gallery.init();
+			// this.instances.detail = Detail.init();
 		}
 
 		this.addEvent();

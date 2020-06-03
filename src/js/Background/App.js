@@ -1,7 +1,7 @@
 import * as THREE from "three";
 
 //fps表示とDAT表示に必要なjs
-// import {GUI} from 'three/examples/jsm/libs/dat.gui.module';
+import {GUI} from 'three/examples/jsm/libs/dat.gui.module';
 import Stats from "three/examples/jsm/libs/stats.module";
 // カメラ系に必要なjs
 // import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
@@ -63,8 +63,9 @@ export default class App
 
     // シェーダー
     //レンダーパス
-    var renderPass = new RenderPass(this._scene.scene0, this._scene.camera);
-    // renderPass.clear = true;
+    // var renderPass = new RenderPass(this._scene.scene0, this._scene.camera);
+    var renderPass = new RenderPass(this._scene, this._scene.camera);
+    renderPass.clear = true;
 
     // var renderPass1 = new RenderPass(this._scene.scene0.scene1, this._scene.camera);
     // renderPass1.clear = true;//Lineは線が更新されていくのでtrueにする、falseだと線最初から全部のこっちゃう
@@ -72,9 +73,10 @@ export default class App
     // renderPass2.clear = true;//trueで色がでる
     // //**********renderPass両方falseだとopasity0みたいに明るくなりすぎる、ライト二重？ */
 
-    //マスクパス、クリアマスクパス
+    // マスクパス、クリアマスクパス
     // let sceneMask = new MaskPass(this._scene.scene0, this._scene.camera);
-    // let clearMask = new ClearPass();
+    let sceneMask = new MaskPass(this._scene, this._scene.camera);
+    let clearMask = new ClearPass();
 
 
     //エフェクトパス（出力パスの前にかく）
@@ -82,6 +84,7 @@ export default class App
     var colorify = new ShaderPass(ColorifyGradientShader);
     colorify.uniforms.color.value = new THREE.Color(0x734ca4);//0x4ea78e
     colorify.uniforms.color2.value = new THREE.Color(0x4ea78);//e0x648
+    // colorify.uniforms.color2.value = new THREE.Color(0x9629CC);//e0x648
     colorify.uniforms.alpha = 0.8;
     colorify.enabled = true;
 
@@ -108,54 +111,64 @@ export default class App
 
     // this.composer.addPass(sceneMask);
     this.composer.addPass(colorify);//Scene2(Plate)のマスクのエフェクト
-    this.composer.addPass(bloomPass);
+    
     // this.composer.addPass(clearMask);
+    this.composer.addPass(bloomPass);
     this.composer.addPass(effectCopy);
 
 
-    // var controls = new function () {
+    var controls = new function () {
 
-    //     this.select = 'Colorify';
+        this.select = 'Colorify';
 
-    //     //グラデパス
-    //     this.color = 0x4ea78e;
-    //     this.color2 = 0x2c7d96;
+        //グラデパス
+        this.color = 0x734ca4;
+        this.color2 = 0x4ea78;
 
-    //     //ブルームパス
-    //     this.strength = 0.1;
-    //     this.kernelSize = 5;
-    //     this.sigma = 1.0;
-    //     this.resolution = 64;
+        // //ブルームパス
+        // this.strength = 0.1;
+        // this.kernelSize = 5;
+        // this.sigma = 1.0;
+        // this.resolution = 64;
 
-    //     // this.rotate = false;
+        // this.rotate = false;
 
-    //     this.changeColor = function () {
-    //         colorify.uniforms.color.value = new THREE.Color(controls.color);
-    //     };
-    //     this.changeColor2 = function () {
-    //         colorify.uniforms.color2.value = new THREE.Color(controls.color2);
-    //     };
+        this.changeColor = function () {
+            // colorify.uniforms.color.value = new THREE.Color(controls.color);
+            colorify.uniforms.color.value = controls.color;
 
-    // };
+        };
+        this.changeColor2 = function () {
+            colorify.uniforms.color2.value = new THREE.Color(controls.color2);
+        };
+
+    };
 
 
 
-    // const gui = new GUI();
+    const gui = new GUI();
 
-    // gui.add(controls, "select", [ "colorify" , 'BloomPass']).onChange(controls.switchShader);
+    gui.add(controls, "select", [ "colorify" , 'BloomPass']).onChange(controls.switchShader);
 
-    // var clFolder = gui.addFolder("Colorify");
+    var clFolder = gui.addFolder("Colorify");
+    clFolder.addColor(controls, "color").onChange(controls.changeColor);
     // clFolder.addColor(controls, "color").onChange(controls.changeColor);
-    // clFolder.addColor(controls, "color2").onChange(controls.changeColor2);
+    // clFolder.addColor(controls, "color").onChange(controls.changeColor);
+    // clFolder.addColor(controls, "color").onChange(controls.changeColor);
 
-    // var bpFolder = gui.addFolder("BloomPass");
+    clFolder.addColor(controls, "color2").onChange(controls.changeColor2);
+    clFolder.open();
+
+    var bpFolder = gui.addFolder("BloomPass");
     // bpFolder.add(controls, "strength", 1, 10).onChange(controls.updateEffectBloom);
     // bpFolder.add(controls, "kernelSize", 1, 100).onChange(controls.updateEffectBloom);
     // bpFolder.add(controls, "sigma", 1, 10).onChange(controls.updateEffectBloom);
     // bpFolder.add(controls, "resolution", 0, 1024).onChange(controls.updateEffectBloom);
 
+
+
     // フレーム毎の更新
-    this.update();
+    // this.update();
 
   }
 

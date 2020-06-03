@@ -69,7 +69,7 @@ export class Camera extends THREE.PerspectiveCamera{
       }
 
       //camTargetの初期化とcamPosの取得
-      if(this.frame == 1370){this.camTarget = new THREE.Vector3(-200,75,200);}
+      if(this.frame == 1370){this.camTarget = new THREE.Vector3(-50,75,400);}
       if(this.frame == 1470){this.camTarget = new THREE.Vector3(100,70,100);}//175,75,175
     }
   }
