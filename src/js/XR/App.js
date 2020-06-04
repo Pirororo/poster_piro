@@ -37,7 +37,7 @@ const App =
 	{
 		this.props.elements.scene = document.getElementById(SELECTORS.XRScene);
 		this.attachComponent(this.props.elements.scene, COMPONENTS.Background);
-		this.attachComponent(this.props.elements.scene, COMPONENTS.Gallery);
+		// this.attachComponent(this.props.elements.scene, COMPONENTS.Gallery);
 
 		this.props.elements.xr_player = this.attachComponent(document.getElementById(SELECTORS.XRPlayer), COMPONENTS.RaycastCheck);
 		this.props.elements.xr_raycaster = document.getElementById(SELECTORS.Raycaster);
