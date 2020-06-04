@@ -5,11 +5,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const rootDir = path.resolve(__dirname);
 const devServer = {
-  host: "192.168.2.104",
+  host: "192.168.1.115",
   port: 8080
 };
 
-const config = merge(common,{
+const config = merge(common, {
   mode: "development",
   entry: {
     app: path.resolve(rootDir, "src", "static", "main.js")
@@ -37,12 +37,12 @@ const config = merge(common,{
 });
 
 config.plugins =
-[
-  new HtmlWebpackPlugin({
-    template: path.join("src", "static", "index.html"),
-    filename: 'index.html',
-    inject: "body"
-  })
-];
+  [
+    new HtmlWebpackPlugin({
+      template: path.join("src", "static", "index.html"),
+      filename: 'index.html',
+      inject: "body"
+    })
+  ];
 
 module.exports = config;

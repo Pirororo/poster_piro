@@ -58,7 +58,7 @@ export default class GalleryModel {
     context.scale(8, 8);
     context.font = this.fontSize + 'px ' + 'Arial, meiryo, sans-serif';
     context.fillStyle = 'rgba(255,255,255,1)';
-    const textList = labelText.split('\n');//\nで分割
+    const textList = labelText.split('<br>');//\nで分割
     const lineHeight = context.measureText("あ").width * 1.4; //文字の高さを調べてline-heightに
     // 複数行で表示するためにループさせる
     textList.forEach(function (labelText, i) {
@@ -70,8 +70,12 @@ export default class GalleryModel {
   }
 
   createCategory() {
-    const sample = this.categories[0].categoryEn;
+
+    // this.posterData.forIn((k, instance) => console.log(instance));
+    // const sample = this.categories[0].categoryEn;
     // console.log(sample);
+
+    const domElement = '<div class="">'
   }
 
 }

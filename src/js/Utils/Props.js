@@ -2,22 +2,34 @@
  * Publically accessible parameters
  */
 
+const VR = {
+  enable: false,
+};
+
 const KEYCODE = {
   SPACE: 32,
 };
 
 const EVENT = {
+  ShowPoster: "ShowPoster",
   ShowDetail: "ShowDetail",
+  BackToCategory: "BackToCategory",
+  BackToPoster: "BackToPoster"
 };
 
-const VR = {
-  enable: false,
-};
+const SELECTORS =
+{
+  BackgroundContainer: "background_container",
+  BackgroundStage: "WebGL-output",
 
-const SELECTORS = {
+  HudContainer: "hud_container",
+  HudUIStage: "hud_ui_stage",
+
+  CategoryContainer: "category_container",
+  CategoryStage: "category_stage",
+
   GalleryContainer: "gallery_container",
   GalleryStage: "gallery_stage",
-  GalleryPostersContainer: "gallery_poster_container",
 
   DetailContainer: "detail_container",
   DetailStage: "detail_stage",
@@ -28,6 +40,13 @@ const SELECTORS = {
   XRPlayer: "xr_player",
   Raycaster: "xr_raycaster",
   RaycastTarget: "xr_raycast_target",
+  XRHudContainer: "xr_hud_container",
+
+  XRCategoryBoardContainer: "xr_category_board_container",
+  XRGalleryPosterPanelContainer: "xr_poster_panel_container",
+  XRGalleryPosterTitleContainer: "xr_poster_title_container",
+
+  XRDetailContainer: "xr_detail_container"
 };
 
 const COMPONENTS = {
@@ -38,10 +57,28 @@ const COMPONENTS = {
   RaycastTarget: "raycast-target-component",
 };
 
+const BOARD_ID = {
+  Category: "category",
+  Poster: "poster",
+  Detail: "detail",
+  UI: {
+    BackToCategory: "ui_back_category",
+    BackToPoster: "ui_back_poster"
+  }
+};
+
+
+const COLOR = {
+  RaycastFocusOff: 0x999999,
+  RaycastFocusOn: 0xFFFFFF
+};
+
 export {
 	KEYCODE,
 	EVENT,
 	VR,
   SELECTORS,
-  COMPONENTS
+  COMPONENTS,
+  BOARD_ID,
+  COLOR
 };

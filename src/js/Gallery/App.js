@@ -5,11 +5,11 @@ import { radians, map, distance } from './helpers';
 import { posterData } from './posterData';
 import GalleryModel from './GalleryModel';
 import PosterBoard from './elements/posterBoard';
+import CategoryBoard from './elements/CategoryBoard';
 import { EVENT, SELECTORS } from "./../Utils/Props";
 
 export default class App {
-  constructor() { }
-
+  constructor(){}
   init() {
     this.setup();
     this.createScene();
@@ -18,6 +18,8 @@ export default class App {
     this.addAmbientLight();
     this.addDirectionalLight();
 
+
+    // this.addCategory();
     //ポスターギャラリーを追加
     this.addBorad();
   }
@@ -93,6 +95,11 @@ export default class App {
   /**
    * Methods
    */
+  addCategory() {
+    this.category = new CategoryBoard('a', 1);
+  }
+
+
   addBorad() {
     const topPosY = 40;
     const bottomPosY = -50;

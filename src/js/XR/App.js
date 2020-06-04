@@ -36,13 +36,16 @@ const App =
 	setup()
 	{
 		this.props.elements.scene = document.getElementById(SELECTORS.XRScene);
+
 		this.attachComponent(this.props.elements.scene, COMPONENTS.Background);
-		// this.attachComponent(this.props.elements.scene, COMPONENTS.Gallery);
+		this.attachComponent(this.props.elements.scene, COMPONENTS.Gallery);
+		this.attachComponent(this.props.elements.scene, COMPONENTS.Detail);
+
 
 		this.props.elements.xr_player = this.attachComponent(document.getElementById(SELECTORS.XRPlayer), COMPONENTS.RaycastCheck);
 		this.props.elements.xr_raycaster = document.getElementById(SELECTORS.Raycaster);
 		this.attachComponent(this.props.elements.xr_raycaster, "raycaster", `objects: .${SELECTORS.RaycastTarget}`);
-		this.attachComponent(this.props.elements.xr_raycaster, "cursor", `fuse: false`);
+		this.attachComponent(this.props.elements.xr_raycaster, "cursor", "fuse: false; fuse-timeout: 2000");
 
 	},
 
@@ -57,7 +60,9 @@ const App =
 
 	onKeyUp(e)
 	{
-		this.components.background.prototype.onKeyUp(e);
+		if (this.components.background != null) {
+			this.components.background.prototype.onKeyUp(e);
+		}
 		// this.components.gallery.prototype.onKeyUp(e);
 	}
 

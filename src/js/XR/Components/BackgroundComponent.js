@@ -1,6 +1,6 @@
 import Background from "../../Background/App_xr";
 import { Scene as Background_Scene } from "../../Background/scene/scene_xr";
-import { COMPONENTS } from "./../../Utils/Props";
+import { SELECTORS, COMPONENTS } from "./../../Utils/Props";
 
 const AFRAME = window.AFRAME;
 
@@ -13,27 +13,31 @@ export default AFRAME.registerComponent(COMPONENTS.Background,
 		console.log("Background Component Init.");
 
 		this.props.scene = this.el.object3D;
-		this.props.container = this.el.appendChild(document.createElement("a-entity"));
+
+		const container = document.createElement("a-entity");
+		container.setAttribute("id", SELECTORS.BackgroundContainer);
+		this.props.container = this.el.appendChild(container);
 
 		this.modules.scene = new Background_Scene();
 		this.modules.scene.setup();
-		this.modules.app = new Background(this.modules.scene);
+		// this.modules.app = new Background(this.modules.scene);
 
 		// attach each scenes to AFrame root scene
-		this.props.container.object3D.add(this.modules.scene);
+		setTimeout(() => {
+			this.props.container.object3D.add(this.modules.scene);
+		}, 1000);
 	},
 
 	tick()
 	{
-		this.modules.app.update();
+		this.modules.scene.update();
 	},
 
-	onClick(e)
-	{
-		console.log("click");
-	},
 	onKeyUp(e)
 	{
-		this.modules.scene.onKeyUp(e);
-	},
+		if (this.modules.scene != null)
+		{
+			this.modules.scene.onKeyUp(e);
+		}
+	}
 });

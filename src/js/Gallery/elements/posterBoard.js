@@ -13,7 +13,6 @@ export default class posterBoard {
       image: this.model.loadTexture(),
       label: this.model.createLabel()
     }
-    this.model.createCategory();
     this.view = new PosterView(this.scene, texture).setup();
     this.controller = new GalleryController(this.view, this.model, this.id);
   }
