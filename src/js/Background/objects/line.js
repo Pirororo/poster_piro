@@ -184,9 +184,13 @@ export default class Line extends THREE.Object3D {
 
         update(){
             if(this.DATAisOK ==  true){
-                this.frame += 1;
-                if(this.frame% 4 == 0){
-                    for( var i in this.meshes ) { this.checkIntersection(i); }
+                if(this.frame < 1800){
+                    this.frame += 1;
+                    if(this.frame% 4 == 0){
+                        for( var i in this.meshes ) { this.checkIntersection(i); }
+                    }
+                }else{ 
+                    this.frame = 1801;//1800以上は読まないよー あれ、1800だと読んでしまう
                 }
             }
         }

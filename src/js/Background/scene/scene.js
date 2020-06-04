@@ -390,7 +390,13 @@ export class Scene2 extends THREE.Scene {
 
     update(){
 
-        this.frame += 1;
+        if(this.frame < 1800){
+            this.frame += 1;
+        }else{ 
+            this.frame = 1800;//1800以上は読まないよー
+            this.eansingBool == false;//頂点入れ替えもしない。
+        }
+
         if (this.eansingBool == true){
 
             this.easeElapsedTime += this.clock.getDelta();
@@ -637,9 +643,9 @@ export class Scene2 extends THREE.Scene {
                     if(i >=40*j+(5*k) && i<40*j+(5*(k+1))){
                         for (let l = 0; l < 5; l++) {
                         if(i >=40*j+(5*k)+(1*l) && i<40*j+(5*k)+(1*(l+1))){
-                            this.posTarget[3*i+ 0] = 80*Math.sin((i*2*Math.PI/180))+50,
+                            this.posTarget[3*i+ 0] = 70*Math.sin((i*2*Math.PI/180))+50,
                             this.posTarget[3*i+ 1] = 0+25,
-                            this.posTarget[3*i+ 2] = 80*Math.cos((i*2*Math.PI/180))+50
+                            this.posTarget[3*i+ 2] = 70*Math.cos((i*2*Math.PI/180))+50
                         }
                         }
                     }
