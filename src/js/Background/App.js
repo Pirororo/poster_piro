@@ -83,7 +83,7 @@ export default class App
 
     this.colorify.uniforms.color.value = new THREE.Color(this.gradColor1);//0x4ea78e
     this.colorify.uniforms.color2.value = new THREE.Color(this.gradColor2);//e0x648
-    this.colorify.uniforms.alpha = 0.9;
+    this.colorify.uniforms.alpha = 0.8;
     this.colorify.enabled = true;
 
     //ブルームパス

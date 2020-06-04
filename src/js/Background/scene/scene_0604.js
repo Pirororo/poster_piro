@@ -332,7 +332,7 @@ export class Scene2 extends THREE.Scene {
         super();
 
         this.frame = 0;/////////////////////////////1050
-        this.frameSlide = 1260;
+        this.frameSlide = 1270;
 
 
 
@@ -436,7 +436,7 @@ export class Scene2 extends THREE.Scene {
         }
 
         // if(this.clock.elapsedTime == 2){
-        if(this.frame == 100){
+        if(this.frame == 110){
             for (let i = 0; i < this.meshList.length; i++) {
                 for (let j = 0; j < 4; j++) {
                 if(i >=80*j && i<80*(j+1)){
@@ -453,7 +453,7 @@ export class Scene2 extends THREE.Scene {
             this.easeElapsedTime =0;
         }
 
-        if(this.frame == 150){
+        if(this.frame == 170){
             for (let i = 0; i < this.meshList.length; i++) {
                 for (let j = 0; j < 4; j++) {
                 if(i >=80*j && i<80*(j+1)){
@@ -461,9 +461,9 @@ export class Scene2 extends THREE.Scene {
                     if(i >=80*j+(20*k) && i<80*j+(20*(k+1))){
                         for (let l = 0; l < 20; l++) {
                         if(i >=80*j+(20*k)+(1*l) && i<80*j+(20*k)+(1*(l+1))){
-                            this.posTarget[3*i+ 0] = 20*j,
+                            this.posTarget[3*i+ 0] = 25*j,
                             this.posTarget[3*i+ 1] = 7*l,
-                            this.posTarget[3*i+ 2] = 20*k
+                            this.posTarget[3*i+ 2] = 25*k
                         }
                         }
                     }
@@ -472,10 +472,10 @@ export class Scene2 extends THREE.Scene {
                 }
             }
             this.easeElapsedTime =0;
-            this.tSpeed = 3.0;
+            this.tSpeed = 4.0;
         }
 
-        if(this.frame == 230){//280
+        if(this.frame == 280){
             for (let i = 0; i < this.meshList.length; i++) {
                 for (let j = 0; j < 4; j++) {
                 if(i >=80*j && i<80*(j+1)){
@@ -494,10 +494,10 @@ export class Scene2 extends THREE.Scene {
                 }
             }
             this.easeElapsedTime = 0;
-            this.tSpeed = 3.0;
+            this.tSpeed = 4.0;
         }
 
-        if(this.frame == 310){//430
+        if(this.frame == 430){
             for (let i = 0; i < this.meshList.length; i++) {
                 for (let j = 0; j < 4; j++) {
                 if(i >=80*j && i<80*(j+1)){
@@ -516,11 +516,11 @@ export class Scene2 extends THREE.Scene {
                 }
             }
             this.easeElapsedTime =0;
-            this.tSpeed = 3.0;
+            this.tSpeed = 7.0;
         }
 
 
-        if(this.frame == 360){//490
+        if(this.frame == 490){
             for (let i = 0; i < this.meshList.length; i++) {
                 for (let j = 0; j < 4; j++) {
                 if(i >=80*j && i<80*(j+1)){
@@ -539,11 +539,11 @@ export class Scene2 extends THREE.Scene {
                 }
             }
             this.easeElapsedTime =0;
-            this.tSpeed = 3.0;
+            this.tSpeed = 4.0;
         }
 
 
-        if(this.frame == 410){//550
+        if(this.frame == 550){
             for (let i = 0; i < this.meshList.length; i++) {
                 for (let j = 0; j < 8; j++) {
                 if(i >=40*j && i<40*(j+1)){
@@ -562,72 +562,65 @@ export class Scene2 extends THREE.Scene {
                 }
             }
             this.easeElapsedTime =0;
-            this.tSpeed = 3.0;
-
+            this.tSpeed = 4.0;
         }
 
-        if(this.frame == 460){
-
-            this.frame += (780 - 460);
+        if(this.frame == 600){
+            for (let i = 0; i < this.meshList.length; i++) {
+                for (let j = 0; j < 8; j++) {
+                if(i >=40*j && i<40*(j+1)){
+                    for (let k = 0; k < 8; k++) {
+                    if(i >=40*j+(5*k) && i<40*j+(5*(k+1))){
+                        for (let l = 0; l < 5; l++) {
+                        if(i >=40*j+(5*k)+(1*l) && i<40*j+(5*k)+(1*(l+1))){
+                            this.posTarget[3*i+ 0] = 20*j,
+                            this.posTarget[3*i+ 1] =  (30*Math.sin((30*(j+k)+((this.frame+60)*2))*Math.PI/180)),
+                            this.posTarget[3*i+ 2] = 20*k
+                        }
+                        }
+                    }
+                    }
+                }
+                }
+            }
+            this.easeElapsedTime =0;
         }
 
 
-        // if(this.frame == 600){
-        //     for (let i = 0; i < this.meshList.length; i++) {
-        //         for (let j = 0; j < 8; j++) {
-        //         if(i >=40*j && i<40*(j+1)){
-        //             for (let k = 0; k < 8; k++) {
-        //             if(i >=40*j+(5*k) && i<40*j+(5*(k+1))){
-        //                 for (let l = 0; l < 5; l++) {
-        //                 if(i >=40*j+(5*k)+(1*l) && i<40*j+(5*k)+(1*(l+1))){
-        //                     this.posTarget[3*i+ 0] = 20*j,
-        //                     this.posTarget[3*i+ 1] =  (30*Math.sin((30*(j+k)+((this.frame+60)*2))*Math.PI/180)),
-        //                     this.posTarget[3*i+ 2] = 20*k
-        //                 }
-        //                 }
-        //             }
-        //             }
-        //         }
-        //         }
-        //     }
-        //     this.easeElapsedTime =0;
-        // }
 
+        if(this.frame == 660){ this.eansingBool = false;}
 
+        if(this.frame >= 660 && this.frame < 780){
 
-        // if(this.frame == 660){ this.eansingBool = false;}
+            for (let i = 0; i < this.meshList.length; i++) {
+                this.meshList[i].position.x = this.positions[3*i+ 0];
+                this.meshList[i].position.y = this.positions[3*i+ 1];
+                this.meshList[i].position.z = this.positions[3*i+ 2];
+            }
 
-        // if(this.frame >= 660 && this.frame < 780){
-
-        //     for (let i = 0; i < this.meshList.length; i++) {
-        //         this.meshList[i].position.x = this.positions[3*i+ 0];
-        //         this.meshList[i].position.y = this.positions[3*i+ 1];
-        //         this.meshList[i].position.z = this.positions[3*i+ 2];
-        //     }
-
-        //     for (let i = 0; i < this.meshList.length; i++) {
-        //         for (let j = 0; j < 8; j++) {
-        //         if(i >=40*j && i<40*(j+1)){
-        //             for (let k = 0; k < 8; k++) {
-        //             if(i >=40*j+(5*k) && i<40*j+(5*(k+1))){
-        //                 for (let l = 0; l < 5; l++) {
-        //                 if(i >=40*j+(5*k)+(1*l) && i<40*j+(5*k)+(1*(l+1))){
-        //                     this.positions[3*i+ 0] = 20*j,
-        //                     this.positions[3*i+ 1] = (30*Math.sin((30*(j+k)+(this.frame*2))*Math.PI/180)),
-        //                     this.positions[3*i+ 2] = 20*k
-        //                 }
-        //                 }
-        //             }
-        //             }
-        //         }
-        //         }
-        //     }
+            for (let i = 0; i < this.meshList.length; i++) {
+                for (let j = 0; j < 8; j++) {
+                if(i >=40*j && i<40*(j+1)){
+                    for (let k = 0; k < 8; k++) {
+                    if(i >=40*j+(5*k) && i<40*j+(5*(k+1))){
+                        for (let l = 0; l < 5; l++) {
+                        if(i >=40*j+(5*k)+(1*l) && i<40*j+(5*k)+(1*(l+1))){
+                            this.positions[3*i+ 0] = 20*j,
+                            this.positions[3*i+ 1] = (30*Math.sin((30*(j+k)+(this.frame*2))*Math.PI/180)),
+                            this.positions[3*i+ 2] = 20*k
+                        }
+                        }
+                    }
+                    }
+                }
+                }
+            }
 
            
-        // }
+        }
 
 
-        // if(this.frame == 780){ this.eansingBool = true;}
+        if(this.frame == 780){ this.eansingBool = true;}
 
         if(this.frame == 780){
             for (let i = 0; i < this.meshList.length; i++) {
@@ -648,10 +641,10 @@ export class Scene2 extends THREE.Scene {
                 }
             }
             this.easeElapsedTime =0;
-            this.tSpeed =5;//30
+            this.tSpeed =30;
         }
 
-        if(this.frame == 880){
+        if(this.frame == 900){
             for (let i = 0; i < this.meshList.length; i++) {
                 for (let j = 0; j < 4; j++) {
                 if(i >=80*j && i<80*(j+1)){
@@ -659,7 +652,7 @@ export class Scene2 extends THREE.Scene {
                     if(i >=80*j+(20*k) && i<80*j+(20*(k+1))){
                         for (let l = 0; l < 10; l++) {
                         if(i >=80*j+(20*k)+(2*l) && i<80*j+(20*k)+(2*(l+1))){
-                            this.posTarget[3*i+ 0] = 20*k+50,
+                            this.posTarget[3*i+ 0] = 4*k+50,
                             this.posTarget[3*i+ 1] = 1.5*l+25,
                             this.posTarget[3*i+ 2] = 4*j+50
                         }
@@ -670,12 +663,12 @@ export class Scene2 extends THREE.Scene {
                 }
             }
             this.easeElapsedTime =0;
-            this.tSpeed =4.0;
+            this.tSpeed =8.0;
         }
 
+        
 
-
-        if(this.frame == 960){
+        if(this.frame == 1000){
             for (let i = 0; i < this.meshList.length; i++) {
                 for (let j = 0; j < 4; j++) {
                 if(i >=80*j && i<80*(j+1)){
@@ -694,10 +687,10 @@ export class Scene2 extends THREE.Scene {
                 }
             }
             this.easeElapsedTime =0;
-            this.tSpeed =7.0;
+            this.tSpeed =12.0;
         }
 
-        if(this.frame == 1080){
+        if(this.frame == 1150){
             for (let i = 0; i < this.meshList.length; i++) {
                 for (let j = 0; j < 4; j++) {
                 if(i >=80*j && i<80*(j+1)){
@@ -717,10 +710,6 @@ export class Scene2 extends THREE.Scene {
             }
             this.easeElapsedTime =0;
             this.tSpeed =4.0;
-        }
-
-        if(this.frame == 1150){
-            this.frame += (1200-1150);
         }
 
         if(this.frame == 1200){
@@ -745,7 +734,7 @@ export class Scene2 extends THREE.Scene {
             this.tSpeed =6.0;
         }
 
-        if(this.frame == this.frameSlide){//1250
+        if(this.frame == this.frameSlide){//1270
             for (let i = 0; i < this.meshList.length; i++) {
                 for (let j = 0; j < 4; j++) {
                 if(i >=80*j && i<80*(j+1)){

@@ -54,7 +54,7 @@ export default class Line extends THREE.Object3D {
 
         prepareMesh() {
     
-            var geo = new Float32Array( 10 * 3 );//点は40個、長さは/10000000*0.5
+            var geo = new Float32Array( 100 * 3 );//点は40個、長さは/10000000*0.5
             for( var j = 0; j < geo.length; j += 3 ) {
                 geo[ j ] = geo[ j + 1 ] = geo[ j + 2 ] = 0;//最初の点の位置。全部いれてる
             }
@@ -142,7 +142,7 @@ export default class Line extends THREE.Object3D {
                 //InOut: in=1, out=2;
 
 
-                this.lineLength = this.data[this.Times][2*this.where + this.inout]/10000000*0.5;
+                this.lineLength = this.data[this.Times][2*this.where + this.inout]/10000000*0.3;
                 // this.lineLength = this.data[0][0];
                 // //10^-8して小さくしてる
                 // this.lineLength = this.data[this.Times][2*this.where + this.inout]*pow(10,-9);
