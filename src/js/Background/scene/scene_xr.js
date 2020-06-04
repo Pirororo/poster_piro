@@ -51,23 +51,20 @@ export class Scene extends THREE.Scene
     }
 
     setup(){//ここ呼ばれてるから空でもかいてあげないとだめ
-
     }
 
     update()
     {
-        //iphoneでS押せないから実機検証用
-        if(this.keyBool_startVRanime == true){
-            this.keyBool_startVRanime = false;
-            this.scene0 = new Scene0();
-            this.add(this.scene0);
-            this.updateBool = true;
-            console.log("start VR anime!");
+        // //iphoneでS押せないから実機検証用
+        // if(this.keyBool_startVRanime == true){
+        //     this.keyBool_startVRanime = false;
+        //     this.scene0 = new Scene0();
+        //     this.add(this.scene0);
+        //     this.updateBool = true;
+        //     console.log("start VR anime!");
 
-            // this.frame = 0;
-        }
-
-
+        //     // this.frame = 0;
+        // }
 
 
         if(this.updateBool == true){
