@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { EVENT, KEYCODE } from "./utils/props.js";
 
 //fps表示とDAT表示に必要なjs
 import {GUI} from 'three/examples/jsm/libs/dat.gui.module';
@@ -8,6 +9,8 @@ import Stats from "three/examples/jsm/libs/stats.module";
 
 //シェーダーに必要なjs
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
+import { MaskPass } from "three/examples/jsm/postprocessing/MaskPass";
+import { ClearPass } from "three/examples/jsm/postprocessing/ClearPass";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass";
 import { BloomPass } from "three/examples/jsm/postprocessing/BloomPass";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer"
@@ -17,19 +20,14 @@ import { CopyShader } from "three/examples/jsm/shaders/CopyShader";
 import { ColorifyGradientShader } from "./shaders/ColorifyGradientShader.mine";
 
 
-/**
- * メインアプリクラスです。
- */
+
 export default class App
 {
-//  export default class App{
-    /**
-   * @constructor
-   * @param sceneInstance
-   */
+
   constructor(sceneInstance){
 
     this._initStats = this._initStats.bind(this);
+    this.chooseRoomColor = this.chooseRoomColor.bind(this);
 
     //fps表示
     this._stats = this._initStats();
@@ -61,20 +59,32 @@ export default class App
 
     // シェーダー
     //レンダーパス
-    var renderPass1 = new RenderPass(this._scene.scene0.scene1, this._scene.camera);
-    renderPass1.clear = true;//Lineは線が更新されていくのでtrueにする、falseだと線最初から全部のこっちゃう
-    var renderPass2 = new RenderPass(this._scene.scene0.scene2, this._scene.camera);
-    renderPass2.clear = false;//trueで色がでる
-    //**********renderPass両方falseだとopasity0みたいに明るくなりすぎる、ライト二重？ */
+    // var renderPass = new RenderPass(this._scene.scene0, this._scene.camera);
+    var renderPass = new RenderPass(this._scene, this._scene.camera);
+    renderPass.clear = true;
+
+    // var renderPass1 = new RenderPass(this._scene.scene0.scene1, this._scene.camera);
+    // renderPass1.clear = true;//Lineは線が更新されていくのでtrueにする、falseだと線最初から全部のこっちゃう
+    // var renderPass2 = new RenderPass(this._scene.scene0.scene2, this._scene.camera);
+    // renderPass2.clear = true;//trueで色がでる
+    // //**********renderPass両方falseだとopasity0みたいに明るくなりすぎる、ライト二重？ */
+
+    // マスクパス、クリアマスクパス
+    // let sceneMask = new MaskPass(this._scene.scene0, this._scene.camera);
+    let sceneMask = new MaskPass(this._scene, this._scene.camera);
+    let clearMask = new ClearPass();
 
 
     //エフェクトパス（出力パスの前にかく）
     //グラデパス
-    var colorify = new ShaderPass(ColorifyGradientShader);
-    colorify.uniforms.color.value = new THREE.Color(0x734ca4);//0x4ea78e
-    colorify.uniforms.color2.value = new THREE.Color(0x4ea78);//e0x648
-    colorify.uniforms.alpha = 0.8;
-    colorify.enabled = true;
+    this.colorify = new ShaderPass(ColorifyGradientShader);
+    this.gradColor1 = 0x734ca4;
+    this.gradColor2 = 0x4ea78;
+
+    this.colorify.uniforms.color.value = new THREE.Color(this.gradColor1);//0x4ea78e
+    this.colorify.uniforms.color2.value = new THREE.Color(this.gradColor2);//e0x648
+    this.colorify.uniforms.alpha = 0.8;
+    this.colorify.enabled = true;
 
     //ブルームパス
     // var bloomPass = new BloomPass(1.5, 15, 3.0, 64);
@@ -93,66 +103,67 @@ export default class App
     this.composer.renderTarget2.stencilBuffer = true;//?
 
     //コンポーザーに入れていく
-    this.composer.addPass(renderPass1);//Scene1(Line)のレンダー
-    this.composer.addPass(renderPass2);//Scene2(Plate)のレンダー
+    this.composer.addPass(renderPass);//Scene1(Line)のレンダー
+    // this.composer.addPass(renderPass1);//Scene1(Line)のレンダー
+    // this.composer.addPass(renderPass2);//Scene2(Plate)のレンダー
 
-    this.composer.addPass(colorify);//Scene2(Plate)のマスクのエフェクト
+    // this.composer.addPass(sceneMask);
+    this.composer.addPass(this.colorify);//Scene2(Plate)のマスクのエフェクト
+    
+    // this.composer.addPass(clearMask);
     this.composer.addPass(bloomPass);
     this.composer.addPass(effectCopy);
 
 
-    var controls = new function () {
+    // var controls = new function () {
 
-        this.select = 'Colorify';
+    //     this.select = 'Colorify';
 
-        //グラデパス
-        this.color = 0x4ea78e;
-        this.color2 = 0x2c7d96;
+    //     //グラデパス
+    //     this.color = 0x734ca4;
+    //     this.color2 = 0x4ea78;
 
-        //ブルームパス
-        this.strength = 0.1;
-        this.kernelSize = 5;
-        this.sigma = 1.0;
-        this.resolution = 64;
+    //     // //ブルームパス
+    //     // this.strength = 0.1;
+    //     // this.kernelSize = 5;
+    //     // this.sigma = 1.0;
+    //     // this.resolution = 64;
 
-        // this.rotate = false;
+    //     // this.rotate = false;
 
-        this.changeColor = function () {
-            colorify.uniforms.color.value = new THREE.Color(controls.color);
-        };
-        this.changeColor2 = function () {
-            colorify.uniforms.color2.value = new THREE.Color(controls.color2);
-        };
+    //     this.changeColor = function () {
+    //         // this.colorify.uniforms.color.value = new THREE.Color(controls.color);
+    //         this.colorify.uniforms.color.value = controls.color;
 
-    };
+    //     };
+    //     this.changeColor2 = function () {
+    //         this.colorify.uniforms.color2.value = new THREE.Color(controls.color2);
+    //     };
+    // };
 
 
+    // const gui = new GUI();
 
-    const gui = new GUI();
+    // gui.add(controls, "select", [ "colorify" , 'BloomPass']).onChange(controls.switchShader);
 
-    gui.add(controls, "select", [ "colorify" , 'BloomPass']).onChange(controls.switchShader);
+    // var clFolder = gui.addFolder("Colorify");
+    // clFolder.addColor(controls, "color").onChange(controls.changeColor);
+    // // clFolder.addColor(controls, "color").onChange(controls.changeColor);
+    // // clFolder.addColor(controls, "color").onChange(controls.changeColor);
+    // // clFolder.addColor(controls, "color").onChange(controls.changeColor);
 
-    var clFolder = gui.addFolder("Colorify");
-    clFolder.addColor(controls, "color").onChange(controls.changeColor);
-    clFolder.addColor(controls, "color2").onChange(controls.changeColor2);
+    // clFolder.addColor(controls, "color2").onChange(controls.changeColor2);
+    // clFolder.open();
 
-    var bpFolder = gui.addFolder("BloomPass");
-    bpFolder.add(controls, "strength", 1, 10).onChange(controls.updateEffectBloom);
-    bpFolder.add(controls, "kernelSize", 1, 100).onChange(controls.updateEffectBloom);
-    bpFolder.add(controls, "sigma", 1, 10).onChange(controls.updateEffectBloom);
-    bpFolder.add(controls, "resolution", 0, 1024).onChange(controls.updateEffectBloom);
-
-    // フレーム毎の更新
-    this.update();
+    // var bpFolder = gui.addFolder("BloomPass");
+    // // bpFolder.add(controls, "strength", 1, 10).onChange(controls.updateEffectBloom);
+    // // bpFolder.add(controls, "kernelSize", 1, 100).onChange(controls.updateEffectBloom);
+    // // bpFolder.add(controls, "sigma", 1, 10).onChange(controls.updateEffectBloom);
+    // // bpFolder.add(controls, "resolution", 0, 1024).onChange(controls.updateEffectBloom);
 
   }
 
 
-
-
-  /**
-  * フレーム毎の更新をします。
-  */
   update()
   {
 
@@ -162,11 +173,8 @@ export default class App
 
     this._stats.update();
 
-    // //sphere.rotation.y=step+=0.01;
-
     // var delta = this.clock.getDelta();
     // this.orbitControls.update(delta);
-
 
     this._renderer.autoClear = false;//これ大事〜！trueだと色が毎回背景白にクリアされちゃう
 
@@ -176,14 +184,56 @@ export default class App
 
   }
 
-  onKeyUp(e)
+  onKeyUp(e)//グラデめも    0x5de2ff, 0x3333a7
   {
-    this._scene.onKeyUp(e);
+      if (e.keyCode == KEYCODE.A){//Aの部屋に移動してね
+      //   if (this.goRoom_A == true){ //キーの代わりにくる変数
+          this.chooseRoomColor(this._scene.camTargetBool_A, 0x9629CC, 0x9629CC);//4ea780
+      }
+      if (e.keyCode == KEYCODE.B){//Bの部屋に移動してね
+      //   if (this.goRoom_B == true){ //キーの代わりにくる変数
+          this.chooseRoomColor(this._scene.camTargetBool_B, 0x295FCC, 0x295FCC);
+      }
+      if (e.keyCode == KEYCODE.C){//Cの部屋に移動してね
+      //   if (this.goRoom_C == true){ //キーの代わりにくる変数
+          this.chooseRoomColor(this._scene.camTargetBool_C, 0x24B253, 0x24B253);
+      }
+      if (e.keyCode == KEYCODE.D){
+      //   if (this.goRoom_D == true){ //キーの代わりにくる変数
+          this.chooseRoomColor(this._scene.camTargetBool_D, 0x2EC7E5, 0x2EC7E5);
+      }
+      if (e.keyCode == KEYCODE.E){
+      //   if (this.goRoom_E == true){ //キーの代わりにくる変数
+          this.chooseRoomColor(this._scene.camTargetBool_E, 0x29CCBE, 0x29CCBE);
+      }
+      if (e.keyCode == KEYCODE.F){
+      //   if (this.goRoom_F == true){ //キーの代わりにくる変数
+          this.chooseRoomColor(this._scene.camTargetBool_F, 0x4429CC, 0x4429CC);
+      }
+      if (e.keyCode == KEYCODE.G){
+      //   if (this.goRoom_G == true){ //キーの代わりにくる変数
+          this.chooseRoomColor(this._scene.camTargetBool_G, 0xCC2995, 0xCC2995);
+      }
+      if (e.keyCode == KEYCODE.BACKSPACE){
+      //   if (this.backToPanels == true){ //キーの代わりにくる変数
+          this.chooseRoomColor(this._scene.camTargetBool_BACKSPACE, this.gradColor1, this.gradColor2);
+      }
+
+
+      this._scene.onKeyUp(e);//これがcamTargetBoolをfalseにするから最後にかく
+
+  }
+
+  chooseRoomColor(camTargetBool,color1,color2){
+    if(camTargetBool == true){//これはsceneで読むからfalseにしない
+        this.colorify.uniforms.color.value = new THREE.Color(color1);
+        this.colorify.uniforms.color2.value = new THREE.Color(color2);
+    }
   }
 
   addEvent()
 	{
-		this._scene.addEvent(); 
+    this._scene.addEvent(); 
 	}
 
   draw()
