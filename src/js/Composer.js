@@ -22,8 +22,8 @@ const Composer =
 			this.instances.xr = XRHelper.init();
 		}
 		else {
-			// this.instances.background = Background.init();
-			this.instances.gallery = Gallery.init();
+			this.instances.background = Background.init();
+			// this.instances.gallery = Gallery.init();
 			// this.instances.detail = Detail.init();
 		}
 
