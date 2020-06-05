@@ -11,6 +11,7 @@ const EVENT = {
   BackToPoster: "BackToPoster",
 
   VRModeStart: "VRModeStart",
+//   OPisEnd: "OPisEnd",
   ShowCategoryA: "ShowCategoryA",
   ShowCategoryB: "ShowCategoryB",
   ShowCategoryC: "ShowCategoryC",

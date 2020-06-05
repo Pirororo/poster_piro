@@ -71,10 +71,10 @@ export class Scene extends THREE.Scene
         if (e.keyCode == KEYCODE.K){//アニメーションをskipしてね
         //   if (this.skipAnime == true){ //キーの代わりにくる変数
             if(this.frameBool_skipAnime == true 
-                && this.scene0.scene2.frame < this.scene0.scene2.frameSlide-1){//ここ斜めになるtargetPosの時間！！
+                && this.scene0.scene2.frame < this.scene0.scene2.frameSlide-2){//ここ斜めになるtargetPosの時間の一歩手前！！
                 this.frameBool_skipAnime = false;
-                this.camera.frame = this.scene0.scene2.frameSlide-1;
-                this.scene0.scene2.frame = this.scene0.scene2.frameSlide-1;
+                this.camera.frame = this.scene0.scene2.frameSlide-2;
+                this.scene0.scene2.frame = this.scene0.scene2.frameSlide-2;
                 console.log("skip animasion !");
             }
         }
@@ -391,7 +391,7 @@ export class Scene2 extends THREE.Scene {
     update(){
 
         if(this.frame < 1800){
-            this.frame += 1;
+            this.frame += 2;//２倍速
         }else{ 
             this.frame = 1800;//1800以上は読まないよー
             this.eansingBool == false;//頂点入れ替えもしない。

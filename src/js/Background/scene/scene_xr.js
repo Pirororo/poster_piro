@@ -1,7 +1,9 @@
 
 import * as THREE from "three";
 import Line from '../objects/line.js';
-import { EVENT, KEYCODE } from "../utils/props.js";
+// import { EVENT, KEYCODE } from "../utils/props.js";
+import { KEYCODE } from "../utils/props.js";
+import { EVENT, Action } from "../../Utils/EventManager"
 
 
 export class Scene extends THREE.Scene
@@ -14,18 +16,19 @@ export class Scene extends THREE.Scene
         this.resetCamTargetBool = this.resetCamTargetBool.bind(this);
         this.openCamTargetBool = this.openCamTargetBool.bind(this);
         this.chooseRoom = this.chooseRoom.bind(this);
+        this.VR_action = this.VR_action.bind(this);
 
 
         //7枚パネルの基準のカメラポジション
         this.baseCamTarget = new THREE.Vector3(-220-50,-30-25,-300-50);
-        // this.camTarget = new THREE.Vector3(-180-50,-40-25,-220-50);
+        // this.camTarget = new THREE.Vector3(-180-50,-40-25,-220-50);//こっちのが近い
         this.baseCamTargetPlus = new THREE.Vector3(220+50,30+25,300+50);
 
         // this.scene0 = new Scene0();//onKeyup(e)へ！
         // this.add(this.scene0);//onKeyup(e)へ！
 
         //最初の位置
-        this.camPos = new THREE.Vector3(0, -100, -240);//(-50, -30, -200);//正面中心に収まる位置
+        this.camPos = new THREE.Vector3(0, -100, -240);//正面中心に収まる位置
         this.camTarget = new THREE.Vector3(-140, 0, -140);
 
         //Target指定なので都度１回だけ読むようにする
@@ -35,41 +38,42 @@ export class Scene extends THREE.Scene
         this.resetCamTargetBool();
         this.camTargetBool_BACKSPACE = false;
 
-        //☆☆☆【はじめfalseだけどtrueにして送る変数】
-        this.show7panels = false;
+        //☆☆☆【送るイベント】
+        //EVENT.OPisEnd
 
-        //☆☆☆【trueで受け取りたい変数】
-        // this.startVRanime = true;//VRのプチアニメをはじまるスイッチ。終わったら this.show7panels = trueが送信される  <S>
-        // this.goRoom_A = true;// Aの部屋に近づくスイッチ  <A>
-        // this.goRoom_B = true;// Bの部屋に近づくスイッチ  <B>
-        // this.goRoom_C = true;// Cの部屋に近づくスイッチ  <C>
-        // this.goRoom_D = true;// Dの部屋に近づくスイッチ  <D>
-        // this.goRoom_E = true;// Eの部屋に近づくスイッチ  <E>
-        // this.goRoom_F = true;// Fの部屋に近づくスイッチ  <F>
-        // this.goRoom_G = true;// Gの部屋に近づくスイッチ  <G>
-        // this.backToPanels;//A〜Fの部屋の中にいるんだけど違う部屋いきたいから７枚パネルのとこ戻ってほしいスイッチ  <BACKSPACE>
+        //☆☆☆【受け取るイベント】
+        // EVENT.VRModeStart//VRのプチOPをはじめるスイッチ。OP終わったらEVENT.OPisEnd送信される  <S>
+        // ShowCategoryA// Aの部屋に近づくスイッチ  <A>
+        // ShowCategoryB// Bの部屋に近づくスイッチ  <B>
+        // ShowCategoryC// Cの部屋に近づくスイッチ  <C>
+        // ShowCategoryD// Dの部屋に近づくスイッチ  <D>
+        // ShowCategoryE// Eの部屋に近づくスイッチ  <E>
+        // ShowCategoryF// Fの部屋に近づくスイッチ  <F>
+        // ShowCategoryG// Gの部屋に近づくスイッチ  <G>
+        // BackToCategory//７枚パネルのとこ戻ってほしいスイッチ  <BACKSPACE>
+
     }
 
     setup(){//ここ呼ばれてるから空でもかいてあげないとだめ
+        //VRでの操作
+        this.VR_action();
     }
 
     update()
     {
-        // //iphoneでS押せないから実機検証用
-        // if(this.keyBool_startVRanime == true){
-        //     this.keyBool_startVRanime = false;
-        //     this.scene0 = new Scene0();
-        //     this.add(this.scene0);
-        //     this.updateBool = true;
-        //     console.log("start VR anime!");
-
-        //     // this.frame = 0;
-        // }
+        //iphoneでS押せないから実機検証用
+        if(this.keyBool_startVRanime == true){
+            this.keyBool_startVRanime = false;
+            this.scene0 = new Scene0();
+            this.add(this.scene0);
+            this.updateBool = true;
+            console.log("start VR anime!");
+        }
 
 
         if(this.updateBool == true){
 
-            this.frame += 1;
+            this.frame += 2;//２倍速
 
             this.camPos.x += (this.camTarget.x - this.camPos.x) *0.01;
             this.camPos.y += (this.camTarget.y - this.camPos.y) *0.01;
@@ -86,13 +90,13 @@ export class Scene extends THREE.Scene
             this.scene0.rotation.y = 45 *Math.PI/180;
             this.scene0.update();
 
-            //this.scene0.scene2.openingIsEndは、最初はfalseだけどオープニングのframecountがある値にきたらtrueになる。
+            //⬇︎最初はfalseだけどオープニングのthis.framecountがある値にきたらtrueで帰ってくる
             if (this.scene0.scene2.openingIsEnd == true){
-            //   if (this.show7panels == false){ 
-            //     this.show7panels = true; //送る変数
 
                 //VR版でカメラズームアウトするから７枚パネル出してね
-                console.log("show 7 panels!");
+                console.log("VR Opening is end!");
+                // Action.dispatch(EVENT.OPisEnd);//送る変数
+
                 // if(this.camTargetBool_SPACE == true){
                 //     this.camTargetBool_SPACE = false;
                     this.camTarget = this.baseCamTarget;
@@ -103,6 +107,45 @@ export class Scene extends THREE.Scene
             //   }
             }
         }
+    }
+
+    VR_action(){
+        // Action.add(EVENT.VRModeStart, () =>{
+        //     if(this.keyBool_startVRanime == true){
+        //         this.keyBool_startVRanime = false;
+        //         this.scene0 = new Scene0();
+        //         this.add(this.scene0);
+        //         this.updateBool = true;
+        //         console.log("start VR anime!");
+
+        //         // this.camTargetBool_SPACE = true;
+        //     }
+        // });
+
+
+        Action.add(EVENT.ShowCategoryA, () =>{
+            console.log("ふむ");
+            this.chooseRoom(this.camTargetBool_A, 0, "Go to room_A!");
+        });
+
+        Action.add(EVENT.ShowCategoryD, () =>{
+            this.chooseRoom(this.camTargetBool_D, 0, "Go to room_D!");
+        });
+
+        Action.add(EVENT.ShowCategoryG, () =>{
+            this.chooseRoom(this.camTargetBool_G, 0, "Go to room_G!");
+        });
+
+        Action.add(EVENT.BackToCategory , () =>{
+            if(this.camTargetBool_BACKSPACE == true){
+                this.camTargetBool_BACKSPACE = false;
+                this.baseCamTarget = new THREE.Vector3(-220-50,-30-25,-300-50);//ここ書かないと書き換えられちゃってるぽい
+                this.camTarget = this.baseCamTarget;
+                console.log("Please back to 7 panels!");
+                this.openCamTargetBool();
+            }
+        });
+
     }
 
 
@@ -122,32 +165,25 @@ export class Scene extends THREE.Scene
         }
 
 
-        if (e.keyCode == KEYCODE.A){//Aの部屋に移動してね//3
-        //   if (this.goRoom_A == true){ //キーの代わりにくる変数
+        if (e.keyCode == KEYCODE.A){
             this.chooseRoom(this.camTargetBool_A, 0, "Go to room_A!");
         }
-        if (e.keyCode == KEYCODE.B){//Bの部屋に移動してね//3
-        //   if (this.goRoom_B == true){ //キーの代わりにくる変数
+        if (e.keyCode == KEYCODE.B){
             this.chooseRoom(this.camTargetBool_B, 1, "Go to room_B!");
         }
-        if (e.keyCode == KEYCODE.C){//Cの部屋に移動してね//3
-        //   if (this.goRoom_C == true){ //キーの代わりにくる変数
+        if (e.keyCode == KEYCODE.C){
             this.chooseRoom(this.camTargetBool_C, 3, "Go to room_C!");
         }
         if (e.keyCode == KEYCODE.D){
-        //   if (this.goRoom_D == true){ 
             this.chooseRoom(this.camTargetBool_D, 4, "Go to room_D!");
         }
         if (e.keyCode == KEYCODE.E){
-        //   if (this.goRoom_E == true){ 
             this.chooseRoom(this.camTargetBool_E, 6, "Go to room_E!");
         }
         if (e.keyCode == KEYCODE.F){
-        //   if (this.goRoom_F == true){ 
             this.chooseRoom(this.camTargetBool_F, 7, "Go to room_F!");
         }
         if (e.keyCode == KEYCODE.G){
-        //   if (this.goRoom_G == true){ 
             this.chooseRoom(this.camTargetBool_G, 9, "Go to room_G!");
         }
 
@@ -161,9 +197,9 @@ export class Scene extends THREE.Scene
 
         //         // this.frame = 0;
         //         // this.scene0.scene2.frame = 0;
-        //         // if(this.frame >= 1200-1){
-        //         //     this.frame = 1200-1;
-        //         //     this.scene0.scene2.frame = 1200-1;
+        //         // if(this.frame >= 1200-2){
+        //         //     this.frame = 1200-2;
+        //         //     this.scene0.scene2.frame = 1200-2;
         //         //     this.camTarget = new THREE.Vector3(-50-(36*2), -25-(15*1), -50+(4*2));
         //         // }
 
@@ -172,7 +208,6 @@ export class Scene extends THREE.Scene
 
 
         if (e.keyCode == KEYCODE.BACKSPACE){//今部屋の中にいるんだけど違う部屋いきたいから７枚パネルのとこ戻ってね
-        //   if (this.backToPanels == true){ //キーの代わりにくる変数
             if(this.camTargetBool_BACKSPACE == true){
                 this.camTargetBool_BACKSPACE = false;
                 this.baseCamTarget = new THREE.Vector3(-220-50,-30-25,-300-50);//ここ書かないと書き換えられちゃってるぽい
@@ -188,7 +223,7 @@ export class Scene extends THREE.Scene
             camTargetBool = false;
             this.lookTarget = new THREE.Vector3(
                 // 25*(1.5+l),8+(15*l),25*(1.5+l)
-                25*1.41*(1.5+l),8+(15*l),25*0*(1.5+l)//ここVRオリジナル！！45度回転してるので。ルート２
+                25*1.41*(1.5+l),8+(15*l),25*0*(1.5+l)//ここVRオリジナル！！45度回転してるので。ルート２かけてる
             );
             this.camTarget.subVectors(this.lookTarget, this.baseCamTargetPlus);//Plus
             this.camTarget.multiplyScalar(0.95);
@@ -229,28 +264,16 @@ export class Scene0 extends THREE.Scene
     constructor()
     {
         super();
-    // }
-    // setup()    //なぜかsetupではエラー。Cannot read property 'update' of undefined
-    // {
-        // this.camera = new Camera();
 
-        // const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
-        // var spotLight = new THREE.SpotLight(0xffffff);
-        // spotLight.position.set(80, 60, 50);
-        // spotLight.intensity = 1;
-
-        this.scene1 = new Scene1();
-        this.add(this.scene1);
+        // this.scene1 = new Scene1();
+        // this.add(this.scene1);
 
         this.scene2 = new Scene2();
-        // this.scene2.add(ambientLight);
-        // this.scene2.add(spotLight);
         this.add(this.scene2);
     }
     update()
     {
-        // this.camera.update();
-        this.scene1.update();
+        // this.scene1.update();
         this.scene2.update();
     }
 }
@@ -273,10 +296,9 @@ export class Scene1 extends THREE.Scene
                 this.add(this._line[2*i+j]);
             }
         }
-        
     }
-    update(){
-
+    update()
+    {
         for (let i = 0 ; i < this._line.length ; i++){
             this._line[i].update();
         }
@@ -292,8 +314,6 @@ export class Scene2 extends THREE.Scene
         super();
 
         this.frame = 1200;
-
-
 
 
 
