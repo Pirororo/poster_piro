@@ -58,8 +58,31 @@ export default
       };
       this.boardList.push(new PosterBoard_xr(parameter));
     }
-    this.showBoard(34);
     this.generateHUD();
+    this.showBoard(34);
+  },
+
+  generateHUDs()
+  {
+    // this.generateHUD();
+    this.generateHUD(BOARD_ID.UI.BackToCategory, [25, 12, -20]);
+    setTimeout(() => {
+      this.generateHUD(BOARD_ID.UI.ShowCategoryA, [5, 12, -20]);
+    }, 10);
+    setTimeout(() => {
+      this.generateHUD(BOARD_ID.UI.ShowCategoryD, [10, 12, -20]);
+    }, 20);
+    setTimeout(() => {
+      this.generateHUD(BOARD_ID.UI.ShowCategoryG, [15, 12, -20]);
+    }, 30);
+    setTimeout(() => {
+      this.generateHUD(BOARD_ID.UI.VRModeStart, [20, 12, -20]);
+    }, 40);
+
+    setTimeout(() => {
+      this.showBoard(34, this.boardList, 20);
+      this.showBoard(34, this.hudUIList, 20, -150);
+    }, 50);
   },
 
   generateCategory(data = posterData)
@@ -87,7 +110,9 @@ export default
       };
       this.boardList.push(new CategoryBoard_xr(parameter));
     }
-    this.showBoard(34);
+    this.generateHUDs();
+    // this.showBoard(34, this.boardList, 20);
+    // this.showBoard(34, this.hudUIList, 20, -150);
   },
 
   addEvent()

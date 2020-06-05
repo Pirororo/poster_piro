@@ -59,23 +59,24 @@ export default
     this.hudUIList.push(instance);
 
   },
-  showBoard(width, radius = 20)
+  showBoard(width, boardList = this.boardList, radius = 20, offset = null)
   {
-    const amount = this.boardList.length;
+    const amount = boardList.length;
     const angle = width != null ? width + 2 : 360 / amount;
-    const offset = -90 - (amount - 1) * angle / 2;
+    offset = offset == null ? -90 - (amount - 1) * angle / 2 : offset;
 
     for (let i = 0; i < amount; i++)
     {
-      const board = this.boardList[i];
+      const board = boardList[i];
       const boardAngle = i * angle + offset;
 
       board.setPosition(
         radius * Math.cos(THREE.Math.degToRad(boardAngle)),
-        0,
+        board.position.y,
         radius * Math.sin(THREE.Math.degToRad(boardAngle))
       );
       board.lookAt();
     }
   }
+
 }

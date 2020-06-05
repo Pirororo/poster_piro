@@ -43,6 +43,7 @@ export default class GalleryModel {
 
 
   loadTexture() {
+    //ポスターCanvasに読み込む画像のローダー
     const textureLoader = new THREE.TextureLoader();
     this.imgTexture = textureLoader.load(this.currentCategory.imgPath[this.id]);
     return this.imgTexture;
@@ -50,6 +51,7 @@ export default class GalleryModel {
 
 
   createLabel() {
+    //ポスターCanvasに読み込む2Dテキストの生成
     const labelText = this.currentCategory.posterTitle[this.id];
     const canvas = document.createElement('canvas');
     canvas.width = this.boardWidth * 8;
@@ -69,13 +71,18 @@ export default class GalleryModel {
     return this.canvasTexture;
   }
 
-  createCategory() {
-
-    // this.posterData.forIn((k, instance) => console.log(instance));
-    // const sample = this.categories[0].categoryEn;
-    // console.log(sample);
-
-    const domElement = '<div class="">'
+  createCategory(categoryId) {
+    //カテゴリー一覧用テキスト抽出
+    const categoryData = [];
+    this.posterData.forIn((categoryId, instance, index) => {
+      console.log(instance.categoryId);
+      categoryData[index] = {};
+      categoryData[index].cateroryId = instance.categoryId;
+      categoryData[index].categoryEn = instance.categoryEn;
+      categoryData[index].categoryJp = instance.categoryJp;
+      categoryData[index].copy = instance.copy;
+    });
+    return categoryData;
   }
 
 }

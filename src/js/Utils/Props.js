@@ -14,7 +14,16 @@ const EVENT = {
   ShowPoster: "ShowPoster",
   ShowDetail: "ShowDetail",
   BackToCategory: "BackToCategory",
-  BackToPoster: "BackToPoster"
+  BackToPoster: "BackToPoster",
+
+  VRModeStart: "VRModeStart",
+  ShowCategoryA: "ShowCategoryA",
+  ShowCategoryB: "ShowCategoryB",
+  ShowCategoryC: "ShowCategoryC",
+  ShowCategoryD: "ShowCategoryD",
+  ShowCategoryE: "ShowCategoryE",
+  ShowCategoryF: "ShowCategoryF",
+  ShowCategoryG: "ShowCategoryG"
 };
 
 const SELECTORS =
@@ -63,7 +72,17 @@ const BOARD_ID = {
   Detail: "detail",
   UI: {
     BackToCategory: "ui_back_category",
-    BackToPoster: "ui_back_poster"
+    BackToPoster: "ui_back_poster",
+
+    VRModeStart: "VRModeStart",
+    ShowCategoryA: "ShowCategoryA",
+    ShowCategoryB: "ShowCategoryB",
+    ShowCategoryC: "ShowCategoryC",
+    ShowCategoryD: "ShowCategoryD",
+    ShowCategoryE: "ShowCategoryE",
+    ShowCategoryF: "ShowCategoryF",
+    ShowCategoryG: "ShowCategoryG"
+
   }
 };
 

@@ -53,7 +53,7 @@ export default
       };
       this.boardList.push(new DetailBoard_xr(parameter));
     }
-    this.showBoard(48, 18);
+    this.showBoard(48, this.boardList, 18);
     this.generateHUD(BOARD_ID.UI.BackToPoster, [0, 15, -20]);
   },
 

@@ -18,10 +18,10 @@ export default class App {
     this.addAmbientLight();
     this.addDirectionalLight();
 
-
-    // this.addCategory();
-    //ポスターギャラリーを追加
-    this.addBorad();
+    //カテゴリーを配置
+    this.addCategory();
+    //ポスターギャラリーを配置
+    // this.addBorad();
   }
 
   setup() {
@@ -96,7 +96,9 @@ export default class App {
    * Methods
    */
   addCategory() {
-    this.category = new CategoryBoard('a', 1);
+    //カテゴリを配置する
+    const galleryStage = document.getElementById('gallery_stage');
+    this.category = new CategoryBoard(galleryStage);
   }
 
 
@@ -170,6 +172,11 @@ export default class App {
         this.meshList[i].view.wireMaterial.opacity = startB.alphaB;
       }).delay(3000 + (i * 20)).start();
     }
+  }
+
+
+  removeBoard() {
+
   }
 
 

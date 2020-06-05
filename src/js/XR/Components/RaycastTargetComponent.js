@@ -35,6 +35,19 @@ export default AFRAME.registerComponent(COMPONENTS.RaycastTarget,
 				case BOARD_ID.UI.BackToPoster:
 					document.dispatchEvent(new CustomEvent(EVENT.BackToPoster));
 					break;
+				case BOARD_ID.UI.VRModeStart:
+					document.dispatchEvent(new CustomEvent(EVENT.VRModeStart));
+					break;
+
+				case BOARD_ID.UI.ShowCategoryA:
+					document.dispatchEvent(new CustomEvent(EVENT.ShowCategoryA));
+					break;
+				case BOARD_ID.UI.ShowCategoryD:
+					document.dispatchEvent(new CustomEvent(EVENT.ShowCategoryD));
+					break;
+				case BOARD_ID.UI.ShowCategoryG:
+					document.dispatchEvent(new CustomEvent(EVENT.ShowCategoryG));
+					break;
 				default:
 					break;
 			}

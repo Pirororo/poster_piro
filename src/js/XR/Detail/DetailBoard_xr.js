@@ -19,12 +19,16 @@ export default class DetailBoard_xr extends BoardViewBase
 
   init()
   {
-    const imgPath = "./../session/img/poster1.png";
+    const imgPath = "./../session/img/D05.png";
 
     switch(this.params.index)
     {
       case 1:
-        this.materials.board = `shader: flat; color: #999; src: ${imgPath}`;
+        this.materials.board = `shader: flat; color: #fff; src: ./../session/img/D05.png`;
+        this.scale = new THREE.Vector3(this.width, this.height * 0.5625, 1);
+        break
+      case 3:
+        this.materials.board = `shader: flat; color: #fff; src: ./../session/img/D06.png`;
         this.scale = new THREE.Vector3(this.width, this.height * 0.5625, 1);
         break;
       default:

@@ -4,15 +4,15 @@ import CategoryView from './CategoryView';
 import GalleryController from '../GalleryController';
 
 export default class CategoryBoard {
-  constructor(categoryId, id = 1) {
-    this.id = id;
-    this.model = new GalleryModel(categoryId, this.id);
+  constructor(stage) {
+    this.stage = stage;
+    this.categoryId = null;
+    this.id = null;
+    this.model = new GalleryModel(this.categoryId, this.id);
     this.model.setup();
-    const texture = {
+    const categoryData = this.model.createCategory();
+    this.view = new CategoryView(this.stage, categoryData);
+    this.view.setup();
 
-    }
-    this.model.createCategory();
-    this.view = new CategoryView(texture).setup();
-    // this.controller = new GalleryController(this.view, this.model, this.id);
   }
 }
