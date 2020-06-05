@@ -26,6 +26,8 @@ export default class App
 
   constructor(sceneInstance){
 
+    this.masterFrame = 0;
+    
     this._initStats = this._initStats.bind(this);
     this.chooseRoomColor = this.chooseRoomColor.bind(this);
 
@@ -171,16 +173,23 @@ export default class App
     // const world = this._scene.camera.getWorldPosition();
     // console.log(world);
 
-    this._stats.update();
-
     // var delta = this.clock.getDelta();
     // this.orbitControls.update(delta);
 
-    this._renderer.autoClear = false;//これ大事〜！trueだと色が毎回背景白にクリアされちゃう
 
-    // シーンの更新
-    this._scene.update();
-    this.composer.render();
+    //２回に１回読む
+    this.masterFrame += 1;
+    if(this.masterFrame == 2){
+
+      //fps表示の更新
+      this._stats.update();
+      // シーンの更新
+      this._scene.update();
+      this._renderer.autoClear = false;//これ大事〜！trueだと色が毎回背景白にクリアされちゃう
+      this.composer.render();
+      this.masterFrame =0;
+    }
+
 
   }
 
@@ -218,7 +227,6 @@ export default class App
       //   if (this.backToPanels == true){ //キーの代わりにくる変数
           this.chooseRoomColor(this._scene.camTargetBool_BACKSPACE, this.gradColor1, this.gradColor2);
       }
-
 
       this._scene.onKeyUp(e);//これがcamTargetBoolをfalseにするから最後にかく
 

@@ -69,7 +69,7 @@ export class Scene extends THREE.Scene
 
         if(this.updateBool == true){
 
-            this.frame += 1;
+            this.frame += 2;//２倍速
 
             this.camPos.x += (this.camTarget.x - this.camPos.x) *0.01;
             this.camPos.y += (this.camTarget.y - this.camPos.y) *0.01;
@@ -161,9 +161,9 @@ export class Scene extends THREE.Scene
 
         //         // this.frame = 0;
         //         // this.scene0.scene2.frame = 0;
-        //         // if(this.frame >= 1200-1){
-        //         //     this.frame = 1200-1;
-        //         //     this.scene0.scene2.frame = 1200-1;
+        //         // if(this.frame >= 1200-2){
+        //         //     this.frame = 1200-2;
+        //         //     this.scene0.scene2.frame = 1200-2;
         //         //     this.camTarget = new THREE.Vector3(-50-(36*2), -25-(15*1), -50+(4*2));
         //         // }
 

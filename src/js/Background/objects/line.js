@@ -65,7 +65,7 @@ export default class Line extends THREE.Object3D {
 
             let material = new MeshLineMaterial( {
                 color: 0xABABAB,
-                lineWidth: 0.8,//0.6
+                lineWidth: 0.6,//0.6
                 depthTest: false,//これがないと隠れちゃって描画されなかった。。。
             });
     
@@ -158,7 +158,12 @@ export default class Line extends THREE.Object3D {
 
         loadCSVandConvertToArray2D()//2回よばれるの気になる
         {
-            loadCSV("../../../../data/kanto_hokkaido.csv", e =>
+
+            //Github Pageではこっちをあける
+            loadCSV("https://pirororo.github.io/poster_piro/build/data/kanto_hokkaido.csv", e =>
+
+            //いつもはこっち
+            // loadCSV("../data/kanto_hokkaido.csv", e =>
             {
                 const result = e.result;
                 let data = convertCSVtoArray2D(result);

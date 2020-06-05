@@ -30,7 +30,7 @@ export class Camera extends THREE.PerspectiveCamera{
   update() {
 
     if(this.frame < 1800){
-        this.frame += 1;
+        this.frame += 2;//２倍速
     }else{ 
         this.frame = 1800;//1800以上は読まないよー
         this.eansingBool == false;//頂点入れ替えもしない。
@@ -39,15 +39,15 @@ export class Camera extends THREE.PerspectiveCamera{
     if (this.eansingBool == true){
         //イージング
         // this.camPos += (this.camTarget - this.camPos)*0.02;//この書き方動かない！！！！！！！
-        this.camPos.x += (this.camTarget.x - this.camPos.x) *0.012;
-        this.camPos.y += (this.camTarget.y - this.camPos.y) *0.012;
-        this.camPos.z += (this.camTarget.z - this.camPos.z) *0.012;
+        this.camPos.x += (this.camTarget.x - this.camPos.x) *0.012*2;//*2は２倍速
+        this.camPos.y += (this.camTarget.y - this.camPos.y) *0.012*2;//*2は２倍速
+        this.camPos.z += (this.camTarget.z - this.camPos.z) *0.012*2;//*2は２倍速
         this.position.set(this.camPos.x,this.camPos.y,this.camPos.z);
 
         //lookPosイージング
-        this.lookPos.x += (this.lookTarget.x - this.lookPos.x) *0.02;
-        this.lookPos.y += (this.lookTarget.y - this.lookPos.y) *0.02;
-        this.lookPos.z += (this.lookTarget.z - this.lookPos.z) *0.02;
+        this.lookPos.x += (this.lookTarget.x - this.lookPos.x) *0.02*2;
+        this.lookPos.y += (this.lookTarget.y - this.lookPos.y) *0.02*2;
+        this.lookPos.z += (this.lookTarget.z - this.lookPos.z) *0.02*2;
         this.lookAt(this.lookPos);//これ大事！！！！
     }
 
