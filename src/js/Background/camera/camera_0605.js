@@ -15,7 +15,7 @@ export class Camera extends THREE.PerspectiveCamera{
 
     this.camPos = new THREE.Vector3(100, 300,120);
     // this.camTarget = new THREE.Vector3(-370, 0,320);
-    this.camTarget = new THREE.Vector3(-470, 0,400);
+    this.camTarget = new THREE.Vector3(-370, 0,300);
 
     this.lookPos = new THREE.Vector3(45, 50, 45);
     this.lookTarget = new THREE.Vector3(45, 50, 45);

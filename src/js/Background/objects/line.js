@@ -142,14 +142,11 @@ export default class Line extends THREE.Object3D {
                 //InOut: in=1, out=2;
 
 
-                this.lineLength = this.data[this.Times][2*this.where + this.inout];
-                // this.lineLength = this.data[0][0];
-                // //10^-8して小さくしてる
-                // this.lineLength = this.data[this.Times][2*this.where + this.inout]*pow(10,-9);
+                this.lineLength = this.data[this.Times][2*this.where + this.inout]*0.1;//長さ調整
 
                 // this.lineLength = this.result[0][1];
-                this.Times += 1;//0行目は題名にする場合はここにおく
-                if(this.Times == 12){this.Times = 0;}
+                // if(this.Times > 1800){this.Times = 1800 +2;}
+                this.Times += 1;//0行目を題名にする場合は上のifの前におく
 
                 return this.lineLength;
 
@@ -160,7 +157,7 @@ export default class Line extends THREE.Object3D {
         {
 
             // //Github Pageではこっちをあける
-            // loadCSV("https://pirororo.github.io/poster_piro/build/data/kanto_hokkaido.csv", e =>
+            // loadCSV("https://pirororo.github.io/poster_piro/build/data/kanto_all.csv", e =>
 
             //いつもはこっち
             // loadCSV("../data/kanto_hokkaido.csv", e =>
@@ -192,11 +189,11 @@ export default class Line extends THREE.Object3D {
             if(this.DATAisOK ==  true){
                 if(this.frame < 1800){
                     this.frame += 1;
-                    if(this.frame% 4 == 0){
+                    if(this.frame% 2 == 0){//２回に１回
                         for( var i in this.meshes ) { this.checkIntersection(i); }
                     }
                 }else{ 
-                    this.frame = 1801;//1800以上は読まないよー あれ、1800だと読んでしまう
+                    this.frame = 1800 +2;//1800以上は読まないよー あれ、1800だと読んでしまう
                 }
             }
         }
