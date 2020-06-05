@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>XR Test | Poster Session | Open House 2020</title>
+  <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+</head>
+<body id="xr_mode">
+
+  <div id="content_container" class="common_container">
+    <div id="hud_container" class="common_container">
+      <div class="common_screen_shade"></div>
+      <div id="hud_ui_stage"></div>
+    </div>
+    <div id="category_container" class="common_container">
+      <div class="common_screen_shade"></div>
+      <div id="category_stage"></div>
+    </div>
+    <div id="gallery_container" class="common_container">
+      <div class="common_screen_shade"></div>
+      <div id="gallery_stage"></div>
+    </div>
+    <div id="detail_container" class="common_container">
+      <div id="detail_stage"></div>
+      <div id="detail_blocker"></div>
+    </div>
+  </div>
+
+
+<a-scene id="xr_scene">
+  <a-entity id="xr_rig">
+    <a-entity id="xr_player">
+      <a-entity id="xr_camera" camera look-controls>
+        <a-entity id="xr_raycaster"
+        position="0 0 -1"
+        geometry="primitive: ring"
+        scale="0.02 0.02 0.02"
+        material="color: rgb(255, 128, 0); shader: flat">
+          <a-animation begin="fusing" easing="ease-in" attribute="scale"
+          fill="none" from="0.02 0.02 0.02" to="0.001 0.001 0.001" dur="2000"></a-animation>
+        </a-entity>
+      </a-entity>
+    </a-entity>
+  </a-entity>
+</a-scene>
+
+</body>
+</html>

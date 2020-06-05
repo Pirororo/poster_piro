@@ -1,0 +1,35 @@
+/* ------------------------------------------------------ */
+/*
+ * Global Variables
+ */
+
+//  color pallete
+$colorA: rgba(150, 41, 204, 0.4) !default;
+$colorB: rgba(41, 95, 204, 0.4) !default;
+$colorC: rgba(36, 178, 83, 0.4) !default;
+$colorD: rgba(46, 199, 229, 0.4) !default;
+$colorE: rgba(41, 204, 190, 0.4) !default;
+$colorF: rgba(68, 41, 204, 0.4) !default;
+$colorS: rgba(204, 41, 149, 0.4) !default;
+
+$white: rgb(255, 255, 255) !default;
+$black: rgb(0, 0, 0) !default;
+
+/* Type Family */
+$type-family-main: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif !default;
+
+/* JP Heading  */
+$type-family-jp: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif !default;
+// $type-jp-bold: 700;
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: $black;
+}
+div,
+section,
+nav,
+article {
+  box-sizing: border-box;
+}
