@@ -142,7 +142,7 @@ export default class Line extends THREE.Object3D {
                 //InOut: in=1, out=2;
 
 
-                this.lineLength = this.data[this.Times][2*this.where + this.inout]/10000000*0.3;
+                this.lineLength = this.data[this.Times][2*this.where + this.inout];
                 // this.lineLength = this.data[0][0];
                 // //10^-8して小さくしてる
                 // this.lineLength = this.data[this.Times][2*this.where + this.inout]*pow(10,-9);
@@ -159,11 +159,12 @@ export default class Line extends THREE.Object3D {
         loadCSVandConvertToArray2D()//2回よばれるの気になる
         {
 
-            //Github Pageではこっちをあける
-            loadCSV("https://pirororo.github.io/poster_piro/build/data/kanto_hokkaido.csv", e =>
+            // //Github Pageではこっちをあける
+            // loadCSV("https://pirororo.github.io/poster_piro/build/data/kanto_hokkaido.csv", e =>
 
             //いつもはこっち
             // loadCSV("../data/kanto_hokkaido.csv", e =>
+            loadCSV("../data_mine/kanto_all.csv", e =>
             {
                 const result = e.result;
                 let data = convertCSVtoArray2D(result);

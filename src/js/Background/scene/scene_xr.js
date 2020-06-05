@@ -302,7 +302,6 @@ export class Scene1 extends THREE.Scene
         for (let i = 0 ; i < this._line.length ; i++){
             this._line[i].update();
         }
-
     }
 
 }
