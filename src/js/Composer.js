@@ -9,6 +9,7 @@ import Gallery from "./Gallery/Facade"; // will be created by Yonekura
 import Detail from "./Detail/Facade"; // will be created by Shinagawa
 import XRHelper from "./XR/Facade"; // will be created by Beharu
 
+// import Router from "./Utils/Router";
 import { isVR } from "./Utils/Helper";
 
 const Composer =

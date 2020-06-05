@@ -49,6 +49,7 @@
     "html2canvas": "^1.0.0-rc.5",
     "pdfjs-dist": "^2.3.200",
     "three": "^0.116.1",
-    "three.meshline": "^1.2.0"
+    "three.meshline": "^1.2.0",
+    "vanilla-router": "^1.2.8"
   }
 }
