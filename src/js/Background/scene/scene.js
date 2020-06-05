@@ -177,13 +177,9 @@ export class Scene extends THREE.Scene
         }
     }
 
-    // chooseRoom(camTargetBool,cx,cy,cz,tx,ty,tz,message){
-    // chooseRoom(camTargetBool,tx,ty,tz,message){
     chooseRoom(camTargetBool,l,message){
         if(camTargetBool == true){
             camTargetBool = false;
-            // this.camera.camTarget = new THREE.Vector3(cx,cy,cz);
-            // this.camera.lookTarget = new THREE.Vector3(tx,ty,tz);
             this.camera.lookTarget = new THREE.Vector3(
                 25*(1.5+l),8+(15*l),25*(1.5+l)
             );
@@ -234,23 +230,10 @@ export class Scene0 extends THREE.Scene {
 
         super();
 
-        //カメラは上で読むことにしたよ
-
-        // // 環境光源
-        // const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
-
-        // //スポットライト
-        // var spotLight = new THREE.SpotLight(0xffffff);
-        // spotLight.position.set(80, 60, 50);
-        // spotLight.intensity = 1;
-
-        // シェーダーのエフェクトをマスクするためシーン２種類にわけた
         this.scene1 = new Scene1();
         this.add(this.scene1);
 
         this.scene2 = new Scene2();
-        // this.scene2.add(ambientLight);
-        // this.scene2.add(spotLight);
         this.add(this.scene2);
 
     }
@@ -277,7 +260,6 @@ export class Scene1 extends THREE.Scene {
         // this._line = new Line();
         // this._line.position.set(150,70,150);
         // this.add(this._line);
-
 
         // this._line1in = new Line(0,1);
         // this._line1out = new Line(0,2);

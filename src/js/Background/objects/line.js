@@ -164,7 +164,7 @@ export default class Line extends THREE.Object3D {
 
             //いつもはこっち
             // loadCSV("../data/kanto_hokkaido.csv", e =>
-            loadCSV("../data_mine/kanto_all.csv", e =>
+            loadCSV("../data/kanto_all.csv", e =>
             {
                 const result = e.result;
                 let data = convertCSVtoArray2D(result);
