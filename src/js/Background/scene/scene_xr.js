@@ -1,7 +1,9 @@
 
 import * as THREE from "three";
 import Line from '../objects/line.js';
-import { EVENT, KEYCODE } from "../utils/props.js";
+// import { EVENT, KEYCODE } from "../utils/props.js";
+import { KEYCODE } from "../utils/props.js";
+import { EVENT, Action } from "../../Utils/EventManager"
 
 
 export class Scene extends THREE.Scene
@@ -14,6 +16,7 @@ export class Scene extends THREE.Scene
         this.resetCamTargetBool = this.resetCamTargetBool.bind(this);
         this.openCamTargetBool = this.openCamTargetBool.bind(this);
         this.chooseRoom = this.chooseRoom.bind(this);
+        this.VR_action = this.VR_action.bind(this);
 
 
         //7枚パネルの基準のカメラポジション
@@ -27,6 +30,8 @@ export class Scene extends THREE.Scene
         //最初の位置
         this.camPos = new THREE.Vector3(0, -100, -240);//(-50, -30, -200);//正面中心に収まる位置
         this.camTarget = new THREE.Vector3(-140, 0, -140);
+
+
 
         //Target指定なので都度１回だけ読むようにする
         this.keyBool_startVRanime = true;
@@ -48,23 +53,30 @@ export class Scene extends THREE.Scene
         // this.goRoom_F = true;// Fの部屋に近づくスイッチ  <F>
         // this.goRoom_G = true;// Gの部屋に近づくスイッチ  <G>
         // this.backToPanels;//A〜Fの部屋の中にいるんだけど違う部屋いきたいから７枚パネルのとこ戻ってほしいスイッチ  <BACKSPACE>
+
     }
 
     setup(){//ここ呼ばれてるから空でもかいてあげないとだめ
+        //VRでの操作
+        // this.VR_action();
+        Action.add(EVENT.ShowCategoryA, () =>{
+            console.log("ふむ");
+            this.chooseRoom(this.camTargetBool_A, 0, "Go to room_A!");
+        });
     }
 
     update()
     {
-        // //iphoneでS押せないから実機検証用
-        // if(this.keyBool_startVRanime == true){
-        //     this.keyBool_startVRanime = false;
-        //     this.scene0 = new Scene0();
-        //     this.add(this.scene0);
-        //     this.updateBool = true;
-        //     console.log("start VR anime!");
+        //iphoneでS押せないから実機検証用
+        if(this.keyBool_startVRanime == true){
+            this.keyBool_startVRanime = false;
+            this.scene0 = new Scene0();
+            this.add(this.scene0);
+            this.updateBool = true;
+            console.log("start VR anime!");
 
-        //     // this.frame = 0;
-        // }
+            // this.frame = 0;
+        }
 
 
         if(this.updateBool == true){
@@ -103,6 +115,45 @@ export class Scene extends THREE.Scene
             //   }
             }
         }
+    }
+
+    VR_action(){
+        // Action.add(EVENT.VRModeStart, () =>{
+        //     if(this.keyBool_startVRanime == true){
+        //         this.keyBool_startVRanime = false;
+        //         this.scene0 = new Scene0();
+        //         this.add(this.scene0);
+        //         this.updateBool = true;
+        //         console.log("start VR anime!");
+
+        //         // this.camTargetBool_SPACE = true;
+        //     }
+        // });
+
+
+        Action.add(EVENT.ShowCategoryA, () =>{
+            console.log("ふむ");
+            this.chooseRoom(this.camTargetBool_A, 0, "Go to room_A!");
+        });
+
+        Action.add(EVENT.ShowCategoryD, () =>{
+            this.chooseRoom(this.camTargetBool_D, 0, "Go to room_D!");
+        });
+
+        Action.add(EVENT.ShowCategoryG, () =>{
+            this.chooseRoom(this.camTargetBool_G, 0, "Go to room_G!");
+        });
+
+        Action.add(EVENT.BackToCategory , () =>{
+            if(this.camTargetBool_BACKSPACE == true){
+                this.camTargetBool_BACKSPACE = false;
+                this.baseCamTarget = new THREE.Vector3(-220-50,-30-25,-300-50);//ここ書かないと書き換えられちゃってるぽい
+                this.camTarget = this.baseCamTarget;
+                console.log("Please back to 7 panels!");
+                this.openCamTargetBool();
+            }
+        });
+
     }
 
 
@@ -229,28 +280,19 @@ export class Scene0 extends THREE.Scene
     constructor()
     {
         super();
-    // }
-    // setup()    //なぜかsetupではエラー。Cannot read property 'update' of undefined
-    // {
+
         // this.camera = new Camera();
 
-        // const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
-        // var spotLight = new THREE.SpotLight(0xffffff);
-        // spotLight.position.set(80, 60, 50);
-        // spotLight.intensity = 1;
-
-        this.scene1 = new Scene1();
-        this.add(this.scene1);
+        // this.scene1 = new Scene1();
+        // this.add(this.scene1);
 
         this.scene2 = new Scene2();
-        // this.scene2.add(ambientLight);
-        // this.scene2.add(spotLight);
         this.add(this.scene2);
     }
     update()
     {
         // this.camera.update();
-        this.scene1.update();
+        // this.scene1.update();
         this.scene2.update();
     }
 }
