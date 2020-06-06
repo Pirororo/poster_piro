@@ -142,9 +142,12 @@ export default class Line extends THREE.Object3D {
                 //InOut: in=1, out=2;
 
 
-                this.lineLength = this.data[this.Times][2*this.where + this.inout]*0.1;//長さ調整
+                this.lineLength = this.data[this.Times][2*this.where + this.inout]*1;//長さ調整
 
-                // this.lineLength = this.result[0][1];
+                // console.log("hai");
+                // console.log(this.data[this.Times][2*this.where + this.inout]*1);
+                // console.log(this.data[this.Times][2*this.where + this.inout]*1);
+
                 // if(this.Times > 1800){this.Times = 1800 +2;}
                 this.Times += 1;//0行目を題名にする場合は上のifの前におく
 

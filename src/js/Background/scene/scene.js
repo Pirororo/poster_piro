@@ -274,7 +274,7 @@ export class Scene1 extends THREE.Scene {
 
         //今は関東ー北海道だけなのでi<1
         for (let i = 0 ; i < this._line.length/2; i++){
-            for (let j= 0 ; j < 2 ; j++){
+            for (let j= 1 ; j < 3 ; j++){//inは１、outは２
                 this._line[2*i+j] = new Line(i,j);
                 if(j%2 ==0){this._line[2*i+j].position.set(0,0,0);}//outは0,0,0から
                 else{this._line[2*i+j].position.set(150,70,150);}//inは離れたとこから
