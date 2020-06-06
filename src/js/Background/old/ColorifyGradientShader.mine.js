@@ -16,7 +16,7 @@ var ColorifyGradientShader = {
 
 		"tDiffuse": { value: null },
 		"color":    { value: new Color( 0xff0000 ) },
-		"color2":    { value: new Color( 0xff0000 ) }
+		"color2":    { value: new Color( 0xff0000 ) },
 
 	},
 
@@ -61,3 +61,22 @@ var ColorifyGradientShader = {
 };
 
 export { ColorifyGradientShader };
+
+
+////waterReflectionshaderより
+
+// import {
+// 	Uniform
+// } from '../../../src/Three';
+
+// export const WaterRefractionShader: {
+// 	uniforms: {
+// 		color: Uniform;
+// 		time: Uniform;
+// 		tDiffuse: Uniform;
+// 		tDudv: Uniform;
+// 		textureMatrix: Uniform;
+// 	};
+// 	vertexShader: string;
+// 	fragmentShader: string;
+// };
