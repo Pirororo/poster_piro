@@ -80,7 +80,7 @@ var ColorifyGradientEasingShader = {
 
 };
 
-export { ColorifyGradientShader };
+export { ColorifyGradientEasingShader };
 
 
 ////waterReflectionshaderより
