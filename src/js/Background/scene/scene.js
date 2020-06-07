@@ -1,7 +1,9 @@
 import * as THREE from "three";
 import {Camera} from '../camera/camera.js';
 import Line from '../objects/line.js';
-import { EVENT, KEYCODE } from "../utils/props.js";
+import { KEYCODE } from "../utils/props.js";
+import { EVENT, Action } from "../../Utils/EventManager"
+
 
 /**
  * シーンクラス：カメラとライト
@@ -30,36 +32,36 @@ export class Scene extends THREE.Scene
         this.resetCamTargetBool();
         this.camTargetBool_BACKSPACE = false;
 
-        //☆☆☆【はじめfalseだけどtrueにして送る変数】
-        this.selectVRorNot = false;//
+        //☆☆☆【送るイベント】
+        // EVENT.selectVRorNot
 
-        //☆☆☆【trueで受け取りたい変数】
-        // this.skipAnime = true;//アニメーションをスキップさせ、this.selectVRorNot = trueが送信されるスイッチ  <K>
-        // this.show7Panels = true;//VRではなくこのままPCでみる選択を受信して、７枚パネル出るタイミングでカメラをズームアウトさせるスイッチ  <SPACE>
-        // this.goRoom_A = true;// Aの部屋に近づくスイッチ  <A>
-        // this.goRoom_B = true;// Bの部屋に近づくスイッチ  <B>
-        // this.goRoom_C = true;// Cの部屋に近づくスイッチ  <C>
-        // this.goRoom_D = true;// Dの部屋に近づくスイッチ  <D>
-        // this.goRoom_E = true;// Eの部屋に近づくスイッチ  <E>
-        // this.goRoom_F = true;// Fの部屋に近づくスイッチ  <F>
-        // this.goRoom_G = true;// Gの部屋に近づくスイッチ  <G>
-        // this.backToPanels = true;//A〜Fの部屋の中にいるんだけど違う部屋いきたいから７枚パネルのとこ戻ってほしいスイッチ  <BACKSPACE>
+        //☆☆☆【受け取るイベント】
+        // EVENT.skipAnime//アニメをスキップさせ、EVENT.selectVRorNotを送信するスイッチ  <K>
+        // EVENT.PCModeContinue//７枚パネル出るタイミングでズームアウトするスイッチ  <SPACE>
+        // EVENT.ShowCategoryA// Aの部屋に近づくスイッチ  <A>
+        // EVENT.ShowCategoryB// Bの部屋に近づくスイッチ  <B>
+        // EVENT.ShowCategoryC// Cの部屋に近づくスイッチ  <C>
+        // EVENT.ShowCategoryD// Dの部屋に近づくスイッチ  <D>
+        // EVENT.ShowCategoryE// Eの部屋に近づくスイッチ  <E>
+        // EVENT.ShowCategoryF// Fの部屋に近づくスイッチ  <F>
+        // EVENT.ShowCategoryG// Gの部屋に近づくスイッチ  <G>
+        // EVENT.BackToCategory//７枚パネルのとこ戻ってほしいスイッチ  <BACKSPACE>
 
     }
 
     update()
     {
-        //this.scene0.scene2.openingIsEndは、最初はfalseだけどオープニングのframecountがある値にきたらtrueになる。
+        //this.scene0.scene2.openingIsEndは、最初はfalseだけど
+        //オープニングのframecountがある値にきたらtrueになる。
         if (this.scene0.scene2.openingIsEnd == true){
-        //   if (this.selectVRorNot == false){ 
-        //     this.selectVRorNot = true; //送る変数
 
             //OP終わったからVR使うかどうか選択してね
+            // Action.dispatch(EVENT.selectVRorNot);//送る変数
             console.log("Opening is end and select VR or not");
             this.scene0.scene2.openingIsEnd = false;
             this.camTargetBool_openingIsEnd = true;
+            // this.camTargetBool_BACKSPACE = true;//[SPACE]を[BS]で兼ねるならいれる
 
-        //   }
         }
 
         this.camera.update();//lookAtで中心みてる
@@ -68,112 +70,68 @@ export class Scene extends THREE.Scene
 
     onKeyUp(e)
     {
-        if (e.keyCode == KEYCODE.K){//アニメーションをskipしてね
-        //   if (this.skipAnime == true){ //キーの代わりにくる変数
+        if (e.keyCode == KEYCODE.K){
+        // Action.add(EVENT.skipAnime, () =>{//キーの代わりにくる変数
             if(this.frameBool_skipAnime == true 
                 && this.scene0.scene2.frame < this.scene0.scene2.frameSlide-2){//ここ斜めになるtargetPosの時間の一歩手前！！
                 this.frameBool_skipAnime = false;
                 this.camera.frame = this.scene0.scene2.frameSlide-2;
                 this.scene0.scene2.frame = this.scene0.scene2.frameSlide-2;
-                console.log("skip animasion !");
+                console.log("skip animation !");
             }
         }
         
-        if (e.keyCode == KEYCODE.SPACE){//PC版で７枚パネル出すからカメラズームアウトしてね
-        //   if (this.show7Panels == true){ //キーの代わりにくる変数
+        if (e.keyCode == KEYCODE.SPACE){
+        // Action.add(EVENT.PCModeContinue, () =>{ //キーの代わりにくる変数
             if(this.camTargetBool_openingIsEnd == true){
-                // console.log("zoom out for 7 panels");
                 this.camTargetBool_openingIsEnd = false;
                 this.camera.camTarget = this.baseCamTarget;
                 this.camera.lookTarget = new THREE.Vector3(140, 70, 140);//斜めのときの中心
-                console.log("show 7 panels!");
+                console.log("continue PC mode!");//zoom out
                 this.openCamTargetBool();
             }
         }
         
-        if (e.keyCode == KEYCODE.A){//Aの部屋に移動してね//3
-        //   if (this.goRoom_A == true){ //キーの代わりにくる変数
+        if (e.keyCode == KEYCODE.A){
+        // Action.add(EVENT.ShowCategoryA, () =>{//キーの代わりにくる変数
             this.chooseRoom(this.camTargetBool_A, 0, "Go to room_A!");
         }
-        if (e.keyCode == KEYCODE.B){//Bの部屋に移動してね//3
-        //   if (this.goRoom_B == true){ //キーの代わりにくる変数
+        if (e.keyCode == KEYCODE.B){
+        // Action.add(EVENT.ShowCategoryB, () =>{//キーの代わりにくる変数
             this.chooseRoom(this.camTargetBool_B, 1, "Go to room_B!");
         }
-        if (e.keyCode == KEYCODE.C){//Cの部屋に移動してね//3
-        //   if (this.goRoom_C == true){ //キーの代わりにくる変数
+        if (e.keyCode == KEYCODE.C){
+        // Action.add(EVENT.ShowCategoryC, () =>{ //キーの代わりにくる変数
             this.chooseRoom(this.camTargetBool_C, 3, "Go to room_C!");
         }
         if (e.keyCode == KEYCODE.D){
-        //   if (this.goRoom_D == true){ 
+        // Action.add(EVENT.ShowCategoryD, () =>{ 
             this.chooseRoom(this.camTargetBool_D, 4, "Go to room_D!");
         }
         if (e.keyCode == KEYCODE.E){
-        //   if (this.goRoom_E == true){ 
+        // Action.add(EVENT.ShowCategoryE, () =>{ 
             this.chooseRoom(this.camTargetBool_E, 6, "Go to room_E!");
         }
         if (e.keyCode == KEYCODE.F){
-        //   if (this.goRoom_F == true){ 
+        // Action.add(EVENT.ShowCategoryF, () =>{
             this.chooseRoom(this.camTargetBool_F, 7, "Go to room_F!");
         }
         if (e.keyCode == KEYCODE.G){
-        //   if (this.goRoom_G == true){ 
+        // Action.add(EVENT.ShowCategoryG, () =>{
             this.chooseRoom(this.camTargetBool_G, 9, "Go to room_G!");
         }
 
-
-        // if (e.keyCode == KEYCODE.B){//Bの部屋に移動してね//6
-        // //   if (this.goRoom_B == true){ //キーの代わりにくる変数
-        //     this.chooseRoom(this.camTargetBool_B,
-        //                     28*4,25+(15*4),28*4,
-        //                     30*4,25+(15*4),30*4,
-        //                     "Go to room_B!");
-        // }
-        // if (e.keyCode == KEYCODE.C){//Cの部屋に移動してね//9
-        // //   if (this.goRoom_C == true){ //キーの代わりにくる変数
-        //     this.chooseRoom(this.camTargetBool_C,
-        //                     28*7,25+(15*7),28*7,
-        //                     30*7,25+(15*7),30*7,
-        //                     "Go to room_C!");
-        // }
-        // if (e.keyCode == KEYCODE.D){
-        // //   if (this.goRoom_D == true){ //キーの代わりにくる変数
-        //     this.chooseRoom(this.camTargetBool_D,
-        //                     28*1,25+(15*1),28*1,
-        //                     30*1,25+(15*1),30*1,
-        //                     "Go to room_D!");
-        // }
-        // if (e.keyCode == KEYCODE.E){
-        // //   if (this.goRoom_E == true){ //キーの代わりにくる変数
-        //     this.chooseRoom(this.camTargetBool_E,
-        //                     28*4,25+(15*4),28*4,
-        //                     30*4,25+(15*4),30*4,
-        //                     "Go to room_E!");
-        // }
-        // if (e.keyCode == KEYCODE.F){
-        // //   if (this.goRoom_F == true){ //キーの代わりにくる変数
-        //     this.chooseRoom(this.camTargetBool_F,
-        //                     28*7,25+(15*7),28*7,
-        //                     30*7,25+(15*7),30*7,
-        //                     "Go to room_F!");
-        // }
-        // if (e.keyCode == KEYCODE.G){
-        // //   if (this.goRoom_G == true){ //キーの代わりにくる変数
-        //     this.chooseRoom(this.camTargetBool_G,
-        //                     28*7,25+(15*7),28*7,
-        //                     30*7,25+(15*7),30*7,
-        //                     "Go to room_G!");
-        // }
-
         if (e.keyCode == KEYCODE.BACKSPACE){//今部屋の中だけど違う部屋いきたいから７枚パネルのとこ戻ってね
-        //   if (this.backToPanels == true){ //キーの代わりにくる変数
-            if(this.camTargetBool_BACKSPACE == true){
-                this.camTargetBool_BACKSPACE = false;
-                this.camera.camTarget = this.baseCamTarget;
-                this.camera.lookTarget = new THREE.Vector3(140, 70, 140);//斜めのときの中心
-                console.log("Back to 7 panels!");
-                this.openCamTargetBool();
-            }
-
+        // Action.add(EVENT.BackToCategory, () =>{ //キーの代わりにくる変数
+            // if(this.camTargetBool_openingIsEnd == true){//[SPACE]を[BS]で兼ねるならいれる
+                if(this.camTargetBool_BACKSPACE == true){
+                    this.camTargetBool_BACKSPACE = false;
+                    this.camera.camTarget = this.baseCamTarget;
+                    this.camera.lookTarget = new THREE.Vector3(140, 70, 140);//斜めのときの中心
+                    console.log("Back to 7 panels!");
+                    this.openCamTargetBool();
+                }
+            // }
         }
     }
 
@@ -277,7 +235,7 @@ export class Scene1 extends THREE.Scene {
             for (let j= 0 ; j < 2 ; j++){//ここj=1; j<3にしたら「キャッシュを待機しています」→配列外だった
                 this._line[2*i+j] = new Line(i,j+1);//inは１、outは２になるようにjに+1する
                 if(j%2 ==0){this._line[2*i+j].position.set(0,0,0);}//outは0,0,0から
-                else{this._line[2*i+j].position.set(150,70,150);}//inは離れたとこから
+                else{this._line[2*i+j].position.set(200,90,200);}//inは離れたとこから
                 this.add(this._line[2*i+j]);
             }
         }
