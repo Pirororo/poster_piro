@@ -159,11 +159,11 @@ export default class Line extends THREE.Object3D {
         loadCSVandConvertToArray2D()//2回よばれるの気になる
         {
 
-            // //Github Pageではこっちをあける
-            // loadCSV("https://pirororo.github.io/poster_piro/build/data/kanto_all.csv", e =>
+            //Github Pageではこっちをあける
+            loadCSV("https://pirororo.github.io/poster_piro/build/data/kanto_all.csv", e =>
 
-            //いつもはこっち
-            loadCSV("../data/kanto_all.csv", e =>
+            // //いつもはこっち
+            // loadCSV("../data/kanto_all.csv", e =>
             {
                 const result = e.result;
                 let data = convertCSVtoArray2D(result);
