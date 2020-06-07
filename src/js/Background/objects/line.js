@@ -65,7 +65,7 @@ export default class Line extends THREE.Object3D {
 
             let material = new MeshLineMaterial( {
                 color: 0xABABAB,
-                lineWidth: 0.8,//0.6
+                lineWidth: 0.6,//0.6
                 depthTest: false,//これがないと隠れちゃって描画されなかった。。。
             });
     
@@ -142,14 +142,14 @@ export default class Line extends THREE.Object3D {
                 //InOut: in=1, out=2;
 
 
-                this.lineLength = this.data[this.Times][2*this.where + this.inout]/10000000*0.3;
-                // this.lineLength = this.data[0][0];
-                // //10^-8して小さくしてる
-                // this.lineLength = this.data[this.Times][2*this.where + this.inout]*pow(10,-9);
+                this.lineLength = this.data[this.Times][2*this.where + this.inout]*1;//長さ調整
 
-                // this.lineLength = this.result[0][1];
-                this.Times += 1;//0行目は題名にする場合はここにおく
-                if(this.Times == 12){this.Times = 0;}
+                // console.log("hai");
+                // console.log(this.data[this.Times][2*this.where + this.inout]*1);
+                // console.log(this.data[this.Times][2*this.where + this.inout]*1);
+
+                // if(this.Times > 1800){this.Times = 1800 +2;}
+                this.Times += 1;//0行目を題名にする場合は上のifの前におく
 
                 return this.lineLength;
 
@@ -158,7 +158,12 @@ export default class Line extends THREE.Object3D {
 
         loadCSVandConvertToArray2D()//2回よばれるの気になる
         {
-            loadCSV("../../../../data/kanto_hokkaido.csv", e =>
+
+            // //Github Pageではこっちをあける
+            // loadCSV("https://pirororo.github.io/poster_piro/build/data/kanto_all.csv", e =>
+
+            //いつもはこっち
+            loadCSV("../data/kanto_all.csv", e =>
             {
                 const result = e.result;
                 let data = convertCSVtoArray2D(result);
@@ -186,11 +191,11 @@ export default class Line extends THREE.Object3D {
             if(this.DATAisOK ==  true){
                 if(this.frame < 1800){
                     this.frame += 1;
-                    if(this.frame% 4 == 0){
+                    if(this.frame% 2 == 0){//２回に１回
                         for( var i in this.meshes ) { this.checkIntersection(i); }
                     }
                 }else{ 
-                    this.frame = 1801;//1800以上は読まないよー あれ、1800だと読んでしまう
+                    this.frame = 1800 +2;//1800以上は読まないよー あれ、1800だと読んでしまう
                 }
             }
         }
