@@ -18,6 +18,8 @@ export default class PosterBoard_xr extends BoardViewBase
       ...this.entities,
       title: null
     };
+    this.slug = this.category + (this.index < 10 ? "0" : "") + this.index;
+
     this.init();
   }
 

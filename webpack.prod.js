@@ -28,7 +28,7 @@ const config = merge(common, {
 	}
 });
 
-config.module.rules[3] = {
+config.module.rules[2] = {
   test: /\.scss$/,
   use: [
     "style-loader",

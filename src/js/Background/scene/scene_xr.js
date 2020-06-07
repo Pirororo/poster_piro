@@ -1,9 +1,7 @@
 
 import * as THREE from "three";
 import Line from '../objects/line.js';
-// import { EVENT, KEYCODE } from "../utils/props.js";
-import { KEYCODE } from "../utils/props.js";
-import { EVENT, Action } from "../../Utils/EventManager"
+import { EVENT, KEYCODE } from "../utils/props.js";
 
 
 export class Scene extends THREE.Scene
@@ -12,26 +10,22 @@ export class Scene extends THREE.Scene
     {
         super();
 
-        // this.frame = 1200;
-
-        this.cam_opening = this.cam_opening.bind(this);
-        this.cam_backAnimation = this.cam_backAnimation.bind(this);
+        this.frame = 1200;
         this.resetCamTargetBool = this.resetCamTargetBool.bind(this);
         this.openCamTargetBool = this.openCamTargetBool.bind(this);
         this.chooseRoom = this.chooseRoom.bind(this);
-        this.VR_action = this.VR_action.bind(this);
 
 
         //7枚パネルの基準のカメラポジション
         this.baseCamTarget = new THREE.Vector3(-220-50,-30-25,-300-50);
-        // this.camTarget = new THREE.Vector3(-180-50,-40-25,-220-50);//こっちのが近い
+        // this.camTarget = new THREE.Vector3(-180-50,-40-25,-220-50);
         this.baseCamTargetPlus = new THREE.Vector3(220+50,30+25,300+50);
 
         // this.scene0 = new Scene0();//onKeyup(e)へ！
         // this.add(this.scene0);//onKeyup(e)へ！
 
         //最初の位置
-        this.camPos = new THREE.Vector3(0, -100, -240);//正面中心に収まる位置
+        this.camPos = new THREE.Vector3(0, -100, -240);//(-50, -30, -200);//正面中心に収まる位置
         this.camTarget = new THREE.Vector3(-140, 0, -140);
 
         //Target指定なので都度１回だけ読むようにする
@@ -41,70 +35,64 @@ export class Scene extends THREE.Scene
         this.resetCamTargetBool();
         this.camTargetBool_BACKSPACE = false;
 
-        //☆☆☆【送るイベント】
-        //EVENT.OPisEnd
+        //☆☆☆【はじめfalseだけどtrueにして送る変数】
+        this.show7panels = false;
 
-        //☆☆☆【受け取るイベント】
-        // EVENT.VRModeStart//VRのプチOPをはじめるスイッチ。OP終わったらEVENT.OPisEnd送信される  <S>
-        // ShowCategoryA// Aの部屋に近づくスイッチ  <A>
-        // ShowCategoryB// Bの部屋に近づくスイッチ  <B>
-        // ShowCategoryC// Cの部屋に近づくスイッチ  <C>
-        // ShowCategoryD// Dの部屋に近づくスイッチ  <D>
-        // ShowCategoryE// Eの部屋に近づくスイッチ  <E>
-        // ShowCategoryF// Fの部屋に近づくスイッチ  <F>
-        // ShowCategoryG// Gの部屋に近づくスイッチ  <G>
-        // BackToCategory//７枚パネルのとこ戻ってほしいスイッチ  <BACKSPACE>
-
+        //☆☆☆【trueで受け取りたい変数】
+        // this.startVRanime = true;//VRのプチアニメをはじまるスイッチ。終わったら this.show7panels = trueが送信される  <S>
+        // this.goRoom_A = true;// Aの部屋に近づくスイッチ  <A>
+        // this.goRoom_B = true;// Bの部屋に近づくスイッチ  <B>
+        // this.goRoom_C = true;// Cの部屋に近づくスイッチ  <C>
+        // this.goRoom_D = true;// Dの部屋に近づくスイッチ  <D>
+        // this.goRoom_E = true;// Eの部屋に近づくスイッチ  <E>
+        // this.goRoom_F = true;// Fの部屋に近づくスイッチ  <F>
+        // this.goRoom_G = true;// Gの部屋に近づくスイッチ  <G>
+        // this.backToPanels;//A〜Fの部屋の中にいるんだけど違う部屋いきたいから７枚パネルのとこ戻ってほしいスイッチ  <BACKSPACE>
     }
 
     setup(){//ここ呼ばれてるから空でもかいてあげないとだめ
-        //VRでの操作
-        this.VR_action();
     }
 
     update()
     {
-        //iphoneでS押せないから実機検証用
-        if(this.keyBool_startVRanime == true){
-            this.keyBool_startVRanime = false;
-            this.scene0 = new Scene0();
-            this.add(this.scene0);
-            this.updateBool = true;
-            console.log("start VR anime!");
-        }
+        // //iphoneでS押せないから実機検証用
+        // if(this.keyBool_startVRanime == true){
+        //     this.keyBool_startVRanime = false;
+        //     this.scene0 = new Scene0();
+        //     this.add(this.scene0);
+        //     this.updateBool = true;
+        //     console.log("start VR anime!");
+
+        //     // this.frame = 0;
+        // }
 
 
         if(this.updateBool == true){
 
-            //イージング
-            this.camPos.x += (this.camTarget.x - this.camPos.x) *0.02;
-            this.camPos.y += (this.camTarget.y - this.camPos.y) *0.02;
-            this.camPos.z += (this.camTarget.z - this.camPos.z) *0.02;
+            this.frame += 1;
+
+            this.camPos.x += (this.camTarget.x - this.camPos.x) *0.01;
+            this.camPos.y += (this.camTarget.y - this.camPos.y) *0.01;
+            this.camPos.z += (this.camTarget.z - this.camPos.z) *0.01;
             this.scene0.position.set(this.camPos.x,this.camPos.y,this.camPos.z);
 
-            //ここはいつもの更新
+            if(this.frame == 350){this.camTarget = new THREE.Vector3(-150, -100,-50);}
+            if(this.frame == 700){this.camTarget = new THREE.Vector3(-50,-25,-50);}//この座標が円中心座標
+            if(this.frame == 1100){this.camTarget = new THREE.Vector3(70,-80,-200);}
+            // if(this.frame == 1350){this.camTarget = new THREE.Vector3(-150,-125,-150);}
+
+
+            //ここはいつもの
             this.scene0.rotation.y = 45 *Math.PI/180;
             this.scene0.update();
 
-            //カメラワークの更新
-            if(this.scene0.scene2.openingUpdateBool == true){
-                this.cam_opening();
-            }
-            if(this.scene0.scene2.backAnimationUpdateBool == true){
-                if(this.scene0.scene2.waitingFrame == 240+2){
-                    this.cam_backAnimation();
-                    console.log("cam_back");
-                }
-            }
-
-
-            //⬇︎最初はfalseだけどオープニングのthis.framecountがある値にきたらtrueで帰ってくる
+            //this.scene0.scene2.openingIsEndは、最初はfalseだけどオープニングのframecountがある値にきたらtrueになる。
             if (this.scene0.scene2.openingIsEnd == true){
+            //   if (this.show7panels == false){ 
+            //     this.show7panels = true; //送る変数
 
                 //VR版でカメラズームアウトするから７枚パネル出してね
-                console.log("VR Opening is end!");
-                // Action.dispatch(EVENT.OPisEnd);//送る変数
-
+                console.log("show 7 panels!");
                 // if(this.camTargetBool_SPACE == true){
                 //     this.camTargetBool_SPACE = false;
                     this.camTarget = this.baseCamTarget;
@@ -117,49 +105,10 @@ export class Scene extends THREE.Scene
         }
     }
 
-    VR_action(){
-        // Action.add(EVENT.VRModeStart, () =>{
-        //     if(this.keyBool_startVRanime == true){
-        //         this.keyBool_startVRanime = false;
-        //         this.scene0 = new Scene0();
-        //         this.add(this.scene0);
-        //         this.updateBool = true;
-        //         console.log("start VR anime!");
-
-        //         // this.camTargetBool_SPACE = true;
-        //     }
-        // });
-
-
-        Action.add(EVENT.ShowCategoryA, () =>{
-            console.log("ふむ");
-            this.chooseRoom(this.camTargetBool_A, 0, "Go to room_A!");
-        });
-
-        Action.add(EVENT.ShowCategoryD, () =>{
-            this.chooseRoom(this.camTargetBool_D, 0, "Go to room_D!");
-        });
-
-        Action.add(EVENT.ShowCategoryG, () =>{
-            this.chooseRoom(this.camTargetBool_G, 0, "Go to room_G!");
-        });
-
-        Action.add(EVENT.BackToCategory , () =>{
-            if(this.camTargetBool_BACKSPACE == true){
-                this.camTargetBool_BACKSPACE = false;
-                this.baseCamTarget = new THREE.Vector3(-220-50,-30-25,-300-50);//ここ書かないと書き換えられちゃってるぽい
-                this.camTarget = this.baseCamTarget;
-                console.log("Please back to 7 panels!");
-                this.openCamTargetBool();
-            }
-        });
-
-    }
-
 
     onKeyUp(e)
     {
-        if (e.keyCode == KEYCODE.S){//ユーザースタート
+        if (e.keyCode == KEYCODE.S){//PC版で７枚パネル出すからカメラズームアウトしてね
         //   if (this.startVRanime == true){ //キーの代わりにくる変数
             if(this.keyBool_startVRanime == true){
                 this.keyBool_startVRanime = false;
@@ -173,25 +122,32 @@ export class Scene extends THREE.Scene
         }
 
 
-        if (e.keyCode == KEYCODE.A){
+        if (e.keyCode == KEYCODE.A){//Aの部屋に移動してね//3
+        //   if (this.goRoom_A == true){ //キーの代わりにくる変数
             this.chooseRoom(this.camTargetBool_A, 0, "Go to room_A!");
         }
-        if (e.keyCode == KEYCODE.B){
+        if (e.keyCode == KEYCODE.B){//Bの部屋に移動してね//3
+        //   if (this.goRoom_B == true){ //キーの代わりにくる変数
             this.chooseRoom(this.camTargetBool_B, 1, "Go to room_B!");
         }
-        if (e.keyCode == KEYCODE.C){
+        if (e.keyCode == KEYCODE.C){//Cの部屋に移動してね//3
+        //   if (this.goRoom_C == true){ //キーの代わりにくる変数
             this.chooseRoom(this.camTargetBool_C, 3, "Go to room_C!");
         }
         if (e.keyCode == KEYCODE.D){
+        //   if (this.goRoom_D == true){ 
             this.chooseRoom(this.camTargetBool_D, 4, "Go to room_D!");
         }
         if (e.keyCode == KEYCODE.E){
+        //   if (this.goRoom_E == true){ 
             this.chooseRoom(this.camTargetBool_E, 6, "Go to room_E!");
         }
         if (e.keyCode == KEYCODE.F){
+        //   if (this.goRoom_F == true){ 
             this.chooseRoom(this.camTargetBool_F, 7, "Go to room_F!");
         }
         if (e.keyCode == KEYCODE.G){
+        //   if (this.goRoom_G == true){ 
             this.chooseRoom(this.camTargetBool_G, 9, "Go to room_G!");
         }
 
@@ -205,9 +161,9 @@ export class Scene extends THREE.Scene
 
         //         // this.frame = 0;
         //         // this.scene0.scene2.frame = 0;
-        //         // if(this.frame >= 1200-2){
-        //         //     this.frame = 1200-2;
-        //         //     this.scene0.scene2.frame = 1200-2;
+        //         // if(this.frame >= 1200-1){
+        //         //     this.frame = 1200-1;
+        //         //     this.scene0.scene2.frame = 1200-1;
         //         //     this.camTarget = new THREE.Vector3(-50-(36*2), -25-(15*1), -50+(4*2));
         //         // }
 
@@ -216,13 +172,9 @@ export class Scene extends THREE.Scene
 
 
         if (e.keyCode == KEYCODE.BACKSPACE){//今部屋の中にいるんだけど違う部屋いきたいから７枚パネルのとこ戻ってね
+        //   if (this.backToPanels == true){ //キーの代わりにくる変数
             if(this.camTargetBool_BACKSPACE == true){
                 this.camTargetBool_BACKSPACE = false;
-                this.scene0.scene2.backAnimationUpdateBool = false;
-                this.scene0.scene2.backAnimationframe = 0;
-                this.scene0.scene2.waitingFrame = 0;
-                this.scene0.scene2.openingUpdateBool = true;
-
                 this.baseCamTarget = new THREE.Vector3(-220-50,-30-25,-300-50);//ここ書かないと書き換えられちゃってるぽい
                 this.camTarget = this.baseCamTarget;
                 console.log("Please back to 7 panels!");
@@ -231,33 +183,12 @@ export class Scene extends THREE.Scene
         }
     }
 
-
-    cam_opening(){
-        //ここ不要だった、初期設定値だけでokだったので。
-    }
-    cam_backAnimation(){
-        if(this.scene0.scene2.backAnimationframe == 550){
-            // this.camTarget = new THREE.Vector3(0, 0, 0);
-            this.camTarget = new THREE.Vector3(-150, -100,-50);
-        }
-        if(this.scene0.scene2.backAnimationframe == 700){
-            this.camTarget = new THREE.Vector3(-50,-25,-50);
-        }//この座標が円中心座標
-        if(this.scene0.scene2.backAnimationframe == 1100){
-            this.camTarget = new THREE.Vector3(70,-80,-200);
-        }
-
-        // if(this.scene0.scene2.backAnimationframe == 1350){
-        //     this.camTarget = new THREE.Vector3(-150,-125,-150);
-        // }
-    }
-
     chooseRoom(camTargetBool,l,message){
         if(camTargetBool == true){
             camTargetBool = false;
             this.lookTarget = new THREE.Vector3(
                 // 25*(1.5+l),8+(15*l),25*(1.5+l)
-                25*1.41*(1.5+l),8+(15*l),25*0*(1.5+l)//ここVRオリジナル！！45度回転してるので。ルート２かけてる
+                25*1.41*(1.5+l),8+(15*l),25*0*(1.5+l)//ここVRオリジナル！！45度回転してるので。ルート２
             );
             this.camTarget.subVectors(this.lookTarget, this.baseCamTargetPlus);//Plus
             this.camTarget.multiplyScalar(0.95);
@@ -265,8 +196,6 @@ export class Scene extends THREE.Scene
             this.camTarget.multiplyScalar(-1);//ここVRオリジナル！！
             console.log(message);
             this.resetCamTargetBool();
-
-            this.scene0.scene2.backAnimationUpdateBool = true;///////////////
         }
     }
 
@@ -295,28 +224,33 @@ export class Scene extends THREE.Scene
 
 }
 
-
-
-
-
-
-
-
 export class Scene0 extends THREE.Scene
 {
     constructor()
     {
         super();
+    // }
+    // setup()    //なぜかsetupではエラー。Cannot read property 'update' of undefined
+    // {
+        // this.camera = new Camera();
 
-        // this.scene1 = new Scene1();
-        // this.add(this.scene1);
+        // const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+        // var spotLight = new THREE.SpotLight(0xffffff);
+        // spotLight.position.set(80, 60, 50);
+        // spotLight.intensity = 1;
+
+        this.scene1 = new Scene1();
+        this.add(this.scene1);
 
         this.scene2 = new Scene2();
+        // this.scene2.add(ambientLight);
+        // this.scene2.add(spotLight);
         this.add(this.scene2);
     }
     update()
     {
-        // this.scene1.update();
+        // this.camera.update();
+        this.scene1.update();
         this.scene2.update();
     }
 }
@@ -339,21 +273,17 @@ export class Scene1 extends THREE.Scene
                 this.add(this._line[2*i+j]);
             }
         }
+        
     }
-    update()
-    {
+    update(){
+
         for (let i = 0 ; i < this._line.length ; i++){
             this._line[i].update();
         }
+
     }
 
 }
-
-
-
-
-
-
 
 export class Scene2 extends THREE.Scene
 {
@@ -361,15 +291,10 @@ export class Scene2 extends THREE.Scene
     {
         super();
 
-        this.opening = this.opening.bind(this);
-        this.backAnimation = this.backAnimation.bind(this);
+        this.frame = 1200;
 
 
-        this.openingFrame = 0;
-        this.backAnimationframe = 0;
-        this.waitingFrame = 0;
-        this.openingUpdateBool = true;
-        this.backAnimationUpdateBool = false;
+
 
 
         this.meshList = [];//raycast用
@@ -412,7 +337,10 @@ export class Scene2 extends THREE.Scene
 
     update()
     {
+        this.frame += 1;
+
         if (this.eansingBool == true){
+
             this.easeElapsedTime += this.clock.getDelta();
             this.t = this.easeElapsedTime / this.tSpeed;
             if ( this.t > 1.0){this.t = 1.0;}    // クランプ
@@ -437,93 +365,9 @@ export class Scene2 extends THREE.Scene
             }
         }
 
-
-        if(this.openingUpdateBool == true){
-            this.openingFrame += 1;
-            this.opening();
-        }
-
-        if(this.backAnimationUpdateBool == true){
-
-            if(this.waitingFrame< 240){
-                this.waitingFrame += 1;
-            }
-            if(this.waitingFrame >= 240){
-                this.waitingFrame = 240+1;
-
-                this.backAnimationframe += 1;
-                this.backAnimation();
-                // console.log(this.backAnimationframe);//問題ない
-            }
-            // console.log(this.waitingFrame);//ok
-            // console.log(this.backAnimationframe);//ok
-        }
-    }
-
-    opening()
-    {
-        if(this.openingFrame == 70){
-            for (let i = 0; i < this.meshList.length; i++) {
-                for (let j = 0; j < 4; j++) {
-                if(i >=80*j && i<80*(j+1)){
-                    for (let k = 0; k < 4; k++) {
-                    if(i >=80*j+(20*k) && i<80*j+(20*(k+1))){
-                        for (let l = 0; l < 20; l++) {
-                        if(i >=80*j+(20*k)+(1*l) && i<80*j+(20*k)+(1*(l+1))){
-                            this.posTarget[3*i+ 0] = 20*j,
-                            this.posTarget[3*i+ 1] = 5*l,
-                            this.posTarget[3*i+ 2] = 20*k
-                        }
-                        }
-                    }
-                    }
-                }
-                }
-            }
-            this.easeElapsedTime =0;
-            this.tSpeed =4.0;
-        }
-
-        if(this.openingFrame == 130){
-            for (let i = 0; i < this.meshList.length; i++) {
-                for (let j = 0; j < 4; j++) {
-                if(i >=80*j && i<80*(j+1)){
-                    for (let k = 0; k < 4; k++) {
-                    if(i >=80*j+(20*k) && i<80*j+(20*(k+1))){
-                        for (let l = 0; l < 10; l++) {
-                        if(i >=80*j+(20*k)+(2*l) && i<80*j+(20*k)+(2*(l+1))){
-                                this.posTarget[3*i+ 0] = 25*(j+l),
-                                this.posTarget[3*i+ 1] = 15*l,
-                                this.posTarget[3*i+ 2] = 25*(k+l)
-                        }
-                        }
-                    }
-                    }
-                }
-                }
-            }
-            this.easeElapsedTime =0;
-            this.tSpeed =7.0;
-        }
-
-
-        if(this.openingFrame == 270){
-            if(this.openingIsEnd == false){
-                this.openingIsEnd = true;
-                this.openingUpdateBool = false;
-                this.openingFrame = 0;
-            }
-        }
-    }
-
-
-
-
-    backAnimation()
-    {
-        console.log(this.backAnimationframe);
         //ここからアニメーション
-        if(this.backAnimationframe == 50){
+        // if(this.clock.elapsedTime == 1){
+        if(this.frame == 50){
             for (let i = 0; i < this.meshList.length; i++) {
                 for (let j = 0; j < 4; j++) {
                 if(i >=80*j && i<80*(j+1)){
@@ -537,7 +381,8 @@ export class Scene2 extends THREE.Scene
             this.tSpeed = 3.0;
         }
 
-        if(this.backAnimationframe == 110){
+        // if(this.clock.elapsedTime == 2){
+        if(this.frame == 110){
             for (let i = 0; i < this.meshList.length; i++) {
                 for (let j = 0; j < 4; j++) {
                 if(i >=80*j && i<80*(j+1)){
@@ -554,8 +399,8 @@ export class Scene2 extends THREE.Scene
             this.easeElapsedTime =0;
         }
 
-
-        if(this.backAnimationframe == 170){
+        // if(this.clock.elapsedTime == 3){
+        if(this.frame == 170){
             for (let i = 0; i < this.meshList.length; i++) {
                 for (let j = 0; j < 4; j++) {
                 if(i >=80*j && i<80*(j+1)){
@@ -577,7 +422,7 @@ export class Scene2 extends THREE.Scene
             this.tSpeed = 4.0;
         }
 
-        if(this.backAnimationframe == 280){
+        if(this.frame == 280){
             for (let i = 0; i < this.meshList.length; i++) {
                 for (let j = 0; j < 4; j++) {
                 if(i >=80*j && i<80*(j+1)){
@@ -599,7 +444,7 @@ export class Scene2 extends THREE.Scene
             this.tSpeed = 4.0;
         }
 
-        if(this.backAnimationframe == 430){
+        if(this.frame == 430){
             for (let i = 0; i < this.meshList.length; i++) {
                 for (let j = 0; j < 4; j++) {
                 if(i >=80*j && i<80*(j+1)){
@@ -621,7 +466,7 @@ export class Scene2 extends THREE.Scene
             this.tSpeed = 7.0;
         }
 
-        if(this.backAnimationframe == 490){
+        if(this.frame == 490){
             for (let i = 0; i < this.meshList.length; i++) {
                 for (let j = 0; j < 4; j++) {
                 if(i >=80*j && i<80*(j+1)){
@@ -630,7 +475,7 @@ export class Scene2 extends THREE.Scene
                         for (let l = 0; l < 10; l++) {
                         if(i >=80*j+(20*k)+(2*l) && i<80*j+(20*k)+(2*(l+1))){
                             this.posTarget[3*i+ 0] = 15*2*j,
-                            this.posTarget[3*i+ 1] = 0,
+                            this.posTarget[3*i+ 1] = 0
                             this.posTarget[3*i+ 2] = 15*2*k
                         }
                         }
@@ -643,7 +488,7 @@ export class Scene2 extends THREE.Scene
             this.tSpeed = 4.0;
         }
 
-        if(this.backAnimationframe == 550){
+        if(this.frame == 550){
             for (let i = 0; i < this.meshList.length; i++) {
                 for (let j = 0; j < 8; j++) {
                 if(i >=40*j && i<40*(j+1)){
@@ -666,7 +511,7 @@ export class Scene2 extends THREE.Scene
         }
 
 
-        if(this.backAnimationframe == 600){
+        if(this.frame == 600){
             for (let i = 0; i < this.meshList.length; i++) {
                 for (let j = 0; j < 8; j++) {
                 if(i >=40*j && i<40*(j+1)){
@@ -675,7 +520,7 @@ export class Scene2 extends THREE.Scene
                         for (let l = 0; l < 5; l++) {
                         if(i >=40*j+(5*k)+(1*l) && i<40*j+(5*k)+(1*(l+1))){
                             this.posTarget[3*i+ 0] = 20*j,
-                            this.posTarget[3*i+ 1] =  (30*Math.sin((30*(j+k)+((this.backAnimationframe+60)*2))*Math.PI/180)),
+                            this.posTarget[3*i+ 1] =  (30*Math.sin((30*(j+k)+((this.frame+60)*2))*Math.PI/180)),
                             this.posTarget[3*i+ 2] = 20*k
                         }
                         }
@@ -689,9 +534,9 @@ export class Scene2 extends THREE.Scene
 
 
 
-        if(this.backAnimationframe == 660){ this.eansingBool = false;}
+        if(this.frame == 660){ this.eansingBool = false;}
 
-        if(this.backAnimationframe >= 660 && this.backAnimationframe < 780){
+        if(this.frame >= 660 && this.frame < 780){
 
             for (let i = 0; i < this.meshList.length; i++) {
                 this.meshList[i].position.x = this.positions[3*i+ 0];
@@ -707,7 +552,7 @@ export class Scene2 extends THREE.Scene
                         for (let l = 0; l < 5; l++) {
                         if(i >=40*j+(5*k)+(1*l) && i<40*j+(5*k)+(1*(l+1))){
                             this.positions[3*i+ 0] = 20*j,
-                            this.positions[3*i+ 1] = (30*Math.sin((30*(j+k)+(this.backAnimationframe*2))*Math.PI/180)),
+                            this.positions[3*i+ 1] = (30*Math.sin((30*(j+k)+(this.frame*2))*Math.PI/180)),
                             this.positions[3*i+ 2] = 20*k
                         }
                         }
@@ -721,9 +566,9 @@ export class Scene2 extends THREE.Scene
         }
 
 
-        if(this.backAnimationframe == 780){ this.eansingBool = true;}
+        if(this.frame == 780){ this.eansingBool = true;}
 
-        if(this.backAnimationframe == 780){
+        if(this.frame == 780){
             for (let i = 0; i < this.meshList.length; i++) {
                 for (let j = 0; j < 8; j++) {
                 if(i >=40*j && i<40*(j+1)){
@@ -745,7 +590,7 @@ export class Scene2 extends THREE.Scene
             this.tSpeed =30;
         }
 
-        if(this.backAnimationframe == 900){
+        if(this.frame == 900){
             for (let i = 0; i < this.meshList.length; i++) {
                 for (let j = 0; j < 4; j++) {
                 if(i >=80*j && i<80*(j+1)){
@@ -769,7 +614,7 @@ export class Scene2 extends THREE.Scene
 
 
 
-        if(this.backAnimationframe == 1000){
+        if(this.frame == 1000){
             for (let i = 0; i < this.meshList.length; i++) {
                 for (let j = 0; j < 4; j++) {
                 if(i >=80*j && i<80*(j+1)){
@@ -791,7 +636,7 @@ export class Scene2 extends THREE.Scene
             this.tSpeed =12.0;
         }
 
-        if(this.backAnimationframe == 1150){
+        if(this.frame == 1150){
             for (let i = 0; i < this.meshList.length; i++) {
                 for (let j = 0; j < 4; j++) {
                 if(i >=80*j && i<80*(j+1)){
@@ -812,5 +657,55 @@ export class Scene2 extends THREE.Scene
             this.easeElapsedTime =0;
             this.tSpeed =4.0;
         }
+
+        if(this.frame == 1270){
+            for (let i = 0; i < this.meshList.length; i++) {
+                for (let j = 0; j < 4; j++) {
+                if(i >=80*j && i<80*(j+1)){
+                    for (let k = 0; k < 4; k++) {
+                    if(i >=80*j+(20*k) && i<80*j+(20*(k+1))){
+                        for (let l = 0; l < 20; l++) {
+                        if(i >=80*j+(20*k)+(1*l) && i<80*j+(20*k)+(1*(l+1))){
+                            this.posTarget[3*i+ 0] = 20*j,
+                            this.posTarget[3*i+ 1] = 5*l,
+                            this.posTarget[3*i+ 2] = 20*k
+                        }
+                        }
+                    }
+                    }
+                }
+                }
+            }
+            this.easeElapsedTime =0;
+            this.tSpeed =4.0;
+        }
+
+        if(this.frame == 1370){
+            for (let i = 0; i < this.meshList.length; i++) {
+                for (let j = 0; j < 4; j++) {
+                if(i >=80*j && i<80*(j+1)){
+                    for (let k = 0; k < 4; k++) {
+                    if(i >=80*j+(20*k) && i<80*j+(20*(k+1))){
+                        for (let l = 0; l < 10; l++) {
+                        if(i >=80*j+(20*k)+(2*l) && i<80*j+(20*k)+(2*(l+1))){
+                                this.posTarget[3*i+ 0] = 25*(j+l),
+                                this.posTarget[3*i+ 1] = 15*l,
+                                this.posTarget[3*i+ 2] = 25*(k+l)
+                        }
+                        }
+                    }
+                    }
+                }
+                }
+            }
+            this.easeElapsedTime =0;
+            this.tSpeed =10.0;
+        }
+
+
+        if(this.frame == 1470){
+            if(this.openingIsEnd == false){this.openingIsEnd = true;}
+        }
+
     }
 }

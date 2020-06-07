@@ -1,208 +1,127 @@
 [
 	{
-		"id": 1,
-		"date": "2020-06-03T12:53:52",
-		"date_gmt": "2020-06-03T03:53:52",
-		"guid": {
-			"rendered": "http:\/\/openhouse.nii.ac.jp\/wp\/?p=1"
+	id: 11,
+	date: "2020-06-05T00:18:44",
+	date_gmt: "2020-06-04T15:18:44",
+	guid: {
+	rendered: "http://openhouse.nii.ac.jp/wp/?p=11"
 		},
-		"modified": "2020-06-03T12:53:52",
-		"modified_gmt": "2020-06-03T03:53:52",
-		"slug": "hello-world",
-		"status": "publish",
-		"type": "post",
-		"link": "http:\/\/openhouse.nii.ac.jp\/wp\/2020\/06\/03\/hello-world\/",
-		"title": {
-			"rendered": "Hello world!"
+	modified: "2020-06-06T13:26:41",
+	modified_gmt: "2020-06-06T04:26:41",
+	slug: "a01",
+	status: "publish",
+	type: "post",
+	link: "https://openhouse.nii.ac.jp/wp/a01/",
+	title: {
+	rendered: "a01"
 		},
-		"content": {
-			"rendered": "\n<p>WordPress \u3078\u3088\u3046\u3053\u305d\u3002\u3053\u3061\u3089\u306f\u6700\u521d\u306e\u6295\u7a3f\u3067\u3059\u3002\u7de8\u96c6\u307e\u305f\u306f\u524a\u9664\u3057\u3001\u30b3\u30f3\u30c6\u30f3\u30c4\u4f5c\u6210\u3092\u59cb\u3081\u3066\u304f\u3060\u3055\u3044\u3002<\/p>\n",
-			"protected": false
+	content: {
+	rendered: "",
+	protected: false
 		},
-		"excerpt": {
-			"rendered": "<p>WordPress \u3078\u3088\u3046\u3053\u305d\u3002\u3053\u3061\u3089\u306f\u6700\u521d\u306e\u6295\u7a3f\u3067\u3059\u3002\u7de8\u96c6\u307e\u305f\u306f\u524a\u9664\u3057\u3001\u30b3\u30f3\u30c6\u30f3\u30c4\u4f5c\u6210\u3092\u59cb\u3081\u3066\u304f\u3060\u3055\u3044\u3002<\/p>\n",
-			"protected": false
+	excerpt: {
+	rendered: "",
+	protected: false
 		},
-		"author": 1,
-		"featured_media": 0,
-		"comment_status": "open",
-		"ping_status": "open",
-		"sticky": false,
-		"template": "",
-		"format": "standard",
-		"meta": [],
-		"categories": [
+	author: 1,
+	featured_media: 0,
+	comment_status: "open",
+	ping_status: "open",
+	sticky: false,
+	template: "",
+	format: "standard",
+	meta: [],
+	categories: [
 			1
 		],
-		"tags": [],
-		"_links": {
-			"self": [
+	tags: [],
+	acf: {
+	category_jp: "アーキテクチャ・ソフトウェア／うごかすちから",
+	category_en: "Architecture, Software",
+	leader_name_jp: "クラウド基盤研究開発センター",
+	leader_name_en: "Center for Cloud Research and Development",
+	group_members_jp: "",
+	group_members_en: "",
+	theme_jp: "データ収集・蓄積・解析クラウド基盤",
+	theme_en: "Cloud infrastructure for data collection, store and analysis",
+	title_jp: "ネットワークとクラウドを活用してデータ収集から解析まで - IoT、ビッグデータ、教育基盤",
+	title_en: "Data collection and analysis utilizing network and cloud: IoT, big data and educational infrastructure",
+	summary_jp: "データ収集から解析までを行う分散アプリケーション基盤を構築するシステム を紹介します。SINETStream を利用することで、広域ネットワーク上の IoTデ バイスのセンサーデータの収集・解析を行うアプリケーションの構築ができる ようになります。また Virtual Cloud Provider を利用することで、複数のク ラウド環境を活用して、ゲノム解析等の研究環境やCMS等の教育環境の構築が できるようになります。さらに、データ解析時のメモリ使用量などの実行時特 性を収集し、資源選択や可視化等への活用を行う監視・分析システムも紹介し ます。",
+	summary_en: "SINETStream enables us to build an environmont to collect and analyze data from distributed sensors. Virtual Cloud Provider enables us to build a distributed application environment over multiple cloud platforms. We use container technologies, overlay network technologies and Jupyter notebook for it. We also show technologies that automatically collect execution records of genome analysis workflows and utilize them by choosing appropriate computing resources and by visualizing collected execution records. ",
+	twitter_account: "",
+	document_link: "",
+	movie_link: "https://youtu.be/Z0wlUi4lr6c",
+	pdf_name_01: "A01_cloud",
+	pdf_name_02: "A01_sinetsteram",
+	research_field_jp: "アーキテクチャ科学研究系",
+	research_field_en: "Information Systems Architecture Science Research Division",
+	audience_jp: "研究者向け",
+	audience_en: "Academic",
+	pdf_name_03: ""
+		},
+	_links: {
+	self: [
 				{
-					"href": "http:\/\/openhouse.nii.ac.jp\/wp\/wp-json\/wp\/v2\/posts\/1"
+	href: "https://openhouse.nii.ac.jp/wp/wp-json/wp/v2/posts/11"
 				}
 			],
-			"collection": [
+	collection: [
 				{
-					"href": "http:\/\/openhouse.nii.ac.jp\/wp\/wp-json\/wp\/v2\/posts"
+	href: "https://openhouse.nii.ac.jp/wp/wp-json/wp/v2/posts"
 				}
 			],
-			"about": [
+	about: [
 				{
-					"href": "http:\/\/openhouse.nii.ac.jp\/wp\/wp-json\/wp\/v2\/types\/post"
+	href: "https://openhouse.nii.ac.jp/wp/wp-json/wp/v2/types/post"
 				}
 			],
-			"author": [
+	author: [
 				{
-					"embeddable": true,
-					"href": "http:\/\/openhouse.nii.ac.jp\/wp\/wp-json\/wp\/v2\/users\/1"
+	embeddable: true,
+	href: "https://openhouse.nii.ac.jp/wp/wp-json/wp/v2/users/1"
 				}
 			],
-			"replies": [
+	replies: [
 				{
-					"embeddable": true,
-					"href": "http:\/\/openhouse.nii.ac.jp\/wp\/wp-json\/wp\/v2\/comments?post=1"
+	embeddable: true,
+	href: "https://openhouse.nii.ac.jp/wp/wp-json/wp/v2/comments?post=11"
 				}
 			],
-			"version-history": [
+	version-history: [
 				{
-					"count": 0,
-					"href": "http:\/\/openhouse.nii.ac.jp\/wp\/wp-json\/wp\/v2\/posts\/1\/revisions"
+	count: 6,
+	href: "https://openhouse.nii.ac.jp/wp/wp-json/wp/v2/posts/11/revisions"
 				}
 			],
-			"wp:attachment": [
+	predecessor-version: [
 				{
-					"href": "http:\/\/openhouse.nii.ac.jp\/wp\/wp-json\/wp\/v2\/media?parent=1"
+	id: 49,
+	href: "https://openhouse.nii.ac.jp/wp/wp-json/wp/v2/posts/11/revisions/49"
 				}
 			],
-			"wp:term": [
+	wp:attachment: [
 				{
-					"taxonomy": "category",
-					"embeddable": true,
-					"href": "http:\/\/openhouse.nii.ac.jp\/wp\/wp-json\/wp\/v2\/categories?post=1"
+	href: "https://openhouse.nii.ac.jp/wp/wp-json/wp/v2/media?parent=11"
+				}
+			],
+	wp:term: [
+				{
+	taxonomy: "category",
+	embeddable: true,
+	href: "https://openhouse.nii.ac.jp/wp/wp-json/wp/v2/categories?post=11"
 				},
 				{
-					"taxonomy": "post_tag",
-					"embeddable": true,
-					"href": "http:\/\/openhouse.nii.ac.jp\/wp\/wp-json\/wp\/v2\/tags?post=1"
+	taxonomy: "post_tag",
+	embeddable: true,
+	href: "https://openhouse.nii.ac.jp/wp/wp-json/wp/v2/tags?post=11"
 				}
 			],
-			"curies": [
+	curies: [
 				{
-					"name": "wp",
-					"href": "https:\/\/api.w.org\/{rel}",
-					"templated": true
+	name: "wp",
+	href: "https://api.w.org/{rel}",
+	templated: true
 				}
-			]
-		},
-		"_embedded": {
-			"author": [
-				{
-					"id": 1,
-					"name": "spectrum",
-					"url": "http:\/\/openhouse.nii.ac.jp\/wp",
-					"description": "",
-					"link": "http:\/\/openhouse.nii.ac.jp\/wp\/author\/spectrum\/",
-					"slug": "spectrum",
-					"avatar_urls": {
-						"24": "http:\/\/1.gravatar.com\/avatar\/79f0cb7dbd41a861cfd94dc13ce879e8?s=24&d=mm&r=g",
-						"48": "http:\/\/1.gravatar.com\/avatar\/79f0cb7dbd41a861cfd94dc13ce879e8?s=48&d=mm&r=g",
-						"96": "http:\/\/1.gravatar.com\/avatar\/79f0cb7dbd41a861cfd94dc13ce879e8?s=96&d=mm&r=g"
-					},
-					"_links": {
-						"self": [
-							{
-								"href": "http:\/\/openhouse.nii.ac.jp\/wp\/wp-json\/wp\/v2\/users\/1"
-							}
-						],
-						"collection": [
-							{
-								"href": "http:\/\/openhouse.nii.ac.jp\/wp\/wp-json\/wp\/v2\/users"
-							}
-						]
-					}
-				}
-			],
-			"replies": [
-				[
-					{
-						"id": 1,
-						"parent": 0,
-						"author": 0,
-						"author_name": "WordPress \u30b3\u30e1\u30f3\u30c8\u306e\u6295\u7a3f\u8005",
-						"author_url": "https:\/\/wordpress.org\/",
-						"date": "2020-06-03T12:53:52",
-						"content": {
-							"rendered": "<p>\u3053\u3093\u306b\u3061\u306f\u3001\u3053\u308c\u306f\u30b3\u30e1\u30f3\u30c8\u3067\u3059\u3002<br \/>\n\u30b3\u30e1\u30f3\u30c8\u306e\u627f\u8a8d\u3001\u7de8\u96c6\u3001\u524a\u9664\u3092\u59cb\u3081\u308b\u306b\u306f\u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9\u306e\u300c\u30b3\u30e1\u30f3\u30c8\u753b\u9762\u300d\u306b\u30a2\u30af\u30bb\u30b9\u3057\u3066\u304f\u3060\u3055\u3044\u3002<br \/>\n\u30b3\u30e1\u30f3\u30c8\u306e\u30a2\u30d0\u30bf\u30fc\u306f\u300c<a href=\"https:\/\/gravatar.com\">Gravatar<\/a>\u300d\u304b\u3089\u53d6\u5f97\u3055\u308c\u307e\u3059\u3002<\/p>\n"
-						},
-						"link": "http:\/\/openhouse.nii.ac.jp\/wp\/2020\/06\/03\/hello-world\/#comment-1",
-						"type": "comment",
-						"author_avatar_urls": {
-							"24": "http:\/\/1.gravatar.com\/avatar\/d7a973c7dab26985da5f961be7b74480?s=24&d=mm&r=g",
-							"48": "http:\/\/1.gravatar.com\/avatar\/d7a973c7dab26985da5f961be7b74480?s=48&d=mm&r=g",
-							"96": "http:\/\/1.gravatar.com\/avatar\/d7a973c7dab26985da5f961be7b74480?s=96&d=mm&r=g"
-						},
-						"_links": {
-							"self": [
-								{
-									"href": "http:\/\/openhouse.nii.ac.jp\/wp\/wp-json\/wp\/v2\/comments\/1"
-								}
-							],
-							"collection": [
-								{
-									"href": "http:\/\/openhouse.nii.ac.jp\/wp\/wp-json\/wp\/v2\/comments"
-								}
-							],
-							"up": [
-								{
-									"embeddable": true,
-									"post_type": "post",
-									"href": "http:\/\/openhouse.nii.ac.jp\/wp\/wp-json\/wp\/v2\/posts\/1"
-								}
-							]
-						}
-					}
-				]
-			],
-			"wp:term": [
-				[
-					{
-						"id": 1,
-						"link": "http:\/\/openhouse.nii.ac.jp\/wp\/category\/%e6%9c%aa%e5%88%86%e9%a1%9e\/",
-						"name": "\u672a\u5206\u985e",
-						"slug": "%e6%9c%aa%e5%88%86%e9%a1%9e",
-						"taxonomy": "category",
-						"_links": {
-							"self": [
-								{
-									"href": "http:\/\/openhouse.nii.ac.jp\/wp\/wp-json\/wp\/v2\/categories\/1"
-								}
-							],
-							"collection": [
-								{
-									"href": "http:\/\/openhouse.nii.ac.jp\/wp\/wp-json\/wp\/v2\/categories"
-								}
-							],
-							"about": [
-								{
-									"href": "http:\/\/openhouse.nii.ac.jp\/wp\/wp-json\/wp\/v2\/taxonomies\/category"
-								}
-							],
-							"wp:post_type": [
-								{
-									"href": "http:\/\/openhouse.nii.ac.jp\/wp\/wp-json\/wp\/v2\/posts?categories=1"
-								}
-							],
-							"curies": [
-								{
-									"name": "wp",
-									"href": "https:\/\/api.w.org\/{rel}",
-									"templated": true
-								}
-							]
-						}
-					}
-				],
-				[]
 			]
 		}
 	}

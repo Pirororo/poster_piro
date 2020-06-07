@@ -14,8 +14,7 @@ export class Camera extends THREE.PerspectiveCamera{
     this.eansingBool = true;
 
     this.camPos = new THREE.Vector3(100, 300,120);
-    // this.camTarget = new THREE.Vector3(-370, 0,320);
-    this.camTarget = new THREE.Vector3(-470, 0,400);
+    this.camTarget = new THREE.Vector3(-370, 300,320);
 
     this.lookPos = new THREE.Vector3(45, 50, 45);
     this.lookTarget = new THREE.Vector3(45, 50, 45);
@@ -31,7 +30,7 @@ export class Camera extends THREE.PerspectiveCamera{
   update() {
 
     if(this.frame < 1800){
-        this.frame += 2;//２倍速
+        this.frame += 1;
     }else{ 
         this.frame = 1800;//1800以上は読まないよー
         this.eansingBool == false;//頂点入れ替えもしない。
@@ -40,15 +39,15 @@ export class Camera extends THREE.PerspectiveCamera{
     if (this.eansingBool == true){
         //イージング
         // this.camPos += (this.camTarget - this.camPos)*0.02;//この書き方動かない！！！！！！！
-        this.camPos.x += (this.camTarget.x - this.camPos.x) *0.012*2;//*2は２倍速
-        this.camPos.y += (this.camTarget.y - this.camPos.y) *0.012*2;//*2は２倍速
-        this.camPos.z += (this.camTarget.z - this.camPos.z) *0.012*2;//*2は２倍速
+        this.camPos.x += (this.camTarget.x - this.camPos.x) *0.012;
+        this.camPos.y += (this.camTarget.y - this.camPos.y) *0.012;
+        this.camPos.z += (this.camTarget.z - this.camPos.z) *0.012;
         this.position.set(this.camPos.x,this.camPos.y,this.camPos.z);
 
         //lookPosイージング
-        this.lookPos.x += (this.lookTarget.x - this.lookPos.x) *0.02*2;
-        this.lookPos.y += (this.lookTarget.y - this.lookPos.y) *0.02*2;
-        this.lookPos.z += (this.lookTarget.z - this.lookPos.z) *0.02*2;
+        this.lookPos.x += (this.lookTarget.x - this.lookPos.x) *0.02;
+        this.lookPos.y += (this.lookTarget.y - this.lookPos.y) *0.02;
+        this.lookPos.z += (this.lookTarget.z - this.lookPos.z) *0.02;
         this.lookAt(this.lookPos);//これ大事！！！！
     }
 
@@ -56,19 +55,17 @@ export class Camera extends THREE.PerspectiveCamera{
     if(this.frame >= 0 && this.frame <1170){
 
       //camTargetの初期化とcamPosの取得
-      if(this.frame == 20){
+      if(this.frame == 30){
         // this.lookTarget = new THREE.Vector3(45, 100, 45);
-        // this.camTarget = new THREE.Vector3(-320, -200,-200);
-        // this.camTarget = new THREE.Vector3(-470, -200,-600);
+        this.camTarget = new THREE.Vector3(-320, 50,-200);
       }
       if(this.frame == 50){
-        this.lookTarget = new THREE.Vector3(45, 80, 45);
-        // this.camTarget = new THREE.Vector3(-20, -130,-150);
+        // this.lookTarget = new THREE.Vector3(45, 100, 45);
+        this.camTarget = new THREE.Vector3(-20, -130,-150);
       }
-      if(this.frame == 100){
-        // this.lookTarget = new THREE.Vector3(45, 80, 45);
+      if(this.frame == 130){
+        this.lookTarget = new THREE.Vector3(45, 80, 45);
         // this.camTarget = new THREE.Vector3(-190, -30,-170);
-        this.camTarget = new THREE.Vector3(70, -180,-150);
       }
       if(this.frame == 280){
         this.lookTarget = new THREE.Vector3(45, 50, 45);

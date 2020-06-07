@@ -1,61 +1,70 @@
-export default (params) =>
+export default (data) =>
 {
-	const { index } = params;
-	const { title, author, content, excerpt } = params.data;
-
+	const {
+		slug,
+		category_jp,
+		category_en,
+		theme_jp,
+		theme_en,
+		title_jp,
+		title_en,
+		leader_name_jp,
+		leader_name_en,
+		research_field_jp,
+		research_field_en,
+		group_members_jp,
+		group_members_en,
+		summary_jp,
+		summary_en,
+		summary_split
+	} = data;
 	let output = `
-	<div class="detail_content_container ${params.name}">
+	<div class="detail_content_container summary entry_${slug}">
 	<div class="detail_content_container_inner">
 	`;
 
-	switch (index) {
-		case 0:
+	// console.log(data.key);
+
+	switch(data.key)
+	{
+		case "meta":
 			output = `${output}
-			<div class="detail_dummy">
-			<h1>本文１</h1>
-			<div>ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■
-			ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■
-			ダミーテキストです■ダミーテキストです■ダミーテキストです■
+			<header class="detail_header_container">
+			<div class="slug">${slug.toUpperCase()}</div>
+			<p class="category_jp">${category_jp}</p>
+			<p class="category_en">${category_en}</p>
+			</header>
+
+			<div class="detail_theme_container">
+			<p class="theme_jp">${theme_jp}</p>
+			<p class="theme_en">${theme_en}</p>
 			</div>
+			<div class="detail_title_container">
+			<h1 class="title_jp">${title_jp}</h1>
+			<p class="title_en">${title_en}</p>
+			</div>
+			<div class="detail_author_container">
+			<p class="leader_name_jp">${leader_name_jp}</p>
+			<p class="leader_name_en">${leader_name_en}</p>
+			<p class="research_field_jp">${research_field_jp}</p>
+			<p class="research_field_en">${research_field_en}</p>
+			<p class="group_members_jp">${group_members_jp}</p>
+			<p class="group_members_en">${group_members_en}</p>
 			</div>
 			`;
 			break;
-		case 2:
+		case "summary":
 			output = `${output}
-			<div class="detail_dummy">
-			<h1>タイトル</h1>
-			<h2>メタ情報</h2>
-			<h3>サマリー</h3>
-			<div>ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■
-			ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■
-			ダミーテキストです■ダミーテキストです■ダミーテキストです■
-			</div>
-			</div>
-			`;
-			break;
-		case 4:
-			output = `${output}
-			<div class="detail_dummy">
-			<h1>本文２</h1>
-			<div>ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■
-			ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■
-			ダミーテキストです■ダミーテキストです■ダミーテキストです■
-			</div>
+			<div class="detail_summary_container ${summary_split ? 'split' : ""}">
+			<p class="summary_jp">${summary_jp || ""}</p>
+			<p class="summary_en">${(summary_jp == summary_en ? "" : summary_en) || ""}</p>
 			</div>
 			`;
 			break;
 		default:
-			output = `${output}
-			<div class="detail_dummy">ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■
-			ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■ダミーテキストです■
-			ダミーテキストです■ダミーテキストです■ダミーテキストです■
-			</div>
-		`;
-			// output = `${output}
-			// 	<div class="detail_title">${title.rendered}</div>
-			// 	<div class="detail_exerpt">${excerpt.rendered}</div>
-			// `;
+			break;
 	}
+
 	output = `${output}</div></div>`;
 
 	return output;

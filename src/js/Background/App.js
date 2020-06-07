@@ -17,8 +17,7 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 import { CopyShader } from "three/examples/jsm/shaders/CopyShader";
 
 //自作のグラジエントシェーダ
-import { ColorifyGradientEasingShader } from "./shaders/ColorifyGradientEasingShader.mine";
-import { CompressedTextureLoader } from "three/build/three";
+import { ColorifyGradientShader } from "./shaders/ColorifyGradientShader.mine";
 
 
 
@@ -27,11 +26,8 @@ export default class App
 
   constructor(sceneInstance){
 
-    this.masterFrame = 0;
-    
     this._initStats = this._initStats.bind(this);
     this.chooseRoomColor = this.chooseRoomColor.bind(this);
-    this.backToColor = this.backToColor.bind(this);
 
     //fps表示
     this._stats = this._initStats();
@@ -81,27 +77,14 @@ export default class App
 
     //エフェクトパス（出力パスの前にかく）
     //グラデパス
-    this.colorify = new ShaderPass(ColorifyGradientEasingShader);
+    this.colorify = new ShaderPass(ColorifyGradientShader);
     this.gradColor1 = 0x734ca4;
     this.gradColor2 = 0x4ea78;
-    this.targetGradColor1 = 0x734ca4;
-    this.targetGradColor2 = 0x4ea78;
 
     this.colorify.uniforms.color.value = new THREE.Color(this.gradColor1);//0x4ea78e
-    this.colorify.uniforms.color2.value = new THREE.Color(this.gradColor2);//0x648
-    this.colorify.uniforms.targetColor.value = new THREE.Color(this.targetGradColor1);
-    this.colorify.uniforms.targetColor2.value = new THREE.Color(this.targetGradColor2);
-    this.colorify.uniforms.time.value = 0.0;
-    this.duration = 60.0;
-    this.colorify.uniforms.duration.value = this.duration;
+    this.colorify.uniforms.color2.value = new THREE.Color(this.gradColor2);//e0x648
     this.colorify.uniforms.alpha = 0.8;
     this.colorify.enabled = true;
-
-    this.gradeColorBool = false;//グラデ開始スイッチ
-    this.gradeColorFrame = 0;
-    this.saveColor1 = 0x000000;
-    this.saveColor2 = 0x000000;
-
 
     //ブルームパス
     // var bloomPass = new BloomPass(1.5, 15, 3.0, 64);
@@ -188,99 +171,63 @@ export default class App
     // const world = this._scene.camera.getWorldPosition();
     // console.log(world);
 
+    this._stats.update();
+
     // var delta = this.clock.getDelta();
     // this.orbitControls.update(delta);
 
+    this._renderer.autoClear = false;//これ大事〜！trueだと色が毎回背景白にクリアされちゃう
 
-    //２回に１回読む
-    this.masterFrame += 1;
-    if(this.masterFrame == 2){
-
-      //fps表示の更新
-      this._stats.update();
-      // シーンの更新
-      this._scene.update();
-      //グラデーションのイージング
-      if(this.gradeColorBool == true){
-        this.gradeColorFrame += 1;
-        this.colorify.uniforms.time.value = this.gradeColorFrame;
-        if(this.gradeColorFrame > this.duration){//60で変化終える
-          this.gradeColorBool = false;
-          this.gradeColorFrame = 0;
-        }
-      }
-      // console.log(this.gradeColorFrame);//0~60
-
-      //レンダー
-      this._renderer.autoClear = false;//これ大事〜！trueだと色が毎回背景白にクリアされちゃう
-      this.composer.render();
-
-      this.masterFrame =0;
-    }
-
+    // シーンの更新
+    this._scene.update();
+    this.composer.render();
 
   }
 
   onKeyUp(e)//グラデめも    0x5de2ff, 0x3333a7
   {
-      if (e.keyCode == KEYCODE.A){//0x9629CC
+      if (e.keyCode == KEYCODE.A){//Aの部屋に移動してね
       //   if (this.goRoom_A == true){ //キーの代わりにくる変数
-          this.chooseRoomColor(this._scene.camTargetBool_A, 0x295FCC, 0x9629CC);
-          // this.chooseRoomColor(this._scene.camTargetBool_A, 0x243ac, 0xa800cd);
+          this.chooseRoomColor(this._scene.camTargetBool_A, 0x9629CC, 0x9629CC);//4ea780
       }
-      if (e.keyCode == KEYCODE.B){//0x295FCC
+      if (e.keyCode == KEYCODE.B){//Bの部屋に移動してね
       //   if (this.goRoom_B == true){ //キーの代わりにくる変数
-          this.chooseRoomColor(this._scene.camTargetBool_B, 0x2EC7E5, 0x295FCC);
+          this.chooseRoomColor(this._scene.camTargetBool_B, 0x295FCC, 0x295FCC);
       }
-      if (e.keyCode == KEYCODE.C){//0x24B253
+      if (e.keyCode == KEYCODE.C){//Cの部屋に移動してね
       //   if (this.goRoom_C == true){ //キーの代わりにくる変数
-          this.chooseRoomColor(this._scene.camTargetBool_C, 0xa6eb72, 0x24B253);
+          this.chooseRoomColor(this._scene.camTargetBool_C, 0x24B253, 0x24B253);
       }
-      if (e.keyCode == KEYCODE.D){//0x29CCBE,0xa297//代わり映えしないんだよなぁ
+      if (e.keyCode == KEYCODE.D){
       //   if (this.goRoom_D == true){ //キーの代わりにくる変数
-          this.chooseRoomColor(this._scene.camTargetBool_D, 0x268983, 0xa27b);//
+          this.chooseRoomColor(this._scene.camTargetBool_D, 0x2EC7E5, 0x2EC7E5);
       }
-      if (e.keyCode == KEYCODE.E){//0x2EC7E5//もう少し明るくする
+      if (e.keyCode == KEYCODE.E){
       //   if (this.goRoom_E == true){ //キーの代わりにくる変数
-          // this.chooseRoomColor(this._scene.camTargetBool_E, 0x295FCC, 0x2EC7E5);
-          this.chooseRoomColor(this._scene.camTargetBool_E, 0x3a7d, 0x268983);
+          this.chooseRoomColor(this._scene.camTargetBool_E, 0x29CCBE, 0x29CCBE);
       }
-      if (e.keyCode == KEYCODE.F){//0x4429CC
+      if (e.keyCode == KEYCODE.F){
       //   if (this.goRoom_F == true){ //キーの代わりにくる変数
-          this.chooseRoomColor(this._scene.camTargetBool_F, 0x9629CC, 0x295FCC);
+          this.chooseRoomColor(this._scene.camTargetBool_F, 0x4429CC, 0x4429CC);
       }
-      if (e.keyCode == KEYCODE.G){//0xCC2995
+      if (e.keyCode == KEYCODE.G){
       //   if (this.goRoom_G == true){ //キーの代わりにくる変数
-          this.chooseRoomColor(this._scene.camTargetBool_G, 0xCC2995, 0x9629CC);
+          this.chooseRoomColor(this._scene.camTargetBool_G, 0xCC2995, 0xCC2995);
       }
       if (e.keyCode == KEYCODE.BACKSPACE){
       //   if (this.backToPanels == true){ //キーの代わりにくる変数
-          this.backToColor(this._scene.camTargetBool_BACKSPACE);
+          this.chooseRoomColor(this._scene.camTargetBool_BACKSPACE, this.gradColor1, this.gradColor2);
       }
+
 
       this._scene.onKeyUp(e);//これがcamTargetBoolをfalseにするから最後にかく
 
   }
 
-  chooseRoomColor(camTargetBool,targetGradColor1,targetGradColor2){
+  chooseRoomColor(camTargetBool,color1,color2){
     if(camTargetBool == true){//これはsceneで読むからfalseにしない
-        this.gradeColorBool = true;
-        this.colorify.uniforms.color.value = new THREE.Color(this.gradColor1);
-        this.colorify.uniforms.color2.value = new THREE.Color(this.gradColor2);
-        this.colorify.uniforms.targetColor.value = new THREE.Color(targetGradColor1);
-        this.colorify.uniforms.targetColor2.value = new THREE.Color(targetGradColor2);
-    }
-    this.saveColor1 = targetGradColor1;
-    this.saveColor2 = targetGradColor2;
-  }
-
-  backToColor(camTargetBool){
-    if(camTargetBool == true){//これはsceneで読むからfalseにしない
-        this.gradeColorBool = true;
-        this.colorify.uniforms.color.value = new THREE.Color(this.saveColor1);
-        this.colorify.uniforms.color2.value = new THREE.Color(this.saveColor2);
-        this.colorify.uniforms.targetColor.value = new THREE.Color(this.gradColor1);
-        this.colorify.uniforms.targetColor2.value = new THREE.Color(this.gradColor2);
+        this.colorify.uniforms.color.value = new THREE.Color(color1);
+        this.colorify.uniforms.color2.value = new THREE.Color(color2);
     }
   }
 

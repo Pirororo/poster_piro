@@ -4,34 +4,45 @@ import { EVENT, Action } from "./../Utils/EventManager";
 const _Router =
 {
 	router: null,
+	queryLabel: "path",
 	init()
 	{
+		console.log("Router init.");
+
 		const router = new Router({
 			mode: 'history',
-			page404(path)
+			page404: path =>
 			{
-					console.log('"/' + path + '" Page not found');
+				/*
+				Convert URL and dispath event
+				https://openhouse.nii.ac.jp/session/a/01/
+				https://openhouse.nii.ac.jp/session/?path=a/01/
+				*/
+				const param = path.replace(/\/|(session)?/g, "");
+
+				if (!this.check(param)) {
+					location.href = "/session";
+				}
+
+				console.group();
+				console.log("Router report:");
+				console.log(`path: ${path}, slug: ${param}`);
+				console.groupEnd();
+
+				Action.dispatch(EVENT.ShowDetail, { slug: param });
 			}
 		});
 
-		router.add("", () =>
-		{
-			console.log('Home page');
-			// router.navigateTo("/");
-		});
+		router.add("/session", path => {});
+		router.addUriListener();
+		router.navigateTo("/session/" + location.search.replace(`?${this.queryLabel}=`, ""));
+	},
 
-		router.add("session", query =>
-		{
-			console.log(query);
-		});
+	check(str)
+	{
+		const test1 = /^[abcdefgs]\d{2}$/.test(str);
 
-		router.add("session/(:any)", query =>
-		{
-			console.log(query);
-		});
-
-		// router.addUriListener();
-		// router.navigateTo("/");
+		return test1;
 	}
 };
 

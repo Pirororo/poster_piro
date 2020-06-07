@@ -14,8 +14,7 @@ export default AFRAME.registerComponent(COMPONENTS.RaycastTarget,
 			{
 				case BOARD_ID.Poster:
 					Action.dispatch(EVENT.ShowDetail, {
-						category: this.el.instance.category,
-						index: this.el.instance.index
+						slug: this.el.instance.slug,
 					});
 					break;
 

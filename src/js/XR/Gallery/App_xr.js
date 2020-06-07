@@ -45,7 +45,7 @@ export default
     {
       const parameter =
       {
-        index: i,
+        index: i + 1,
         name: `poster${i}`,
         category,
         boardId: BOARD_ID.Poster,
@@ -117,13 +117,13 @@ export default
       }
     });
 
-    Action.add(EVENT.ShowDetail, this.destroy);
+    Action.add(EVENT.ShowDetail, () => this.destroy());
 
     Action.add(EVENT.BackToCategory, () => {
       this.destroy();
       this.generateCategory(posterData);
     });
 
-    Action.add(EVENT.BackToPoster, this.generatePosters);
+    Action.add(EVENT.BackToPoster, () => this.generatePosters());
   }
 }

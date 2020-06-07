@@ -9,7 +9,7 @@ import { isVR, setVRMode } from "./Utils/Helper";
 import Composer from "./Composer";
 
 // Define namespace
-const OpenHouse2020 = OpenHouse2020 || {};
+const OpenHouse2020 = {};
 OpenHouse2020.PosterSession = OpenHouse2020.PosterSession || {};
 
 // Define App class

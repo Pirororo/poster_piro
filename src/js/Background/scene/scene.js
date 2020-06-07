@@ -71,10 +71,10 @@ export class Scene extends THREE.Scene
         if (e.keyCode == KEYCODE.K){//アニメーションをskipしてね
         //   if (this.skipAnime == true){ //キーの代わりにくる変数
             if(this.frameBool_skipAnime == true 
-                && this.scene0.scene2.frame < this.scene0.scene2.frameSlide-2){//ここ斜めになるtargetPosの時間の一歩手前！！
+                && this.scene0.scene2.frame < this.scene0.scene2.frameSlide-1){//ここ斜めになるtargetPosの時間！！
                 this.frameBool_skipAnime = false;
-                this.camera.frame = this.scene0.scene2.frameSlide-2;
-                this.scene0.scene2.frame = this.scene0.scene2.frameSlide-2;
+                this.camera.frame = this.scene0.scene2.frameSlide-1;
+                this.scene0.scene2.frame = this.scene0.scene2.frameSlide-1;
                 console.log("skip animasion !");
             }
         }
@@ -177,9 +177,13 @@ export class Scene extends THREE.Scene
         }
     }
 
+    // chooseRoom(camTargetBool,cx,cy,cz,tx,ty,tz,message){
+    // chooseRoom(camTargetBool,tx,ty,tz,message){
     chooseRoom(camTargetBool,l,message){
         if(camTargetBool == true){
             camTargetBool = false;
+            // this.camera.camTarget = new THREE.Vector3(cx,cy,cz);
+            // this.camera.lookTarget = new THREE.Vector3(tx,ty,tz);
             this.camera.lookTarget = new THREE.Vector3(
                 25*(1.5+l),8+(15*l),25*(1.5+l)
             );
@@ -230,10 +234,23 @@ export class Scene0 extends THREE.Scene {
 
         super();
 
+        //カメラは上で読むことにしたよ
+
+        // // 環境光源
+        // const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+
+        // //スポットライト
+        // var spotLight = new THREE.SpotLight(0xffffff);
+        // spotLight.position.set(80, 60, 50);
+        // spotLight.intensity = 1;
+
+        // シェーダーのエフェクトをマスクするためシーン２種類にわけた
         this.scene1 = new Scene1();
         this.add(this.scene1);
 
         this.scene2 = new Scene2();
+        // this.scene2.add(ambientLight);
+        // this.scene2.add(spotLight);
         this.add(this.scene2);
 
     }
@@ -261,6 +278,7 @@ export class Scene1 extends THREE.Scene {
         // this._line.position.set(150,70,150);
         // this.add(this._line);
 
+
         // this._line1in = new Line(0,1);
         // this._line1out = new Line(0,2);
         // this._line1in.position.set(150,70,150);
@@ -274,7 +292,7 @@ export class Scene1 extends THREE.Scene {
 
         //今は関東ー北海道だけなのでi<1
         for (let i = 0 ; i < this._line.length/2; i++){
-            for (let j= 1 ; j < 3 ; j++){//inは１、outは２
+            for (let j= 0 ; j < 2 ; j++){
                 this._line[2*i+j] = new Line(i,j);
                 if(j%2 ==0){this._line[2*i+j].position.set(0,0,0);}//outは0,0,0から
                 else{this._line[2*i+j].position.set(150,70,150);}//inは離れたとこから
@@ -373,7 +391,7 @@ export class Scene2 extends THREE.Scene {
     update(){
 
         if(this.frame < 1800){
-            this.frame += 2;//２倍速
+            this.frame += 1;
         }else{ 
             this.frame = 1800;//1800以上は読まないよー
             this.eansingBool == false;//頂点入れ替えもしない。
@@ -733,7 +751,7 @@ export class Scene2 extends THREE.Scene {
             this.tSpeed =6.0;
         }
 
-        if(this.frame == this.frameSlide){//1260
+        if(this.frame == this.frameSlide){//1250
             for (let i = 0; i < this.meshList.length; i++) {
                 for (let j = 0; j < 4; j++) {
                 if(i >=80*j && i<80*(j+1)){
@@ -755,7 +773,7 @@ export class Scene2 extends THREE.Scene {
             this.tSpeed =6.0;
         }
 
-        if(this.frame == 1420){
+        if(this.frame == 1370){
             if(this.openingIsEnd == false){
                 this.openingIsEnd = true;
             }

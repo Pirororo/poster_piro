@@ -13,6 +13,8 @@ import DetailComponent from "./Components/DetailComponent";
 import RaycastCheckComponent from "./Components/RaycastCheckComponent";
 import RaycastTargetComponent from "./Components/RaycastTargetComponent";
 
+import { EVENT, Action } from "./../Utils/EventManager";
+
 const App =
 {
 	...ICommonFacadeModuleObject,
@@ -29,6 +31,10 @@ const App =
 		this.components.detail = DetailComponent;
 		this.components.raycastCheck = RaycastCheckComponent;
 		this.components.raycastTarget = RaycastTargetComponent;
+
+		// setTimeout(() => {
+		// 	Action.dispatch(EVENT.ShowDetail, { slug: "a01" });
+		// }, 100);
 
 		return this;
 	},
