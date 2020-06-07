@@ -23,9 +23,10 @@ export class Scene extends THREE.Scene
 
 
         //7枚パネルの基準のカメラポジション
-        this.baseCamTarget = new THREE.Vector3(-220-50,-30-25,-300-50);
-        // this.camTarget = new THREE.Vector3(-180-50,-40-25,-220-50);//こっちのが近い
-        this.baseCamTargetPlus = new THREE.Vector3(220+50,30+25,300+50);
+        // this.baseCamTarget = new THREE.Vector3(-220-50,-30-25,-300-50);
+        // this.baseCamTargetPlus = new THREE.Vector3(220+50,30+25,300+50);
+        this.baseCamTarget = new THREE.Vector3(-180-50,-40-25,-220-50);//こっちのが近い
+        this.baseCamTargetPlus = new THREE.Vector3(180+50,40+25,220+50);
 
         // this.scene0 = new Scene0();//onKeyup(e)へ！
         // this.add(this.scene0);//onKeyup(e)へ！
@@ -93,7 +94,6 @@ export class Scene extends THREE.Scene
             if(this.scene0.scene2.backAnimationUpdateBool == true){
                 if(this.scene0.scene2.waitingFrame == 240+2){
                     this.cam_backAnimation();
-                    console.log("cam_back");
                 }
             }
 
@@ -151,7 +151,8 @@ export class Scene extends THREE.Scene
                 this.scene0.scene2.waitingFrame = 0;
                 this.scene0.scene2.openingUpdateBool = true;
 
-                this.baseCamTarget = new THREE.Vector3(-220-50,-30-25,-300-50);//ここ書かないと書き換えられちゃってるぽい
+                // this.baseCamTarget = new THREE.Vector3(-220-50,-30-25,-300-50);//ここ書かないと書き換えられちゃってるぽい
+                this.baseCamTarget = new THREE.Vector3(-180-50,-40-25,-220-50);
                 this.camTarget = this.baseCamTarget;
                 console.log("Please back to 7 panels!");
                 this.openCamTargetBool();
@@ -205,7 +206,8 @@ export class Scene extends THREE.Scene
                 this.scene0.scene2.waitingFrame = 0;
                 this.scene0.scene2.openingUpdateBool = true;
 
-                this.baseCamTarget = new THREE.Vector3(-220-50,-30-25,-300-50);//ここ書かないと書き換えられちゃってるぽい
+                // this.baseCamTarget = new THREE.Vector3(-220-50,-30-25,-300-50);//ここ書かないと書き換えられちゃってるぽい
+                this.baseCamTarget = new THREE.Vector3(-180-50,-40-25,-220-50);
                 this.camTarget = this.baseCamTarget;
                 console.log("Please back to 7 panels!");
                 this.openCamTargetBool();
@@ -218,15 +220,16 @@ export class Scene extends THREE.Scene
         //ここ不要だった、初期設定値だけでokだったので。
     }
     cam_backAnimation(){
-        if(this.scene0.scene2.backAnimationframe == 550){
+
+        if(this.scene0.scene2.backAnimationframe == 250){
             // this.camTarget = new THREE.Vector3(0, 0, 0);
             this.camTarget = new THREE.Vector3(-150, -100,-50);
         }
-        if(this.scene0.scene2.backAnimationframe == 700){
-            this.camTarget = new THREE.Vector3(-50,-25,-50);
+        if(this.scene0.scene2.backAnimationframe == 500){
+            this.camTarget = new THREE.Vector3(-50,-180,-150);
         }//この座標が円中心座標
         if(this.scene0.scene2.backAnimationframe == 1100){
-            this.camTarget = new THREE.Vector3(70,-80,-200);
+            this.camTarget = new THREE.Vector3(70, -80,-200);
         }
         // if(this.scene0.scene2.backAnimationframe == 1350){
         //     this.camTarget = new THREE.Vector3(-150,-125,-150);
@@ -357,10 +360,15 @@ export class Scene2 extends THREE.Scene
         this.meshGroup = new THREE.Group();
 
         const material = new THREE.MeshBasicMaterial( {
-            color: 0xC7C7C7,
+            // color: 0xC7C7C7,
             wireframe: true,
-            opacity: 0.9,
+            color: 0x4ea78e,
+            opacity: 0.5,
             transparent: true,
+            blending: THREE.AdditiveBlending,
+            // blending: THREE.AddBlending,
+
+
         } );
 
         this.PlateNum = 320;
@@ -430,7 +438,7 @@ export class Scene2 extends THREE.Scene
                 this.waitingFrame += 1;
             }
             if(this.waitingFrame >= 240){
-                this.waitingFrame = 240+1;
+                this.waitingFrame = 240+2;
 
                 this.backAnimationframe += 1;
                 this.backAnimation();
@@ -502,7 +510,7 @@ export class Scene2 extends THREE.Scene
 
     backAnimation()
     {
-        console.log(this.backAnimationframe);
+        // console.log(this.backAnimationframe);
         //ここからアニメーション
         if(this.backAnimationframe == 50){
             for (let i = 0; i < this.meshList.length; i++) {
