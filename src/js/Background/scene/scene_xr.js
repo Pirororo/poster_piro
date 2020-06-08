@@ -44,10 +44,10 @@ export class Scene extends THREE.Scene
         this.camTargetBool_BACKSPACE = false;
 
         //☆☆☆【送るイベント】
-        //EVENT.OPisEnd
+        //EVENT.ShowCategory
 
         //☆☆☆【受け取るイベント】
-        // EVENT.VRModeStart//VRのプチOPをはじめるスイッチ。OP終わったらEVENT.OPisEnd送信される  <S>
+        // EVENT.VRModeStart//VRのプチOPをはじめるスイッチ。OP終わったらEVENT.ShowCategory送信  <S>
         // EVENT.ShowCategoryA// Aの部屋に近づくスイッチ  <A>
         // EVENT.ShowCategoryB// Bの部屋に近づくスイッチ  <B>
         // EVENT.ShowCategoryC// Cの部屋に近づくスイッチ  <C>
@@ -66,15 +66,6 @@ export class Scene extends THREE.Scene
 
     update()
     {
-        // //iphoneでS押せないから実機検証用
-        // if(this.keyBool_startVRanime == true){
-        //     this.keyBool_startVRanime = false;
-        //     this.scene0 = new Scene0();
-        //     this.add(this.scene0);
-        //     this.updateBool = true;
-        //     console.log("start VR anime!");
-        // }
-
 
         if(this.updateBool == true){
 

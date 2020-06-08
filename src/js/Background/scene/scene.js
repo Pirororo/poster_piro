@@ -33,11 +33,13 @@ export class Scene extends THREE.Scene
         this.camTargetBool_BACKSPACE = false;
 
         //☆☆☆【送るイベント】
-        // EVENT.selectVRorNot
+        // EVENT.ShowStartup//VRかNORMALか選択
 
         //☆☆☆【受け取るイベント】
-        // EVENT.skipAnime//アニメをスキップさせ、EVENT.selectVRorNotを送信するスイッチ  <K>
-        // EVENT.PCModeContinue//７枚パネル出るタイミングでズームアウトするスイッチ  <SPACE>
+        // EVENT.SkipOpening//アニメをスキップさせ、EVENT.ShowStartupを送信するスイッチ  <K>
+        // EVENT.ShowStartup//VRかNORMALか選択  <K>
+
+        // EVENT.ShowCategory//７枚パネル出るタイミングでズームアウトするスイッチ  <SPACE>
         // EVENT.ShowCategoryA// Aの部屋に近づくスイッチ  <A>
         // EVENT.ShowCategoryB// Bの部屋に近づくスイッチ  <B>
         // EVENT.ShowCategoryC// Cの部屋に近づくスイッチ  <C>
@@ -46,6 +48,9 @@ export class Scene extends THREE.Scene
         // EVENT.ShowCategoryF// Fの部屋に近づくスイッチ  <F>
         // EVENT.ShowCategoryG// Gの部屋に近づくスイッチ  <G>
         // EVENT.BackToCategory//７枚パネルのとこ戻ってほしいスイッチ  <BACKSPACE>
+
+        //EVENT.ShowStartupを送信よりさきに受信したとき、送信はしないようにする。
+        this.ShowStartupBool = true;
 
     }
 
@@ -56,8 +61,11 @@ export class Scene extends THREE.Scene
         if (this.scene0.scene2.openingIsEnd == true){
 
             //OP終わったからVR使うかどうか選択してね
-            // Action.dispatch(EVENT.selectVRorNot);//送る変数
-            console.log("Opening is end and select VR or not");
+            if(this.ShowStartupBool == true){
+                this.ShowStartupBool = false;
+                // Action.dispatch(EVENT.ShowStartup);//送る変数    ☆ひらく
+                console.log("Opening is end and Show Startup");
+            }
             this.scene0.scene2.openingIsEnd = false;
             this.camTargetBool_openingIsEnd = true;
             // this.camTargetBool_BACKSPACE = true;//[SPACE]を[BS]で兼ねるならいれる
@@ -71,18 +79,37 @@ export class Scene extends THREE.Scene
     onKeyUp(e)
     {
         if (e.keyCode == KEYCODE.K){
-        // Action.add(EVENT.skipAnime, () =>{//キーの代わりにくる変数
-            if(this.frameBool_skipAnime == true 
-                && this.scene0.scene2.frame < this.scene0.scene2.frameSlide-2){//ここ斜めになるtargetPosの時間の一歩手前！！
-                this.frameBool_skipAnime = false;
-                this.camera.frame = this.scene0.scene2.frameSlide-2;
-                this.scene0.scene2.frame = this.scene0.scene2.frameSlide-2;
-                console.log("skip animation !");
+
+        // // Action.add(EVENT.SkipOpening, () =>{//キーの代わりにくる変数
+        //     if(this.frameBool_skipAnime == true 
+        //         && this.scene0.scene2.frame < this.scene0.scene2.frameSlide-2){//ここ斜めになるtargetPosの時間の一歩手前！！
+        //         this.frameBool_skipAnime = false;
+        //         this.camera.frame = this.scene0.scene2.frameSlide-2;
+        //         this.scene0.scene2.frame = this.scene0.scene2.frameSlide-2;
+        //         console.log("skip animation !");
+        //     }
+
+
+        // Action.add(EVENT.ShowStartup, () =>{//キーの代わりにくる変数
+        if(this.frameBool_skipAnime == true 
+            && this.scene0.scene2.frame < this.scene0.scene2.frameSlide-2){//ここ斜めになるtargetPosの時間の一歩手前！！
+            this.frameBool_skipAnime = false;
+            this.camera.frame = this.scene0.scene2.frameSlide-2;
+            this.scene0.scene2.frame = this.scene0.scene2.frameSlide-2;
+            console.log("skip animation !");
+
+            if(this.ShowStartupBool == true){
+                this.ShowStartupBool = false;
+                console.log("Got signal [EVENT.ShowStartup] already!");
             }
+
+        }
+
+
         }
         
         if (e.keyCode == KEYCODE.SPACE){
-        // Action.add(EVENT.PCModeContinue, () =>{ //キーの代わりにくる変数
+        // Action.add(EVENT.ShowCategory, () =>{ //キーの代わりにくる変数
             if(this.camTargetBool_openingIsEnd == true){
                 this.camTargetBool_openingIsEnd = false;
                 this.camera.camTarget = this.baseCamTarget;

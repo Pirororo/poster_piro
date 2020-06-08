@@ -192,12 +192,14 @@ export default class App
     // this.orbitControls.update(delta);
 
 
+    //fps表示の更新
+    this._stats.update();
+
     //２回に１回読む
     this.masterFrame += 1;
     if(this.masterFrame == 2){
 
-      //fps表示の更新
-      this._stats.update();
+      
       // シーンの更新
       this._scene.update();
       //グラデーションのイージング
