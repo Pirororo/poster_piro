@@ -1,4 +1,6 @@
 import * as THREE from 'three';
+import { AnimationAction } from 'three';
+import { EVENT, Action } from "./../Utils/EventManager";
 
 // Controller
 export default class GalleryController {
@@ -8,27 +10,50 @@ export default class GalleryController {
     this.view = view;
     this.model = model;
     this.addEvent();
+
   }
   update() {
     this.view.update();
   }
-  shapeChange() {
+  sceneChange(e) {
+    e.preventDefault();
+    const categoryName = e.target.className;
+
+    switch (categoryName) {
+      case 'cat0':
+        break;
+      case 'cat1':
+        break;
+      case 'cat2':
+        break;
+      case 'cat3':
+        break;
+      case 'cat4':
+        break;
+      case 'cat5':
+        break;
+      default:
+        break;
+    }
+
+    //カテゴリー非表示
     // this.view.destroy();
-    // this.id = (this.id + 1) % 3;
-    // switch (this.id) {
-    //   case 0:
-    //     this.view = new MyView02(this.scene).setup();
-    //     break;
-    //   case 1:
-    //     this.view = new MyView03(this.scene).setup();
-    //     break;
-    //   default:
-    //     this.view = new MyView01(this.scene).setup();
-    //     break;
-    // }
-    // this.view.rotationVelocity.set(Math.random() * 0.1, Math.random() * 0.1, Math.random() * 0.1);
+
   }
+
+  sendData() {
+    // //
+    // Action.add(EVENT.Show, (e) => {
+    // });
+    // //
+    // Action.dispatch(EVENT.ShowDetail, { slug: 'a01' });
+    // //param
+
+    // Action.dispatch(EVENT.ShowPoster, data);
+  }
+
+
   addEvent() {
-    // document.addEventListener("click", e => this.shapeChange(e));
+    document.addEventListener("click", e => this.sceneChange(e));
   }
 }

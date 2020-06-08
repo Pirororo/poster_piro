@@ -13,6 +13,14 @@ export default class CategoryBoard {
     const categoryData = this.model.createCategory();
     this.view = new CategoryView(this.stage, categoryData);
     this.view.setup();
+    this.controller = new GalleryController(this.view, this.model, this.id);
+  }
+  destroy() {
+    this.view.destroy();
+  }
+  reset() {
+    this.view.reset();
+    console.log('category boar reset');
 
   }
 }

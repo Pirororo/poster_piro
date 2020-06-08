@@ -34,6 +34,18 @@ class PosterBaseView {
   }
   destroy() {
     this.scene.remove(this.group);
+    this.imageGeometry.dispose();
+    this.imageMaterial.dispose();
+    // this.imageShape.dispose();
+
+    this.labelGeometry.dispose();
+    this.labelMaterial.dispose();
+    // this.labelShape.dispose();
+
+    this.wireGeometry.dispose();
+    this.wireMaterial.dispose();
+    //this.wireShape = null;
+
     // this.geometry.dispose();
     // this.material.dispose();
     // this.texture.dispose();

@@ -7,6 +7,7 @@ export default class GalleryModel {
     this.currentCategory = null;
     this.categoryId = categoryId;
     this.id = id;
+    this.sessionUrl = 'session/';
     this.imgTexture = null;
     this.canvasTexture = null;
     this.boardWidth = 80;
@@ -14,6 +15,7 @@ export default class GalleryModel {
     this.fontSize = 6;
     this.categories = posterData.categories;
   }
+
   setup() {
     switch (this.categoryId) {
       case 'a':
@@ -38,20 +40,36 @@ export default class GalleryModel {
         this.currentCategory = this.posterData.s;
         break;
     }
-    // console.log(this.currentCategory);
   }
 
 
+  createCategory() {
+    //カテゴリー一覧用テキスト抽出
+    const categoryData = [];
+    this.posterData.forIn((categoryId, instance, index) => {
+      categoryData[index] = {};
+      categoryData[index].cateroryId = instance.categoryId;
+      categoryData[index].categoryEn = instance.categoryEn;
+      categoryData[index].categoryJp = instance.categoryJp;
+      categoryData[index].copy = instance.copy;
+    });
+    return categoryData;
+  }
+
+
+
   loadTexture() {
-    //ポスターCanvasに読み込む画像のローダー
+    //ポスター用Canvasに読み込む画像のローダー
     const textureLoader = new THREE.TextureLoader();
-    this.imgTexture = textureLoader.load(this.currentCategory.imgPath[this.id]);
+    this.imgTexture = textureLoader.load(this.sessionUrl + this.currentCategory.imgPath[this.id]);
     return this.imgTexture;
   }
 
 
   createLabel() {
-    //ポスターCanvasに読み込む2Dテキストの生成
+    // //ポスターCanvasに読み込む2Dテキストの生成
+
+    // console.log('createLabel' + this.currentCategory);
     const labelText = this.currentCategory.posterTitle[this.id];
     const canvas = document.createElement('canvas');
     canvas.width = this.boardWidth * 8;
@@ -71,18 +89,21 @@ export default class GalleryModel {
     return this.canvasTexture;
   }
 
-  createCategory(categoryId) {
-    //カテゴリー一覧用テキスト抽出
-    const categoryData = [];
-    this.posterData.forIn((categoryId, instance, index) => {
-      // console.log(instance.categoryId);
-      categoryData[index] = {};
-      categoryData[index].cateroryId = instance.categoryId;
-      categoryData[index].categoryEn = instance.categoryEn;
-      categoryData[index].categoryJp = instance.categoryJp;
-      categoryData[index].copy = instance.copy;
-    });
-    return categoryData;
+
+  createDom() {
+    //レスポンシブ用ポスター画像とタイトルを取得
+    const currentPosterData = {};
+    currentPosterData.imgPath = [];
+    currentPosterData.posterTitle = [];
+    for (let i = 0; i < this.currentCategory.imgPath.length; i++) {
+      currentPosterData.imgPath[i] = this.currentCategory.imgPath[i];
+      currentPosterData.posterTitle[i] = this.currentCategory.posterTitle[i];
+    }
+    return currentPosterData;
+
   }
+
+
+
 
 }

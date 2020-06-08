@@ -9,11 +9,18 @@ export default class posterBoard {
     this.scene = scene;
     this.model = new GalleryModel(categoryId, this.id);
     this.model.setup();
-    const texture = {
+    this.texture = {
       image: this.model.loadTexture(),
       label: this.model.createLabel()
     }
-    this.view = new PosterView(this.scene, texture).setup();
+    this.view = new PosterView(this.scene, this.texture).setup();
     this.controller = new GalleryController(this.view, this.model, this.id);
+  }
+
+  destroy() {
+    this.id = null;
+    this.model = null;
+    this.texture = null;
+    this.view.destroy();
   }
 }

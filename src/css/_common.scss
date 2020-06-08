@@ -3,6 +3,7 @@
 	Common
 	-----------------------------------------------
 */
+
 html,
 body {
   margin: 0;
@@ -11,26 +12,28 @@ body {
   height: 100%;
 }
 body {
-  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-  background-color: #000;
+  background-color: $black;
   overflow: hidden;
 }
 
-.common_container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1;
-}
-
-.common_screen_shade {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
-  background-color: #000;
+div,
+section,
+nav,
+article {
+  box-sizing: border-box;
 }
 
 #content_container {
-  position: relative;
+	position: fixed;
+  width: 100%;
+	height: 100%;
+}
+
+.common_container {
+	position: fixed;
+	top: 0;
+	left: 0;
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
 }

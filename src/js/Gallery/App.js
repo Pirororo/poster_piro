@@ -5,42 +5,55 @@ import { radians, map, distance } from './helpers';
 import { posterData } from './posterData';
 import GalleryModel from './GalleryModel';
 import PosterBoard from './elements/posterBoard';
+import PosterDomBoard from './elements/PosterDomBoard';
 import CategoryBoard from './elements/CategoryBoard';
-import { EVENT, SELECTORS } from "./../Utils/Props";
+import { SELECTORS } from "./../Utils/Props";
+import { EVENT, Action } from "./../Utils/EventManager";
 
 export default class App {
-  constructor() { }
+  constructor() {
+    this.categoryId = null;
+    this.currentPosterData = null;
+    this.boardLength = null;
+    this.posterData = posterData;
+    this.posterFrag = false;
+    this.isMobile = false;
+  }
   init() {
+    //初期カテゴリ
+    this.categoryId = 'a';
+
+    // DOM -----------
+    //PC版のid付与
+    document.querySelector('body').setAttribute('id', 'pc');
+    this.category_stage = document.getElementById('category_stage');
+    this.gallery_stage = document.getElementById('gallery_stage');
+
+    //初期設定
     this.setup();
+
+    // Three.jsの設定
     this.createScene();
     this.createCamera();
     this.addOrbitControls();
     this.addAmbientLight();
     this.addDirectionalLight();
 
-    //カテゴリーを配置
+    //カテゴリーの配置
     this.addCategory();
-    //ポスターギャラリーを配置
-    // this.addBorad();
+    this.onResize();
+
+    this.addEvent();
   }
 
   setup() {
     this.backgroundColor = '#000000';
     this.width = window.innerWidth;
     this.height = window.innerHeight;
-
     this.mouse3D = new THREE.Vector2();
     this.meshList = []; //ポスターを保存する配列
     this.raycaster = new THREE.Raycaster();
     this.rayReceiveObjects = []; //光線を受けるオブジェクト配列
-
-    //ポスターデータ
-    this.posterData = posterData.a; //一旦 a カテゴリを選択
-    this.boardLength = this.posterData.imgPath.length; //ポスターの数
-    this.boardPosRadius = 150; //中心からポスターまでの半径
-    const totalAnlge = 180; //円弧の角度
-    this.boardAngle = totalAnlge / this.boardLength; //分割する円弧の角度
-    this.halfAngle = totalAnlge + this.boardAngle; //円弧の調整角度
   }
 
   draw() {
@@ -73,28 +86,35 @@ export default class App {
     this.camera.aspect = this.width / this.height;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(this.width, this.height);
+
+    //ToDo: レスポンシブの対応
+    if (this.width < 768) {
+      this.isMobile = true;
+    } else {
+      this.isMobile = false;
+    }
+    console.log('isMoble: ' + this.isMobile);
+
   }
 
   onClick(e) {
-    const intersects = this.raycaster.intersectObjects(this.rayReceiveObjects);
+    // e.preventDefault();
+    console.log('poster flag: ' + this.posterFrag);
 
-    if (intersects.length > 0) {
-      const name = intersects[0].object.name;
-
-      console.dir(name);
-
-      document.dispatchEvent(new CustomEvent(EVENT.ShowDetail, {
-        detail: {
-          message: "Please show me a detail!"
-        }
-      }));
+    if (!this.posterFrag) {
+      this.onCategoryHandler(e);
+    } else {
+      this.onPosterBackHandler(e);
+      this.onPosterRaycasterHandler(e);
     }
-
   }
+
+
 
   /**
    * Methods
    */
+
   addCategory() {
     //カテゴリを配置する
     const categoryStage = document.getElementById('category_stage');
@@ -102,14 +122,27 @@ export default class App {
   }
 
 
-  addBorad() {
+
+
+  addPosterCanvasBoard() {
+    //Canvasを表示
+    this.gallery_canvas = this.gallery_stage.querySelector('canvas');
+    this.gallery_canvas.classList.add('in');
+
+    //ポスターデータ
+    this.setPosterData(this.categoryId);
+    this.boardPosRadius = 150; //中心からポスターまでの半径
+    const totalAnlge = 180; //円弧の角度
+    this.boardAngle = totalAnlge / this.boardLength; //分割する円弧の角度
+    this.halfAngle = totalAnlge + this.boardAngle; //円弧の調整角度
+
     const topPosY = 40;
     const bottomPosY = -50;
     const topAxixVec3 = new THREE.Vector3(0, 30, 0);
     const bottomAxixVec3 = new THREE.Vector3(0, -50, 0);
 
     for (let i = 0; i < this.boardLength; i++) {
-      this.board = new PosterBoard(this.scene, 'a', i);
+      this.board = new PosterBoard(this.scene, this.categoryId, i);
       let axisVec3;
       if (i % 2 === 0) {
         this.board.view.group.position.y = topPosY;
@@ -128,58 +161,267 @@ export default class App {
       this.board.view.group.lookAt(axisVec3);
       this.meshList.push(this.board); // 各ポスターを配列に保存
       //ポスターに名前をつける
-      this.meshList[i].view.imageShape.name = 'poster' + i;
+      this.meshList[i].view.imageShape.name = this.categoryId + (i + 1 < 10 ? "0" : "") + i;
       // レイキャスターの対象に登録
       this.rayReceiveObjects.push(this.meshList[i].view.imageShape);
     }
-    this.setBoardAnime();
+    this.setPosterCanvasBoardAnime();
+    this.addBackBtn();
   }
 
-  setBoardAnime() {
+
+  setPosterCanvasBoardAnime() {
     for (let i = 0; i < this.boardLength; i++) {
-      //アニメーション開始位置
       const startA = {
-        x: this.meshList[i].view.group.position.x,
         y: this.meshList[i].view.group.position.y - 100,
-        z: this.meshList[i].view.group.position.z,
-        alpha: this.meshList[i].view.imageMaterial.opacity
+        alpha: 0
       };
-      //到達位置
-      const targetA = { x: startA.x, y: this.meshList[i].view.group.position.y, z: startA.z, alpha: 1 };
-      //トゥイーンアニメーション
-      const tweenA = new TWEEN.Tween(startA).to(targetA, 500).easing(TWEEN.Easing.Cubic.InOut).onUpdate(() => {
-        this.meshList[i].view.group.position.x = startA.x;
-        this.meshList[i].view.group.position.y = startA.y;
-        this.meshList[i].view.group.position.z = startA.z;
-        this.meshList[i].view.labelMaterial.opacity = startB.alpha;
-        this.meshList[i].view.imageMaterial.opacity = startB.alpha;
-        this.meshList[i].view.wireMaterial.opacity = startA.alpha;
-      }).delay(1000 + (i * 50)).start();
+      const targetA = {
+        y: startA.y + 100,
+        alpha: 1
+      };
       const startB = {
-        alphaA: 0,
-        alphaB: 1
+        alphaIn: 0,
+        alphaOut: 1
       };
       const targetB = {
-        alphaA: 1,
-        alphaB: 0
+        alphaIn: 1,
+        alphaOut: 0
       }
+      //トゥイーンアニメーション
+      const tweenA = new TWEEN.Tween(startA).to(targetA, 500).easing(TWEEN.Easing.Cubic.InOut).onUpdate(() => {
+        this.meshList[i].view.group.position.y = startA.y;
+        this.meshList[i].view.wireMaterial.opacity = startA.alpha;
+      }).delay(1000 + (i * 50)).start();
+
       const tweenB = new TWEEN.Tween(startB).to(targetB, 300).easing(TWEEN.Easing.Cubic.InOut).onUpdate(() => {
-        this.meshList[i].view.imageMaterial.opacity = startB.alphaA;
-        this.meshList[i].view.labelMaterial.opacity = startB.alphaA;
+        this.meshList[i].view.imageMaterial.opacity = startB.alphaIn;
+        this.meshList[i].view.labelMaterial.opacity = startB.alphaIn;
       }).delay(1000 + (i * 10));
       tweenA.chain(tweenB);
       const tweenC = new TWEEN.Tween(startB).to(targetB, 300).easing(TWEEN.Easing.Cubic.InOut).onUpdate(() => {
-        this.meshList[i].view.wireMaterial.opacity = startB.alphaB;
+        this.meshList[i].view.wireMaterial.opacity = startB.alphaOut;
       }).delay(3000 + (i * 20)).start();
+    }
+    this.posterFrag = true;
+  }
+
+
+  removePosterCanvasBoard() {
+    const gllery_canvas = this.gallery_stage.querySelector('canvas');
+    gllery_canvas.classList.remove('in');
+    setTimeout(() => {
+      for (let i = 0; i < this.meshList.length; i++) {
+        this.meshList[i].destroy();
+      }
+      this.meshList = [];
+      this.category.reset(); //カテゴリを表示
+      this.posterFrag = false;
+    }, 500);
+  }
+
+  removePosterCanvasBoardAnime() {
+    let completeCounter = 0;
+    for (let i = 0; i < this.boardLength; i++) {
+      //アニメーション開始位置
+      const startA = {
+        alphaIn: 0,
+        alphaOut: 1,
+      };
+      //到達位置
+      const targetA = {
+        alphaIn: 1,
+        alphaOut: 0,
+      };
+      const startB = {
+        y: this.meshList[i].view.group.position.y,
+        alpha: 1,
+      };
+      const targetB = {
+        y: startB.y - 100,
+        alpha: 0,
+      };
+      //トゥイーンアニメーション
+      const tweenA = new TWEEN.Tween(startA).to(targetA, 500).easing(TWEEN.Easing.Cubic.InOut).onUpdate(() => {
+        this.meshList[i].view.wireMaterial.opacity = startA.alphaIn;
+        this.meshList[i].view.imageMaterial.opacity = startA.alphaOut;
+        this.meshList[i].view.labelMaterial.opacity = startA.alphaOut;
+      }).delay(100 + (i * 50)).start();
+
+      const tweenB = new TWEEN.Tween(startB).to(targetB, 500).easing(TWEEN.Easing.Cubic.InOut).onUpdate(() => {
+        this.meshList[i].view.group.position.y = startB.y;
+        this.meshList[i].view.wireMaterial.opacity = startB.alpha;
+      }).delay(300 + (i * 10))
+      tweenA.chain(tweenB);
+    }
+    setTimeout(() => {
+      this.removePosterCanvasBoard();
+    }, 1600);
+  }
+
+  addBackBtn() {
+    //Backボタン
+    this.backBtn = document.createElement('div');
+    this.backBtn.setAttribute('id', 'back_btn');
+    const backBtnImg = document.createElement('img');
+    backBtnImg.setAttribute('src', './img/ui/btn_back.png');
+    backBtnImg.setAttribute('alt', 'back');
+    this.backBtn.appendChild(backBtnImg);
+    this.gallery_stage.appendChild(this.backBtn);
+    setTimeout(() => {
+      this.backBtn.classList.add('in');
+    }, 2000);
+  }
+
+
+
+
+  // レスポンシブ用DOMのポスター
+  addPosterDomBorad() {
+    const galleryStage = document.getElementById('gallery_stage');
+    const domBoard = new PosterDomBoard(galleryStage, this.categoryId);
+    this.addBackBtn();
+    this.posterFrag = true;
+  }
+
+  removePosterDomBorad() {
+    const posterWrapper = this.gallery_stage.querySelector('.poster-wrapper');
+    posterWrapper.classList.remove('in');
+    setTimeout(() => {
+      posterWrapper.remove();
+      this.category.reset(); //再度カテゴリを表示
+      this.posterFrag = false;
+
+    }, 2000);
+  }
+
+
+
+  setPosterData(categoryId) {
+    switch (categoryId) {
+      case 'a':
+        this.currentPosterData = this.posterData.a;
+        break;
+      case 'b':
+        this.currentPosterData = this.posterData.b;
+        break;
+      case 'c':
+        this.currentPosterData = this.posterData.c;
+        break;
+      case 'd':
+        this.currentPosterData = this.posterData.d;
+        break;
+      case 'e':
+        this.currentPosterData = this.posterData.e;
+        break;
+      case 'f':
+        this.currentPosterData = this.posterData.f;
+        break;
+      default:
+        this.currentPosterData = this.posterData.s;
+        break;
+    }
+    this.boardLength = this.currentPosterData.imgPath.length; //ポスターの数
+  }
+
+
+
+
+
+
+  /**
+   * Handler
+   */
+
+  onCategoryHandler(e) {
+    const categoryName = e.target.className;
+    switch (categoryName) {
+      case 'cat0':
+        this.categoryId = 'a';
+        this.category.destroy();
+        this.checkResponsiveBoard();
+        break;
+      case 'cat1':
+        this.categoryId = 'b';
+        this.category.destroy();
+        this.checkResponsiveBoard();
+        break;
+      case 'cat2':
+        this.categoryId = 'c';
+        this.category.destroy();
+        this.checkResponsiveBoard();
+        break;
+      case 'cat3':
+        this.categoryId = 'd';
+        this.category.destroy();
+        this.checkResponsiveBoard();
+        break;
+      case 'cat4':
+        this.categoryId = 'e';
+        this.category.destroy();
+        this.checkResponsiveBoard();
+        break;
+      case 'cat5':
+        this.categoryId = 'f';
+        this.category.destroy();
+        this.checkResponsiveBoard();
+        break;
+      case 'cat6':
+        this.categoryId = 's';
+        this.category.destroy();
+        this.checkResponsiveBoard();
+        break;
+      default:
+        break;
     }
   }
 
 
-  removeBoard() {
-
+  checkResponsiveBoard() {
+    //モバイルのチェック
+    if (!this.isMobile) {
+      this.addPosterCanvasBoard();
+    } else {
+      this.addPosterDomBorad();
+    }
   }
 
 
+  onPosterRaycasterHandler(e) {
+    const intersects = this.raycaster.intersectObjects(this.rayReceiveObjects);
+    if (intersects.length > 0) {
+      const name = intersects[0].object.name;
+      console.dir(name);
+
+      Action.dispatch(EVENT.ShowDetail, { slug: name });
+      // document.dispatchEvent(new CustomEvent(EVENT.ShowDetail, {
+      //   detail: {
+      //     message: "Please show me a detail!"
+      //   }
+      // }));
+
+    }
+    this.posterFrag = true;
+  }
+
+
+  onPosterBackHandler(e) {
+    //バックボタン
+    if (e.target.id === 'back_btn') {
+      if (!this.isMobile) {
+        this.removePosterCanvasBoardAnime();
+      } else {
+        this.removePosterDomBorad();
+      }
+      this.backBtn.classList.remove('in');
+      setTimeout(() => {
+        this.backBtn.remove();
+      }, 2000);
+    }
+  }
+
+
+  // THREEjsの設定
   createScene() {
     this.scene = new THREE.Scene();
     this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -220,5 +462,11 @@ export default class App {
     const ligh = new THREE.DirectionalLight(0xffffff, 1);
     ligh.position.set(0, 300, 30);
     this.scene.add(ligh);
+  }
+
+  addEvent()
+  {
+    Action.add(EVENT.BackToPoster, () => {
+    });
   }
 }

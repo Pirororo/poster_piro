@@ -13,29 +13,23 @@ const KEYCODE = {
 };
 
 const EVENT = _EVENT;
-// const EVENT = {
-//   ShowPoster: "ShowPoster",
-//   ShowDetail: "ShowDetail",
-//   BackToCategory: "BackToCategory",
-//   BackToPoster: "BackToPoster",
-
-//   VRModeStart: "VRModeStart",
-//   ShowCategoryA: "ShowCategoryA",
-//   ShowCategoryB: "ShowCategoryB",
-//   ShowCategoryC: "ShowCategoryC",
-//   ShowCategoryD: "ShowCategoryD",
-//   ShowCategoryE: "ShowCategoryE",
-//   ShowCategoryF: "ShowCategoryF",
-//   ShowCategoryG: "ShowCategoryG"
-// };
 
 const SELECTORS =
 {
+  ContentContainer: "content_container",
+  ContentContainerXR: "xr_mode",
+
   BackgroundContainer: "background_container",
   BackgroundStage: "WebGL-output",
 
   HudContainer: "hud_container",
   HudUIStage: "hud_ui_stage",
+
+  StartupContainer: "startup_container",
+  StartupStage: "startup_stage",
+  StartupContentContainer: "startup_content_container",
+  StartupVRMode: "startup_vrmode_container",
+  StartupNormalMode: "startup_normalmode_container",
 
   CategoryContainer: "category_container",
   CategoryStage: "category_stage",
@@ -54,6 +48,7 @@ const SELECTORS =
   RaycastTarget: "xr_raycast_target",
   XRHudContainer: "xr_hud_container",
 
+  XREntranceBoardContainer: "xr_entrance_board_container",
   XRCategoryBoardContainer: "xr_category_board_container",
   XRGalleryPosterPanelContainer: "xr_poster_panel_container",
   XRGalleryPosterTitleContainer: "xr_poster_title_container",
@@ -63,6 +58,7 @@ const SELECTORS =
 
 const COMPONENTS = {
   Background: "background-component",
+  Entrance: "entrance-component",
   Gallery: "gallery-component",
   Detail: "detail-component",
   RaycastCheck: "raycast-check-component",
@@ -70,6 +66,7 @@ const COMPONENTS = {
 };
 
 const BOARD_ID = {
+  Entrance: "entrance",
   Category: "category",
   Poster: "poster",
   Detail: "detail",

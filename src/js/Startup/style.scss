@@ -1,0 +1,64 @@
+@charset 'utf-8';
+// @import "./../../css/var";
+
+#category_container,
+#gallery_container,
+#detail_container {
+	visibility: hidden;
+}
+
+#startup_container {
+	width: 100%;
+	height: 100%;
+	z-index: 2;
+	visibility: visible;
+}
+
+#startup_stage,
+#startup_content_container {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+#startup_content_container {
+	background-color: rgba(0, 0, 0, 0.2);
+	opacity: 0;
+	transition: opacity 1s ease-out;
+
+	&.active {
+		opacity: 1;
+	}
+}
+
+#startup_selections_container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+
+	color: #fff;
+}
+
+.startup_selection_container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	width: 50%;
+	height: 50%;
+	font-size: 2em;
+	opacity: 0.8;
+	text-align: center;
+}
+
+#startup_vrmode_container {
+	background-color: #433;
+	cursor: pointer;
+}
+
+#startup_normalmode_container {
+	background-color: #334;
+}
+

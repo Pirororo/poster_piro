@@ -36,149 +36,155 @@
  */
 
 //category
-#category_stage {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+#pc {
+  #category_stage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-  .category-wrapper {
-    width: 1100px;
-    height: 580px;
-    margin: 100px auto;
-    ul {
+    .category-wrapper {
       width: 1100px;
       height: 580px;
-      position: relative;
-      li {
-        width: 270px;
-        height: 250px;
-        position: absolute;
-        opacity: 0;
-        transition: all 0.3s ease-in-out;
-        transform: translate3d(0, 60px, 0);
-
-        .category-container {
-          width: 100%;
+      margin: 100px auto;
+      transition: all 0.3s ease-in-out;
+      ul {
+        width: 1100px;
+        height: 580px;
+        position: relative;
+        li {
+          width: 270px;
           height: 250px;
-          text-align: center;
-          color: white;
+          position: absolute;
+          opacity: 0;
+          transform: translate3d(0, 60px, 0);
           transition: all 0.3s ease-in-out;
-          cursor: pointer;
-          position: relative;
-          padding: 8px;
-          letter-spacing: -0.05rem;
+          div {
+            width: 100%;
+            height: 250px;
+            text-align: center;
+            color: white;
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+            position: relative;
+            padding: 8px;
+            letter-spacing: -0.05rem;
 
-          .caterory-label {
-            font-size: 24px;
-            font-weight: bold;
-            width: 100%;
-            padding-top: 24px;
-            margin-bottom: 16px;
-          }
-          .categoryEn {
-            font-size: 18px;
-            font-weight: bold;
-            width: 100%;
-            margin-bottom: 24px;
-            line-height: 1.2;
-          }
-          .categoryJp {
-            font-size: 14px;
-            font-weight: bold;
-            width: 100%;
-            position: absolute;
-            top: 140px;
-            left: 0;
-          }
-          .categoryCopy {
-            font-size: 18px;
-            font-weight: bold;
-            width: 100%;
-            position: absolute;
-            top: 170px;
-            left: 0;
-            line-height: 1.3;
-          }
+            .caterory-label {
+              font-size: 24px;
+              font-weight: bold;
+              width: 100%;
+              padding-top: 24px;
+              margin-bottom: 16px;
+              pointer-events: none;
+            }
+            .categoryEn {
+              font-size: 18px;
+              font-weight: bold;
+              width: 100%;
+              margin-bottom: 24px;
+              line-height: 1.2;
+              pointer-events: none;
+            }
+            .categoryJp {
+              font-size: 14px;
+              font-weight: bold;
+              width: 100%;
+              position: absolute;
+              top: 140px;
+              left: 0;
+              pointer-events: none;
+            }
+            .categoryCopy {
+              font-size: 18px;
+              font-weight: bold;
+              width: 100%;
+              position: absolute;
+              top: 170px;
+              left: 0;
+              line-height: 1.3;
+              pointer-events: none;
+            }
 
-          &:hover {
-            opacity: 0.4;
+            &:hover {
+              opacity: 0.4;
+            }
           }
         }
-      }
-      li:nth-child(1) {
-        left: 0;
-        top: 0;
-        .category-container {
-          background: $colorA;
+        li:nth-child(1) {
+          left: 0;
+          top: 0;
+          div {
+            background: $colorA;
+          }
         }
-      }
-      li:nth-child(2) {
-        left: 272px;
-        top: 0;
-        .category-container {
-          background: $colorB;
+        li:nth-child(2) {
+          left: 272px;
+          top: 0;
+          div {
+            background: $colorB;
+          }
         }
-      }
-      li:nth-child(3) {
-        left: 544px;
-        top: 0;
-        .category-container {
-          background: $colorC;
+        li:nth-child(3) {
+          left: 544px;
+          top: 0;
+          div {
+            background: $colorC;
+          }
         }
-      }
-      li:nth-child(4) {
-        left: 0;
-        top: 252px;
-        .category-container {
-          background: $colorD;
+        li:nth-child(4) {
+          left: 0;
+          top: 252px;
+          div {
+            background: $colorD;
+          }
         }
-      }
-      li:nth-child(5) {
-        left: 272px;
-        top: 252px;
-        .category-container {
-          background: $colorE;
+        li:nth-child(5) {
+          left: 272px;
+          top: 252px;
+          div {
+            background: $colorE;
+          }
         }
-      }
-      li:nth-child(6) {
-        left: 544px;
-        top: 252px;
-        .category-container {
-          background: $colorF;
+        li:nth-child(6) {
+          left: 544px;
+          top: 252px;
+          div {
+            background: $colorF;
+          }
         }
-      }
-      li:nth-child(7) {
-        right: 0;
-        top: 0;
-        .category-container {
-          background: $colorS;
+        li:nth-child(7) {
+          right: 0;
+          top: 0;
+          div {
+            background: $colorS;
+          }
         }
       }
     }
-  }
-  .category-wrapper.fadein {
-    ul {
-      li {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-      }
-      li:nth-child(2) {
-        transition-delay: 0.2s;
-      }
-      li:nth-child(3) {
-        transition-delay: 0.3s;
-      }
-      li:nth-child(4) {
-        transition-delay: 0.4s;
-      }
-      li:nth-child(5) {
-        transition-delay: 0.5s;
-      }
-      li:nth-child(6) {
-        transition-delay: 0.6s;
-      }
-      li:nth-child(7) {
-        transition-delay: 0.7s;
+    .category-wrapper.fadein {
+      ul {
+        li {
+          opacity: 1;
+          transform: translate3d(0, 0, 0);
+        }
+        li:nth-child(2) {
+          transition-delay: 0.2s;
+        }
+        li:nth-child(3) {
+          transition-delay: 0.3s;
+        }
+        li:nth-child(4) {
+          transition-delay: 0.4s;
+        }
+        li:nth-child(5) {
+          transition-delay: 0.5s;
+        }
+        li:nth-child(6) {
+          transition-delay: 0.6s;
+        }
+        li:nth-child(7) {
+          transition-delay: 0.7s;
+        }
       }
     }
   }
@@ -186,48 +192,49 @@
 
 // Tablet SP
 @media (max-width: 960px) {
-  //category
-  #category_stage {
-    display: block;
-    .category-wrapper {
-      width: 100%;
-      height: auto;
-      margin: 100px 0;
-      padding: 0 8px;
-
-      ul {
+  #pc {
+    //category
+    #category_stage {
+      display: block;
+      .category-wrapper {
         width: 100%;
         height: auto;
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        li {
-          width: calc(49%);
+        margin: 100px 0;
+        padding: 0 8px;
+
+        ul {
+          width: 100%;
           height: auto;
-          position: static;
-          margin-bottom: 8px;
+          display: flex;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          li {
+            width: calc(49%);
+            height: auto;
+            position: static;
+            margin-bottom: 8px;
 
-          .category-container {
-            height: 200px;
-
-            .caterory-label {
-              font-size: 20px;
-              padding-top: 16px;
-              margin-bottom: 8px;
-            }
-            .categoryEn {
-              font-size: 16px;
-              margin-bottom: 0;
-            }
-            .categoryJp {
-              font-size: 12px;
-              top: 120px;
-              left: 0;
-            }
-            .categoryCopy {
-              font-size: 16px;
-              top: 140px;
-              left: 0;
+            div {
+              height: 200px;
+              .caterory-label {
+                font-size: 20px;
+                padding-top: 16px;
+                margin-bottom: 8px;
+              }
+              .categoryEn {
+                font-size: 16px;
+                margin-bottom: 0;
+              }
+              .categoryJp {
+                font-size: 12px;
+                top: 120px;
+                left: 0;
+              }
+              .categoryCopy {
+                font-size: 16px;
+                top: 140px;
+                left: 0;
+              }
             }
           }
         }

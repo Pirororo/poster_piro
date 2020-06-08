@@ -1,9 +1,19 @@
 /*
 -----------------------------------------------
+	Import
+	-----------------------------------------------
+*/
+
+@import "reset";
+@import "loader";
+@import url("https://use.typekit.net/gqz2wji.css");
+/*
+-----------------------------------------------
 	Common
 	-----------------------------------------------
 */
-html, body {
+html,
+body {
 	margin: 0;
 	padding: 0;
 	width: 100%;
@@ -11,14 +21,8 @@ html, body {
 }
 body {
 	overflow: hidden;
-	background-color: #ccc;
-}
-
-#content_container {
+	background-color: #000;
 	position: relative;
-	width: 100%;
-	height: 100%;
-	color: #000;
 }
 
 /*
@@ -26,3 +30,108 @@ body {
 	Top
 	-----------------------------------------------
 */
+
+header {
+	position: absolute;
+	left: 32px;
+	top: 16px;
+	width: 300px;
+	height: 100px;
+	z-index: 10;
+	color: #fff;
+	font-family: neue-haas-unica, sans-serif;
+	font-weight: 200;
+	font-style: normal;
+	letter-spacing: -0.1;
+	opacity: 0;
+	animation: fade-in 0.5s ease 0.5s 1 forwards normal;
+
+	h1 {
+		font-size: 24px;
+		margin-bottom: 8px;
+	}
+	.url {
+		font-size: 13px;
+		position: absolute;
+	}
+}
+
+#content_contaienr {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	background: url(./img/bg1.png) center center no-repeat;
+	filter: blur(4px);
+	background-size: cover;
+	opacity: 0;
+	animation: fade-in 0.5s ease 2.5s 1 forwards normal;
+}
+
+.notification-container {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	color: #fff;
+	font-family: neue-haas-unica, sans-serif;
+	font-weight: 200;
+	font-style: normal;
+	letter-spacing: -0.1;
+	display: flex;
+	align-items: center;
+	opacity: 0;
+	animation: fade-in 0.5s ease 1s 1 forwards normal;
+
+	section.notification {
+		text-align: center;
+		width: 100%;
+		margin: -124px auto 0;
+
+		h2 {
+			font-size: 36px;
+			margin-bottom: 24px;
+		}
+		p.comingsoon {
+			font-size: 20px;
+			line-height: 1.6;
+		}
+	}
+}
+
+footer {
+	position: absolute;
+	height: 20px;
+	width: 100%;
+	left: 0;
+	bottom: 16px;
+	z-index: 10;
+	opacity: 0;
+	animation: fade-in 0.5s ease 0.5s 1 forwards normal;
+
+	.copyright {
+		font-size: 10px;
+		text-align: center;
+		z-index: 5;
+		color: #fff;
+		font-family: neue-haas-unica, sans-serif;
+		font-weight: 200;
+		font-style: normal;
+	}
+}
+
+.loader {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin: -11em 0 0 -5em;
+}
+
+@keyframes fade-in {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}

@@ -3,7 +3,7 @@ import * as THREE from 'three';
 export default class CategoryView {
   constructor(stage, categoryData) {
     this.stage = stage;
-    this.categoryData = categoryData
+    this.categoryData = categoryData;
   }
 
   setup() {
@@ -18,30 +18,33 @@ export default class CategoryView {
 
 
     const categoryWrapperli = [];
+
+
     for (let i = 0; i < this.categoryData.length; i++) {
       // li
       categoryWrapperli[i] = document.createElement('li');
       categoryWrapperUl.appendChild(categoryWrapperli[i]);
 
       //div.category-container
-      const categoryContainer = this.createDomElement('div', 'category-container cat' + i);
+      const categoryContainer = this.createDomElement('div', 'cat' + i);
       // categoryContainer.setAttribute('class', 'c' + i);
       categoryWrapperli[i].appendChild(categoryContainer);
 
       //div.caterory-label
-      const cateroryLabel = this.createDomElement('div', 'caterory-label', this.categoryData[i].categoryId);
+      const cateroryLabel = this.createDomElement('p', 'caterory-label', this.categoryData[i].cateroryId);
       categoryContainer.appendChild(cateroryLabel);
 
+
       //div.categoryEn
-      const categoryEn = this.createDomElement('div', 'categoryEn', this.categoryData[i].categoryEn);
+      const categoryEn = this.createDomElement('p', 'categoryEn', this.categoryData[i].categoryEn);
       categoryContainer.appendChild(categoryEn);
 
       //div.categoryJp
-      const categoryJp = this.createDomElement('div', 'categoryJp', this.categoryData[i].categoryJp);
+      const categoryJp = this.createDomElement('p', 'categoryJp', this.categoryData[i].categoryJp);
       categoryContainer.appendChild(categoryJp);
 
       //div.categoryCopy
-      const categoryCopy = this.createDomElement('div', 'categoryCopy', this.categoryData[i].copy);
+      const categoryCopy = this.createDomElement('p', 'categoryCopy', this.categoryData[i].copy);
       categoryContainer.appendChild(categoryCopy);
     }
 
@@ -58,18 +61,22 @@ export default class CategoryView {
 
   }
 
+  reset(){
+    //カテゴリーボードをフェードイン
+    this.categoryWrapper.classList.add('fadein');
+  }
+
   destroy() {
-    //カテゴリーボードをフェードアウトしてDOMを削除
+    //カテゴリーボードをフェードアウト
     this.categoryWrapper.classList.remove('fadein');
-    setTimeout(() => {
-      this.stage.removeChild(this.categoryWrapper);
-    }, 1000);
   }
 
 
   getScene() { return this.stage }
 
   createDomElement(tag, attrValue, str) {
+    // console.log(str);
+
     const ele = document.createElement(tag);
     if (!str) {
       ele.setAttribute('class', attrValue);

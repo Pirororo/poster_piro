@@ -48,6 +48,10 @@
     "gsap": "^3.2.6",
     "html2canvas": "^1.0.0-rc.5",
     "pdfjs-dist": "^2.3.200",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
     "three": "^0.116.1",
     "three.meshline": "^1.2.0",
     "vanilla-router": "^1.2.8"

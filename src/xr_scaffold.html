@@ -1,0 +1,16 @@
+<a-scene id="xr_scene">
+  <a-entity id="xr_rig">
+    <a-entity id="xr_player">
+      <a-entity id="xr_camera" camera look-controls>
+        <a-entity id="xr_raycaster"
+        position="0 0 -1"
+        geometry="primitive: ring"
+        scale="0.02 0.02 0.02"
+        material="color: rgb(255, 128, 0); shader: flat">
+          <a-animation begin="fusing" easing="ease-in" attribute="scale"
+          fill="none" from="0.02 0.02 0.02" to="0.001 0.001 0.001" dur="2000"></a-animation>
+        </a-entity>
+      </a-entity>
+    </a-entity>
+  </a-entity>
+</a-scene>

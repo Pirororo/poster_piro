@@ -1,15 +1,19 @@
-
 /*
 -----------------------------------------------
-	Common
+	XR Mode styles
 	-----------------------------------------------
 */
+
+@charset 'utf-8';
+// @import "var";
+
 html, body {
 	margin: 0;
 	padding: 0;
 	width: 100%;
 	height: 100%;
 }
+
 body {
 	font-family: "Helvetica Neue",
 	Arial,
@@ -18,112 +22,84 @@ body {
 	Meiryo,
 	sans-serif;
 	background-color: #000;
-	overflow: hidden;
 }
-
-.common_container {
-	position: fixed;
-	top: 0;
-	left: 0;
-  z-index: 1;
-  visibility: visible;
-  display: block;
-}
-
-.common_screen_shade {
-	position: fixed;
-	width: 100%;
-	height: 100%;
-	z-index: 2;
-	background-color: #000;
-}
-
-#content_container {
-	position: relative;
-}
-
-/*
------------------------------------------------
-	Background
-	-----------------------------------------------
-*/
-
-#background_container {
-	z-index: 1;
-}
-
-#WebGL-output {
-	width: 100%;
-	height: 100%;
-}
-
-/*
------------------------------------------------
-	Category, Gallery
-	-----------------------------------------------
-*/
-#category_container {
-	z-index: 10;
-}
-#category_stage {
-	position: relative;
-}
-#gallery_container {
-	z-index: 11;
-}
-
-
-#dialog {
-	position: fixed;
-	top: 0;
-	left: 0;
-	color: #fff;
-}
-#dialog button {
-	padding: 1em;
-	font-size: 1em;
-}
-
-#buttons {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 1;
-  background: white;
-}
-
-
-
-/*
------------------------------------------------
-	Detail
-	-----------------------------------------------
-*/
-
-#detail_container {
-	z-index: 20;
-	visibility: hidden;
-}
-
-#blocker {
-	position: absolute;
-}
-
-/*
------------------------------------------------
-	XR
-	-----------------------------------------------
-*/
 
 #xr_mode
 {
-	#content_container {
-		position: fixed;
+
+	#startup_container {
+		visibility: hidden;
 	}
 
-	#xr_scene {
-		z-index: 200;
+	#category_container,
+	#gallery_container,
+	#detail_container {
+		visibility: visible;
 	}
+
+	.common_container {
+		width: auto;
+	}
+
+	.common_screen_shade {
+		position: fixed;
+		width: 100%;
+		height: 100%;
+		z-index: 2;
+		background-color: #000;
+	}
+
+	#hud_container {
+		z-index: 100;
+		visibility: visible;
+	}
+
+	#background_container {
+		z-index: 1;
+	}
+
+	#startup_container {
+		z-index: 5;
+	}
+
+	#entrance_container {
+		z-index: 10;
+	}
+
+	#category_container {
+		z-index: 20;
+	}
+	#category_stage {
+		position: relative;
+	}
+
+	#gallery_container {
+		z-index: 30;
+	}
+
+	#detail_container {
+		z-index: 40;
+	}
+
+
+	#entrance_container,
+	#category_container,
+	#gallery_container,
+	#detail_container {
+		visibility: visible;
+	}
+
+	#startup_container {
+		visibility: hidden;
+	}
+
+	// #xr_scene {
+	// 	z-index: 200;
+	// }
+
+	/*
+		HUD
+	*/
 
 	#hud_container {
 		z-index: 250;
@@ -144,6 +120,9 @@ body {
 		box-sizing: border-box;
 	}
 
+	/*
+		Poster
+	*/
 	.gallery_poster_title {
 		position: absolute;
 		top: 0;
@@ -154,17 +133,18 @@ body {
 		color:#fff;
 		font-weight: bold;
 		background-color: rgba(0, 0, 0, 0.8);
-		padding: 2em 0.5em 0;
+		padding: 1em 0.25em 0;
 		box-sizing: border-box;
 		user-select: none;
 	}
 
-	// category content
-
+	/*
+		Category
+	*/
 	.category_content_container {
 		position: absolute;
-		width: 520px;
-		height: 520px;
+		width: 512px;
+		height: 512px;
 		padding: 80px 0.5em 0;
 		font-size: 36px;
 		line-height: 1.4;
@@ -204,7 +184,8 @@ body {
 		margin-bottom: 20px;
 	}
 
-	.category_title {
+	.category_title
+	{
 		&.english {
 			font-size: 40px;
 			line-height: 1.24;
@@ -227,11 +208,12 @@ body {
 	font-size: 32px;
 	}
 
-	// detail_content_container
 
+	/*
+	 Detail
+	*/
 
 	#detail_container {
-		visibility: visible;
 		font-size: 2rem;
 	}
 
@@ -353,5 +335,4 @@ body {
 			font-size: 0.85em;
 		}
 	}
-
 }

@@ -21,15 +21,3 @@ $type-family-main: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragi
 /* JP Heading  */
 $type-family-jp: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif !default;
 // $type-jp-bold: 700;
-
-body {
-  margin: 0;
-  padding: 0;
-  background-color: $black;
-}
-div,
-section,
-nav,
-article {
-  box-sizing: border-box;
-}

@@ -5,6 +5,8 @@
  */
 
 import { ICommonFacadeModuleObject } from "../Utils/Interfaces";
+import { EVENT, Action } from "./../Utils/EventManager";
+
 import App from "./App";
 
 const Facade =
@@ -16,7 +18,9 @@ const Facade =
 	init()
 	{
 		this.props.instance = new App();
-		this.props.instance.init();
+		// this.props.instance.init();
+
+		this.addEvent();
 
 		return this;
   },
@@ -33,15 +37,21 @@ const Facade =
   },
 	draw()
 	{
-		this.props.instance.draw();
+		// this.props.instance.draw();
 	},
 	destroy()
 	{
 	},
-	onResize() { this.props.instance.onResize(); },
-	onMouseMove(e) { this.props.instance.onMouseMove(e); },
+	addEvent()
+	{
+		Action.add(EVENT.ShowCategory, () => {
+			this.props.instance.init();
+		});
+	}
+	// onResize() { this.props.instance.onResize(); },
+	// onMouseMove(e) { this.props.instance.onMouseMove(e); },
 	// onKeyUp(e) { this.props.instance.onKeyUp(e); }
-	onClick(e) { this.props.instance.onClick(e); }
+	// onClick(e) { this.props.instance.onClick(e); }
 };
 
 export default Facade;

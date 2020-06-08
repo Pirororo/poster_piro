@@ -4,10 +4,12 @@
  * Assembling each module instances.
  */
 
-import Background from "./Background/Facade"; // will be created by Piro
+import Background from "./Background_test/Facade"; // will be created by Piro
 import Gallery from "./Gallery/Facade"; // will be created by Yonekura
 import Detail from "./Detail/Facade"; // will be created by Shinagawa
 import XRHelper from "./XR/Facade"; // will be created by Beharu
+
+import Startup from "./Startup/Facade";
 
 import Router from "./Utils/Router";
 import { isVR } from "./Utils/Helper";
@@ -18,26 +20,36 @@ const Composer =
 		isPause: false,
 	},
 	instances: {},
-	init() {
-
-		// Router.init();
-
-		if (isVR()) {
-			this.instances.xr = XRHelper.init();
+	init()
+	{
+		if (!isVR)
+		{
+			Router.init();
 		}
-		else {
-			this.instances.background = Background.init();
-			this.instances.gallery = Gallery.init();
-			// this.instances.detail = Detail.init();
-		}
+
+		this.instances.background = Background.init();
+		this.instances.startup = Startup.init()
+		this.instances.gallery = Gallery.init();
+		this.instances.xr = XRHelper.init();
+
+		// this.instances.detail = Detail.init();
+
+		// if (isVR()) {
+		// 	this.instances.xr = XRHelper.init();
+		// }
+		// else {
+		// 	this.instances.background = Background.init();
+		// 	this.instances.gallery = Gallery.init();
+		// 	// this.instances.detail = Detail.init();
+		// }
 
 		this.addEvent();
 		this.setup();
 
 		return this;
 	},
-	setup(options = {}) {
-		this.instances.forIn((k, instance) => instance.setup());
+	setup() {
+		// this.instances.forIn((k, instance) => instance.setup());
 		this.update();
 	},
 	update() {
@@ -76,7 +88,7 @@ const Composer =
 		this.instances.forIn((k, instance) => instance.onClick(e));
 	},
 
-	addEvent(events) {
+	addEvent() {
 
 	}
 };

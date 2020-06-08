@@ -4,4 +4,6 @@
  * script for TOP page
  */
 
- import "./style.scss";
+import "./style.scss";
+
+

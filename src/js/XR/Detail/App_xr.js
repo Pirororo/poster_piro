@@ -24,8 +24,6 @@ export default
   {
     const endPoint = "https://openhouse.nii.ac.jp/wp/wp-json/wp/v2/posts/";
 
-    // slug = "a01";
-
     return new Promise((resolve, reject) => {
 
       axios.get(`${endPoint}?slug=${slug}`)
@@ -37,13 +35,9 @@ export default
         else
         {
           reject("Data is empty.");
-          // Action.dispatch(EVENT.BackToPoster);
         }
       })
-      .catch(error => {
-        reject(error);
-        // Action.dispatch(EVENT.BackToPoster);
-      })
+      .catch(error => reject(error))
     });
   },
 

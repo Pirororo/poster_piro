@@ -54,7 +54,7 @@ export default
           boardContentBody: data.imgPath[i],
           title: this.containers.poster.title,
           titleContent: this.containers.poster.titleContent,
-          titleContentBody: data.posterTitle[i]
+          titleContentBody: data.posterTitle[i].replace(/<br>/g, "")
         },
         data
       };
