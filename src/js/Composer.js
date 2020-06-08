@@ -4,7 +4,9 @@
  * Assembling each module instances.
  */
 
-import Background from "./Background_test/Facade"; // will be created by Piro
+// import Background from "./Background_test/Facade"; // will be created by Piro
+import Background from "./Background/Facade"; // will be created by Piro
+
 import Gallery from "./Gallery/Facade"; // will be created by Yonekura
 import Detail from "./Detail/Facade"; // will be created by Shinagawa
 import XRHelper from "./XR/Facade"; // will be created by Beharu
