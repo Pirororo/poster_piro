@@ -42,12 +42,12 @@ const Facade =
 	onKeyUp(e)
 	{
 		this.props.instance.onKeyUp(e);
-	}
+	},
 	
-	// addEvent()
-	// {
-	// 	this.props.instance.addEvent(); 
-	// }
+	addEvent()
+	{
+		// this.props.instance.addEvent(); 
+	}
 
 };
 

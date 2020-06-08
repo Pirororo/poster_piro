@@ -76,6 +76,8 @@ export class Scene extends THREE.Scene
         this.scene0.update();
     }
 
+
+    // addEvent()
     onKeyUp(e)
     {
         if (e.keyCode == KEYCODE.K){

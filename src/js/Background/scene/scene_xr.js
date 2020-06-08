@@ -128,11 +128,11 @@ export class Scene extends THREE.Scene
         });
 
         Action.add(EVENT.ShowCategoryD, () =>{
-            this.chooseRoom(this.camTargetBool_D, 0, "Go to room_D!");
+            this.chooseRoom(this.camTargetBool_D, 4, "Go to room_D!");
         });
 
         Action.add(EVENT.ShowCategoryG, () =>{
-            this.chooseRoom(this.camTargetBool_G, 0, "Go to room_G!");
+            this.chooseRoom(this.camTargetBool_G, 9, "Go to room_G!");
         });
 
         Action.add(EVENT.BackToCategory , () =>{

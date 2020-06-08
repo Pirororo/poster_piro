@@ -1,6 +1,5 @@
 import * as THREE from "three";
-import { KEYCODE } from "./utils/props.js";
-import { EVENT, Action } from "../Utils/EventManager"
+import { EVENT, KEYCODE } from "../utils/props.js";
 
 //fps表示とDAT表示に必要なjs
 import {GUI} from 'three/examples/jsm/libs/dat.gui.module';
@@ -18,7 +17,7 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 import { CopyShader } from "three/examples/jsm/shaders/CopyShader";
 
 //自作のグラジエントシェーダ
-import { ColorifyGradientEasingShader } from "./shaders/ColorifyGradientEasingShader.mine";
+import { ColorifyGradientEasingShader } from "../shaders/ColorifyGradientEasingShader.mine";
 import { CompressedTextureLoader } from "three/build/three";
 
 
@@ -132,15 +131,52 @@ export default class App
     this.composer.addPass(bloomPass);
     this.composer.addPass(effectCopy);
 
-    //☆☆☆【受け取るイベント】
-    // EVENT.ShowCategoryA// Aの部屋に近づくスイッチ  <A>
-    // EVENT.ShowCategoryB// Bの部屋に近づくスイッチ  <B>
-    // EVENT.ShowCategoryC// Cの部屋に近づくスイッチ  <C>
-    // EVENT.ShowCategoryD// Dの部屋に近づくスイッチ  <D>
-    // EVENT.ShowCategoryE// Eの部屋に近づくスイッチ  <E>
-    // EVENT.ShowCategoryF// Fの部屋に近づくスイッチ  <F>
-    // EVENT.ShowCategoryG// Gの部屋に近づくスイッチ  <G>
-    // EVENT.BackToCategory//７枚パネルのとこ戻ってほしいスイッチ  <BACKSPACE>
+
+    // var controls = new function () {
+
+    //     this.select = 'Colorify';
+
+    //     //グラデパス
+    //     this.color = 0x734ca4;
+    //     this.color2 = 0x4ea78;
+
+    //     // //ブルームパス
+    //     // this.strength = 0.1;
+    //     // this.kernelSize = 5;
+    //     // this.sigma = 1.0;
+    //     // this.resolution = 64;
+
+    //     // this.rotate = false;
+
+    //     this.changeColor = function () {
+    //         // this.colorify.uniforms.color.value = new THREE.Color(controls.color);
+    //         this.colorify.uniforms.color.value = controls.color;
+
+    //     };
+    //     this.changeColor2 = function () {
+    //         this.colorify.uniforms.color2.value = new THREE.Color(controls.color2);
+    //     };
+    // };
+
+
+    // const gui = new GUI();
+
+    // gui.add(controls, "select", [ "colorify" , 'BloomPass']).onChange(controls.switchShader);
+
+    // var clFolder = gui.addFolder("Colorify");
+    // clFolder.addColor(controls, "color").onChange(controls.changeColor);
+    // // clFolder.addColor(controls, "color").onChange(controls.changeColor);
+    // // clFolder.addColor(controls, "color").onChange(controls.changeColor);
+    // // clFolder.addColor(controls, "color").onChange(controls.changeColor);
+
+    // clFolder.addColor(controls, "color2").onChange(controls.changeColor2);
+    // clFolder.open();
+
+    // var bpFolder = gui.addFolder("BloomPass");
+    // // bpFolder.add(controls, "strength", 1, 10).onChange(controls.updateEffectBloom);
+    // // bpFolder.add(controls, "kernelSize", 1, 100).onChange(controls.updateEffectBloom);
+    // // bpFolder.add(controls, "sigma", 1, 10).onChange(controls.updateEffectBloom);
+    // // bpFolder.add(controls, "resolution", 0, 1024).onChange(controls.updateEffectBloom);
 
   }
 
@@ -184,50 +220,43 @@ export default class App
       this.masterFrame =0;
     }
 
+
   }
 
-
-
-  // addEvent()
   onKeyUp(e)//グラデめも    0x5de2ff, 0x3333a7
   {
-      if (e.keyCode == KEYCODE.A){//0x730B1E
-      // Action.add(EVENT.ShowCategoryA, () =>{
-          //(this._scene.camTargetBool_A, 0x295FCC, 0x9629CC);//0x2bd6e1
-          this.chooseRoomColor(this._scene.camTargetBool_A, 0xd790b1, 0x9b0a0a);
+      if (e.keyCode == KEYCODE.A){//0x9629CC
+      //   if (this.goRoom_A == true){ //キーの代わりにくる変数
+          this.chooseRoomColor(this._scene.camTargetBool_A, 0x295FCC, 0x9629CC);
+          // this.chooseRoomColor(this._scene.camTargetBool_A, 0x243ac, 0xa800cd);
       }
-      if (e.keyCode == KEYCODE.B){//0x14662F
-      // Action.add(EVENT.ShowCategoryB, () =>{
-          //(this._scene.camTargetBool_B, 0x2EC7E5, 0x295FCC);
-          this.chooseRoomColor(this._scene.camTargetBool_B, 0xa6eb72, 0x14662F);
+      if (e.keyCode == KEYCODE.B){//0x295FCC
+      //   if (this.goRoom_B == true){ //キーの代わりにくる変数
+          this.chooseRoomColor(this._scene.camTargetBool_B, 0x2EC7E5, 0x295FCC);
       }
-      if (e.keyCode == KEYCODE.C){//0x807B0D
-      // Action.add(EVENT.ShowCategoryC, () =>{
-          //(this._scene.camTargetBool_C, 0xa6eb72, 0x24B253);
-          this.chooseRoomColor(this._scene.camTargetBool_C, 0xbeba3c, 0x807B0D);
+      if (e.keyCode == KEYCODE.C){//0x24B253
+      //   if (this.goRoom_C == true){ //キーの代わりにくる変数
+          this.chooseRoomColor(this._scene.camTargetBool_C, 0xa6eb72, 0x24B253);
       }
-      if (e.keyCode == KEYCODE.D){//0x193C80//29CCBE,0xa297//代わり映えしないんだよなぁ
-      // Action.add(EVENT.ShowCategoryD, () =>{
-          //(this._scene.camTargetBool_D, 0x268983, 0xa27b);
-          this.chooseRoomColor(this._scene.camTargetBool_D, 0x2EC7E5, 0x295FCC);
+      if (e.keyCode == KEYCODE.D){//0x29CCBE,0xa297//代わり映えしないんだよなぁ
+      //   if (this.goRoom_D == true){ //キーの代わりにくる変数
+          this.chooseRoomColor(this._scene.camTargetBool_D, 0x268983, 0xa27b);//
       }
-      if (e.keyCode == KEYCODE.E){//0x8C5605
-      // Action.add(EVENT.ShowCategoryE, () =>{
-          //(this._scene.camTargetBool_E, 0x3a7d, 0x268983);
-          this.chooseRoomColor(this._scene.camTargetBool_E, 0xbeae3c, 0x9b4e0a);
+      if (e.keyCode == KEYCODE.E){//0x2EC7E5//もう少し明るくする
+      //   if (this.goRoom_E == true){ //キーの代わりにくる変数
+          // this.chooseRoomColor(this._scene.camTargetBool_E, 0x295FCC, 0x2EC7E5);
+          this.chooseRoomColor(this._scene.camTargetBool_E, 0x3a7d, 0x268983);
       }
-      if (e.keyCode == KEYCODE.F){//0x2B1980
-      // Action.add(EVENT.ShowCategoryF, () =>{
-          //(this._scene.camTargetBool_F, 0x9629CC, 0x295FCC);
+      if (e.keyCode == KEYCODE.F){//0x4429CC
+      //   if (this.goRoom_F == true){ //キーの代わりにくる変数
           this.chooseRoomColor(this._scene.camTargetBool_F, 0x9629CC, 0x295FCC);
       }
-      if (e.keyCode == KEYCODE.G){//0x8C1C66
-      // Action.add(EVENT.ShowCategoryG, () =>{
-          //(this._scene.camTargetBool_G, 0xCC2995, 0x9629CC);
-          this.chooseRoomColor(this._scene.camTargetBool_G, 0x730B1E, 0x8C1C66);
+      if (e.keyCode == KEYCODE.G){//0xCC2995
+      //   if (this.goRoom_G == true){ //キーの代わりにくる変数
+          this.chooseRoomColor(this._scene.camTargetBool_G, 0xCC2995, 0x9629CC);
       }
       if (e.keyCode == KEYCODE.BACKSPACE){
-      // Action.add(EVENT.BackToCategory, () =>{
+      //   if (this.backToPanels == true){ //キーの代わりにくる変数
           this.backToColor(this._scene.camTargetBool_BACKSPACE);
       }
 
