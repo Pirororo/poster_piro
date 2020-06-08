@@ -32,23 +32,6 @@ export class Scene extends THREE.Scene
         this.resetCamTargetBool();
         this.camTargetBool_BACKSPACE = false;
 
-        //☆☆☆【送るイベント】
-        // EVENT.ShowStartup//VRかNORMALか選択
-
-        //☆☆☆【受け取るイベント】
-        // EVENT.SkipOpening//アニメをスキップさせ、EVENT.ShowStartupを送信するスイッチ  <K>
-        // EVENT.ShowStartup//VRかNORMALか選択  <K>
-
-        // EVENT.ShowCategory//７枚パネル出るタイミングでズームアウトするスイッチ  <SPACE>
-        // EVENT.ShowCategoryA// Aの部屋に近づくスイッチ  <A>
-        // EVENT.ShowCategoryB// Bの部屋に近づくスイッチ  <B>
-        // EVENT.ShowCategoryC// Cの部屋に近づくスイッチ  <C>
-        // EVENT.ShowCategoryD// Dの部屋に近づくスイッチ  <D>
-        // EVENT.ShowCategoryE// Eの部屋に近づくスイッチ  <E>
-        // EVENT.ShowCategoryF// Fの部屋に近づくスイッチ  <F>
-        // EVENT.ShowCategoryG// Gの部屋に近づくスイッチ  <G>
-        // EVENT.BackToCategory//７枚パネルのとこ戻ってほしいスイッチ  <BACKSPACE>
-
         //EVENT.ShowStartupを送信よりさきに受信したとき、送信はしないようにするbool。
         this.ShowStartupBool = true;
 
@@ -114,7 +97,6 @@ export class Scene extends THREE.Scene
 
     addEvent()
     {
-        console.log("sceneAddEvent");
 
         Action.add(EVENT.ShowStartup, () =>{//キーの代わりにくる変数
             if(this.frameBool_skipAnime == true 
