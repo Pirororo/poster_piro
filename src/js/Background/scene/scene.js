@@ -62,67 +62,67 @@ export class Scene extends THREE.Scene
 
 
     onKeyUp(e){
-        // if (e.keyCode == KEYCODE.K){
-        // Action.dispatch(EVENT.ShowStartup);
-        // }
-        // if (e.keyCode == KEYCODE.SPACE){
-        // Action.dispatch(EVENT.ShowCategory, null, "normal");//null
-        // }
-        // if (e.keyCode == KEYCODE.A){
-        // Action.dispatch(EVENT.ShowCategory, "A", "normal");
-        // }
-        // if (e.keyCode == KEYCODE.B){
-        // Action.dispatch(EVENT.ShowCategory, "B", "normal");
-        // }
-        // if (e.keyCode == KEYCODE.C){
-        // Action.dispatch(EVENT.ShowCategory, "C", "normal");
-        // }
-        // if (e.keyCode == KEYCODE.D){
-        // Action.dispatch(EVENT.ShowCategory, "D", "normal");
-        // }
-        // if (e.keyCode == KEYCODE.E){
-        // Action.dispatch(EVENT.ShowCategory, "E", "normal");
-        // }
-        // if (e.keyCode == KEYCODE.F){
-        // Action.dispatch(EVENT.ShowCategory, "F", "normal");
-        // }
-        // if (e.keyCode == KEYCODE.G){
-        // Action.dispatch(EVENT.ShowCategory, "G", "normal");
-        // }
-        // if (e.keyCode == KEYCODE.BACKSPACE){
-        // Action.dispatch(EVENT.BackToCategory);
-        // }
-
         if (e.keyCode == KEYCODE.K){
         Action.dispatch(EVENT.ShowStartup);
         }
         if (e.keyCode == KEYCODE.SPACE){
-        Action.dispatch(EVENT.ShowCategory, null);//null
+        Action.dispatch(EVENT.ShowCategory, {category:null, mode:"normal"});//null
         }
         if (e.keyCode == KEYCODE.A){
-        Action.dispatch(EVENT.ShowCategory, "A");
+        Action.dispatch(EVENT.ShowCategory, {category:"A", mode:"normal"});
         }
         if (e.keyCode == KEYCODE.B){
-        Action.dispatch(EVENT.ShowCategory, "B");
+        Action.dispatch(EVENT.ShowCategory, {category:"B", mode:"normal"});
         }
         if (e.keyCode == KEYCODE.C){
-        Action.dispatch(EVENT.ShowCategory, "C");
+        Action.dispatch(EVENT.ShowCategory, {category:"C", mode:"normal"});
         }
         if (e.keyCode == KEYCODE.D){
-        Action.dispatch(EVENT.ShowCategory, "D");
+        Action.dispatch(EVENT.ShowCategory, {category:"D", mode:"normal"});
         }
         if (e.keyCode == KEYCODE.E){
-        Action.dispatch(EVENT.ShowCategory, "E");
+        Action.dispatch(EVENT.ShowCategory, {category:"E", mode:"normal"});
         }
         if (e.keyCode == KEYCODE.F){
-        Action.dispatch(EVENT.ShowCategory, "F");
+        Action.dispatch(EVENT.ShowCategory, {category:"F", mode:"normal"});
         }
         if (e.keyCode == KEYCODE.G){
-        Action.dispatch(EVENT.ShowCategory, "G");
+        Action.dispatch(EVENT.ShowCategory, {category:"G", mode:"normal"});
         }
         if (e.keyCode == KEYCODE.BACKSPACE){
-        Action.dispatch(EVENT.BackToCategory);
+        Action.dispatch(EVENT.BackToCategory, {mode:"normal"});
         }
+
+        // if (e.keyCode == KEYCODE.K){
+        // Action.dispatch(EVENT.ShowStartup);
+        // }
+        // if (e.keyCode == KEYCODE.SPACE){
+        // Action.dispatch(EVENT.ShowCategory, null);//null
+        // }
+        // if (e.keyCode == KEYCODE.A){
+        // Action.dispatch(EVENT.ShowCategory, "A");
+        // }
+        // if (e.keyCode == KEYCODE.B){
+        // Action.dispatch(EVENT.ShowCategory, "B");
+        // }
+        // if (e.keyCode == KEYCODE.C){
+        // Action.dispatch(EVENT.ShowCategory, "C");
+        // }
+        // if (e.keyCode == KEYCODE.D){
+        // Action.dispatch(EVENT.ShowCategory, "D");
+        // }
+        // if (e.keyCode == KEYCODE.E){
+        // Action.dispatch(EVENT.ShowCategory, "E");
+        // }
+        // if (e.keyCode == KEYCODE.F){
+        // Action.dispatch(EVENT.ShowCategory, "F");
+        // }
+        // if (e.keyCode == KEYCODE.G){
+        // Action.dispatch(EVENT.ShowCategory, "G");
+        // }
+        // if (e.keyCode == KEYCODE.BACKSPACE){
+        // Action.dispatch(EVENT.BackToCategory);
+        // }
 
     }
 
@@ -130,7 +130,6 @@ export class Scene extends THREE.Scene
     addEvent()
     {
         Action.add(EVENT.ShowStartup, () =>{//キーの代わりにくる変数
-            
             if(this.frameBool_skipAnime == true 
                 && this.scene0.scene2.frame < this.scene0.scene2.frameSlide-2){//ここ斜めになるtargetPosの時間の一歩手前！！
                 this.frameBool_skipAnime = false;
@@ -146,11 +145,11 @@ export class Scene extends THREE.Scene
         });
 
 
-        // Action.add(EVENT.ShowCategory, category, mode =>{ //キーの代わりにくる変数
-        Action.add(EVENT.ShowCategory, category =>{ //キーの代わりにくる変数
+        Action.add(EVENT.ShowCategory, data =>{ //キーの代わりにくる変数
+        // Action.add(EVENT.ShowCategory, category =>{ //キーの代わりにくる変数
 
-            // if(mode == "normal"){
-                switch(category){
+            if(data.mode == "normal"){
+                switch(data.category){
                     case "A" :
                         this.chooseRoom(this.camTargetBool_A, 0, "Go to room_A!");
                         break;
@@ -182,19 +181,21 @@ export class Scene extends THREE.Scene
                         }
                         break;
                 }
-            // }
+            }
         });
 
-        Action.add(EVENT.BackToCategory, () =>{ //キーの代わりにくる変数
+        Action.add(EVENT.BackToCategory, data =>{ //キーの代わりにくる変数
+            if(data.mode == "normal"){
             // if(this.camTargetBool_openingIsEnd == true){//[SPACE]を[BS]で兼ねるならいれる
                 if(this.camTargetBool_BACKSPACE == true){
                     this.camTargetBool_BACKSPACE = false;
                     this.camera.camTarget = this.baseCamTarget;
                     this.camera.lookTarget = new THREE.Vector3(140, 70, 140);//斜めのときの中心
-                    // console.log("Back to Category!");
+                    console.log("Normal_ Back to Category!");
                     this.openCamTargetBool();
                 }
             // }
+            }
         });
 
     }
@@ -209,7 +210,7 @@ export class Scene extends THREE.Scene
             this.camera.camTarget.subVectors(this.camera.lookTarget, this.baseCamTarget);
             this.camera.camTarget.multiplyScalar(0.9);
             this.camera.camTarget.add(this.baseCamTarget);
-            // console.log("normal_ " + message);
+            console.log("Normal_ " + message);
             this.resetCamTargetBool();
         }
     }

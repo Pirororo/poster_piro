@@ -174,68 +174,69 @@ export default class App
 
     onKeyUp(e)
     {
+        if (e.keyCode == KEYCODE.A){
+          Action.dispatch(EVENT.ShowCategory, {category:"A", mode:"normal"});
+        }
+        if (e.keyCode == KEYCODE.B){
+          Action.dispatch(EVENT.ShowCategory, {category:"B", mode:"normal"});
+        }
+        if (e.keyCode == KEYCODE.C){
+          Action.dispatch(EVENT.ShowCategory, {category:"C", mode:"normal"});
+        }
+        if (e.keyCode == KEYCODE.D){
+          Action.dispatch(EVENT.ShowCategory, {category:"D", mode:"normal"});
+        }
+        if (e.keyCode == KEYCODE.E){
+          Action.dispatch(EVENT.ShowCategory, {category:"E", mode:"normal"});
+        }
+        if (e.keyCode == KEYCODE.F){
+          Action.dispatch(EVENT.ShowCategory, {category:"F", mode:"normal"});
+        }
+        if (e.keyCode == KEYCODE.G){
+          Action.dispatch(EVENT.ShowCategory, {category:"G", mode:"normal"});
+        }
+        if (e.keyCode == KEYCODE.BACKSPACE){
+          Action.dispatch(EVENT.BackToCategory, {mode:"normal"});
+        }
+        this._scene.onKeyUp(e);//これがcamTargetBoolをfalseにするから最後にかく
+
+
         // if (e.keyCode == KEYCODE.A){
-        //   Action.dispatch(EVENT.ShowCategory, "A", "normal");
+        // Action.dispatch(EVENT.ShowCategory, "A");
         // }
         // if (e.keyCode == KEYCODE.B){
-        //   Action.dispatch(EVENT.ShowCategory, "B", "normal");
+        // Action.dispatch(EVENT.ShowCategory, "B");
         // }
         // if (e.keyCode == KEYCODE.C){
-        //   Action.dispatch(EVENT.ShowCategory, "C", "normal");
+        // Action.dispatch(EVENT.ShowCategory, "C");
         // }
         // if (e.keyCode == KEYCODE.D){
-        //   Action.dispatch(EVENT.ShowCategory, "D", "normal");
+        // Action.dispatch(EVENT.ShowCategory, "D");
         // }
         // if (e.keyCode == KEYCODE.E){
-        //   Action.dispatch(EVENT.ShowCategory, "E", "normal");
+        // Action.dispatch(EVENT.ShowCategory, "E");
         // }
         // if (e.keyCode == KEYCODE.F){
-        //   Action.dispatch(EVENT.ShowCategory, "F", "normal");
+        // Action.dispatch(EVENT.ShowCategory, "F");
         // }
         // if (e.keyCode == KEYCODE.G){
-        //   Action.dispatch(EVENT.ShowCategory, "G", "normal");
+        // Action.dispatch(EVENT.ShowCategory, "G");
         // }
         // if (e.keyCode == KEYCODE.BACKSPACE){
-        //   Action.dispatch(EVENT.BackToCategory);
+        // Action.dispatch(EVENT.BackToCategory);
         // }
         // this._scene.onKeyUp(e);//これがcamTargetBoolをfalseにするから最後にかく
-
-
-        if (e.keyCode == KEYCODE.A){
-            Action.dispatch(EVENT.ShowCategory, "A");
-          }
-          if (e.keyCode == KEYCODE.B){
-            Action.dispatch(EVENT.ShowCategory, "B");
-          }
-          if (e.keyCode == KEYCODE.C){
-            Action.dispatch(EVENT.ShowCategory, "C");
-          }
-          if (e.keyCode == KEYCODE.D){
-            Action.dispatch(EVENT.ShowCategory, "D");
-          }
-          if (e.keyCode == KEYCODE.E){
-            Action.dispatch(EVENT.ShowCategory, "E");
-          }
-          if (e.keyCode == KEYCODE.F){
-            Action.dispatch(EVENT.ShowCategory, "F");
-          }
-          if (e.keyCode == KEYCODE.G){
-            Action.dispatch(EVENT.ShowCategory, "G");
-          }
-          if (e.keyCode == KEYCODE.BACKSPACE){
-            Action.dispatch(EVENT.BackToCategory);
-          }
-          this._scene.onKeyUp(e);//これがcamTargetBoolをfalseにするから最後にかく
     }
 
 
     addEvent()//グラデめも    0x5de2ff, 0x3333a7
     {   
-        // Action.add(EVENT.ShowCategory, category, mode =>{//0x730B1E
-        Action.add(EVENT.ShowCategory, category =>{//0x730B1E
+        Action.add(EVENT.ShowCategory, data =>{//0x730B1E
+        // Action.add(EVENT.ShowCategory, category =>{//0x730B1E
 
-            // if(mode == "normal"){
-                switch(category){
+            
+            if(data.mode == "normal"){
+                switch(data.category){
                     case "A" :
                         //0x666000(0x295FCC, 0x9629CC);//0x2bd6e1
                         this.chooseRoomColor(this._scene.camTargetBool_A, 0xd790b1, 0x9b0a0a);
@@ -265,11 +266,19 @@ export default class App
                         this.chooseRoomColor(this._scene.camTargetBool_G, 0x730B1E, 0x8C1C66);
                         break;
                 }
+            }
+            // else{
+            //     console.log("Someone already called ShowCategory")
             // }
         });
         
-        Action.add(EVENT.BackToCategory, () =>{
-            this.backToColor(this._scene.camTargetBool_BACKSPACE);
+        Action.add(EVENT.BackToCategory, data =>{
+            if(data.mode == "normal"){
+                this.backToColor(this._scene.camTargetBool_BACKSPACE);
+            }
+            // else{
+            //     console.log("Someone already called BackToCategory")
+            // }
         });
 
         this._scene.addEvent();

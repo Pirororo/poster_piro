@@ -95,7 +95,7 @@ export class Scene extends THREE.Scene
 
                 //VR版でカメラズームアウトするから７枚パネル出してね
                 // console.log("VR_ Show Category!");
-                Action.dispatch(EVENT.ShowCategory);//送る変数
+                Action.dispatch(EVENT.ShowCategory ,{mode:"VR"});//送る変数
 
                 // if(this.camTargetBool_SPACE == true){
                 //     this.camTargetBool_SPACE = false;
@@ -113,29 +113,57 @@ export class Scene extends THREE.Scene
         Action.dispatch(EVENT.VRModeStart);
         }
         if (e.keyCode == KEYCODE.A){
-        Action.dispatch(EVENT.ShowCategory, "A");
+        Action.dispatch(EVENT.ShowCategory, {category:"A", mode:"VR"});
         }
         if (e.keyCode == KEYCODE.B){
-        Action.dispatch(EVENT.ShowCategory, "B");
+        Action.dispatch(EVENT.ShowCategory, {category:"B", mode:"VR"});
         }
         if (e.keyCode == KEYCODE.C){
-        Action.dispatch(EVENT.ShowCategory, "C");
+        Action.dispatch(EVENT.ShowCategory, {category:"C", mode:"VR"});
         }
         if (e.keyCode == KEYCODE.D){
-        Action.dispatch(EVENT.ShowCategory, "D");
+        Action.dispatch(EVENT.ShowCategory, {category:"D", mode:"VR"});
         }
         if (e.keyCode == KEYCODE.E){
-        Action.dispatch(EVENT.ShowCategory, "E");
+        Action.dispatch(EVENT.ShowCategory, {category:"E", mode:"VR"});
         }
         if (e.keyCode == KEYCODE.F){
-        Action.dispatch(EVENT.ShowCategory, "F");
+        Action.dispatch(EVENT.ShowCategory, {category:"F", mode:"VR"});
         }
         if (e.keyCode == KEYCODE.G){
-        Action.dispatch(EVENT.ShowCategory, "G");
+        Action.dispatch(EVENT.ShowCategory, {category:"G", mode:"VR"});
         }
         if (e.keyCode == KEYCODE.BACKSPACE){
-        Action.dispatch(EVENT.BackToCategory);
+        Action.dispatch(EVENT.BackToCategory, {mode:"VR"});
         }
+    
+        // if (e.keyCode == KEYCODE.S){
+        // Action.dispatch(EVENT.VRModeStart);
+        // }
+        // if (e.keyCode == KEYCODE.A){
+        // Action.dispatch(EVENT.ShowCategory, "A");
+        // }
+        // if (e.keyCode == KEYCODE.B){
+        // Action.dispatch(EVENT.ShowCategory, "B");
+        // }
+        // if (e.keyCode == KEYCODE.C){
+        // Action.dispatch(EVENT.ShowCategory, "C");
+        // }
+        // if (e.keyCode == KEYCODE.D){
+        // Action.dispatch(EVENT.ShowCategory, "D");
+        // }
+        // if (e.keyCode == KEYCODE.E){
+        // Action.dispatch(EVENT.ShowCategory, "E");
+        // }
+        // if (e.keyCode == KEYCODE.F){
+        // Action.dispatch(EVENT.ShowCategory, "F");
+        // }
+        // if (e.keyCode == KEYCODE.G){
+        // Action.dispatch(EVENT.ShowCategory, "G");
+        // }
+        // if (e.keyCode == KEYCODE.BACKSPACE){
+        // Action.dispatch(EVENT.BackToCategory);
+        // }
     }
 
 
@@ -152,45 +180,51 @@ export class Scene extends THREE.Scene
             }
         });
 
-        Action.add(EVENT.ShowCategory, category =>{ //キーの代わりにくる変数
-            switch(category){
-                case "A" :
-                    this.chooseRoom(this.camTargetBool_A, 0, "Go to room_A!");
-                    break;
-                case "B" :
-                    this.chooseRoom(this.camTargetBool_B, 1, "Go to room_B!");
-                    break;
-                case "C" :
-                    this.chooseRoom(this.camTargetBool_C, 3, "Go to room_C!");
-                    break;
-                case "D" :
-                    this.chooseRoom(this.camTargetBool_D, 4, "Go to room_D!");
-                    break;
-                case "E" :
-                    this.chooseRoom(this.camTargetBool_E, 6, "Go to room_E!");
-                    break;
-                case "F" :
-                    this.chooseRoom(this.camTargetBool_F, 7, "Go to room_F!");
-                    break;
-                case "G" :
-                    this.chooseRoom(this.camTargetBool_G, 9, "Go to room_G!");
-                    break;
+        Action.add(EVENT.ShowCategory, data =>{ 
+        // Action.add(EVENT.ShowCategory, category =>{ 
+            if(data.mode == "VR"){
+                switch(data.category){
+                    case "A" :
+                        this.chooseRoom(this.camTargetBool_A, 0, "Go to room_A!");
+                        break;
+                    case "B" :
+                        this.chooseRoom(this.camTargetBool_B, 1, "Go to room_B!");
+                        break;
+                    case "C" :
+                        this.chooseRoom(this.camTargetBool_C, 3, "Go to room_C!");
+                        break;
+                    case "D" :
+                        this.chooseRoom(this.camTargetBool_D, 4, "Go to room_D!");
+                        break;
+                    case "E" :
+                        this.chooseRoom(this.camTargetBool_E, 6, "Go to room_E!");
+                        break;
+                    case "F" :
+                        this.chooseRoom(this.camTargetBool_F, 7, "Go to room_F!");
+                        break;
+                    case "G" :
+                        this.chooseRoom(this.camTargetBool_G, 9, "Go to room_G!");
+                        break;
+                }
             }
         });
 
-        Action.add(EVENT.BackToCategory , () =>{
-            if(this.camTargetBool_BACKSPACE == true){
-                this.camTargetBool_BACKSPACE = false;
-                this.scene0.scene2.backAnimationUpdateBool = false;
-                this.scene0.scene2.backAnimationframe = this.scene0.scene2.backAnimationframeStart;
-                this.scene0.scene2.waitingFrame = 0;
-                this.scene0.scene2.openingUpdateBool = true;
+        Action.add(EVENT.BackToCategory , data =>{
+        // Action.add(EVENT.BackToCategory ,() =>{
+            if(data.mode == "VR"){
+                if(this.camTargetBool_BACKSPACE == true){
+                    this.camTargetBool_BACKSPACE = false;
+                    this.scene0.scene2.backAnimationUpdateBool = false;
+                    this.scene0.scene2.backAnimationframe = this.scene0.scene2.backAnimationframeStart;
+                    this.scene0.scene2.waitingFrame = 0;
+                    this.scene0.scene2.openingUpdateBool = true;
 
-                // this.baseCamTarget = new THREE.Vector3(-220-50,-30-25,-300-50);//ここ書かないと書き換えられちゃってるぽい
-                this.baseCamTarget = new THREE.Vector3(-180-50,-40-25,-220-50);
-                this.camTarget = this.baseCamTarget;
-                // console.log("VR_ Back to Category!");
-                this.openCamTargetBool();
+                    // this.baseCamTarget = new THREE.Vector3(-220-50,-30-25,-300-50);//ここ書かないと書き換えられちゃってるぽい
+                    this.baseCamTarget = new THREE.Vector3(-180-50,-40-25,-220-50);
+                    this.camTarget = this.baseCamTarget;
+                    console.log("VR_ Back to Category!");
+                    this.openCamTargetBool();
+                }
             }
         });
     }
@@ -227,7 +261,7 @@ export class Scene extends THREE.Scene
             this.camTarget.multiplyScalar(0.95);
             this.camTarget.add(this.baseCamTargetPlus);
             this.camTarget.multiplyScalar(-1);//ここVRオリジナル！！
-            // console.log("VR_ " + message);
+            console.log("VR_ " + message);
             this.resetCamTargetBool();
 
             // this.scene0.scene2.backAnimationUpdateBool = true;///////////////
