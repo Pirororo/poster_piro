@@ -2,7 +2,8 @@ import * as THREE from "three";
 import {Camera} from '../camera/camera.js';
 import Line from '../objects/line.js';
 import { KEYCODE } from "../utils/props.js";
-import { EVENT, Action } from "../../Utils/EventManager"
+import { EVENT, Action } from "../../Utils/EventManager";
+import { isVR, setVRMode } from "../../Utils/Helper";
 
 
 /**
@@ -61,11 +62,42 @@ export class Scene extends THREE.Scene
 
 
     onKeyUp(e){
+        // if (e.keyCode == KEYCODE.K){
+        // Action.dispatch(EVENT.ShowStartup);
+        // }
+        // if (e.keyCode == KEYCODE.SPACE){
+        // Action.dispatch(EVENT.ShowCategory, null, "normal");//null
+        // }
+        // if (e.keyCode == KEYCODE.A){
+        // Action.dispatch(EVENT.ShowCategory, "A", "normal");
+        // }
+        // if (e.keyCode == KEYCODE.B){
+        // Action.dispatch(EVENT.ShowCategory, "B", "normal");
+        // }
+        // if (e.keyCode == KEYCODE.C){
+        // Action.dispatch(EVENT.ShowCategory, "C", "normal");
+        // }
+        // if (e.keyCode == KEYCODE.D){
+        // Action.dispatch(EVENT.ShowCategory, "D", "normal");
+        // }
+        // if (e.keyCode == KEYCODE.E){
+        // Action.dispatch(EVENT.ShowCategory, "E", "normal");
+        // }
+        // if (e.keyCode == KEYCODE.F){
+        // Action.dispatch(EVENT.ShowCategory, "F", "normal");
+        // }
+        // if (e.keyCode == KEYCODE.G){
+        // Action.dispatch(EVENT.ShowCategory, "G", "normal");
+        // }
+        // if (e.keyCode == KEYCODE.BACKSPACE){
+        // Action.dispatch(EVENT.BackToCategory);
+        // }
+
         if (e.keyCode == KEYCODE.K){
         Action.dispatch(EVENT.ShowStartup);
         }
         if (e.keyCode == KEYCODE.SPACE){
-        Action.dispatch(EVENT.ShowCategory);//null
+        Action.dispatch(EVENT.ShowCategory, null);//null
         }
         if (e.keyCode == KEYCODE.A){
         Action.dispatch(EVENT.ShowCategory, "A");
@@ -97,8 +129,8 @@ export class Scene extends THREE.Scene
 
     addEvent()
     {
-
         Action.add(EVENT.ShowStartup, () =>{//キーの代わりにくる変数
+            
             if(this.frameBool_skipAnime == true 
                 && this.scene0.scene2.frame < this.scene0.scene2.frameSlide-2){//ここ斜めになるtargetPosの時間の一歩手前！！
                 this.frameBool_skipAnime = false;
@@ -113,17 +145,11 @@ export class Scene extends THREE.Scene
             }
         });
 
+
+        // Action.add(EVENT.ShowCategory, category, mode =>{ //キーの代わりにくる変数
         Action.add(EVENT.ShowCategory, category =>{ //キーの代わりにくる変数
 
-            if(category == null){
-                if(this.camTargetBool_openingIsEnd == true){
-                    this.camTargetBool_openingIsEnd = false;
-                    this.camera.camTarget = this.baseCamTarget;
-                    this.camera.lookTarget = new THREE.Vector3(140, 70, 140);//斜めのときの中心
-                    console.log("continue Normal mode!");//zoom out
-                    this.openCamTargetBool();
-                }
-            }else{
+            // if(mode == "normal"){
                 switch(category){
                     case "A" :
                         this.chooseRoom(this.camTargetBool_A, 0, "Go to room_A!");
@@ -146,8 +172,17 @@ export class Scene extends THREE.Scene
                     case "G" :
                         this.chooseRoom(this.camTargetBool_G, 9, "Go to room_G!");
                         break;
+                    case null :
+                        if(this.camTargetBool_openingIsEnd == true){
+                            this.camTargetBool_openingIsEnd = false;
+                            this.camera.camTarget = this.baseCamTarget;
+                            this.camera.lookTarget = new THREE.Vector3(140, 70, 140);//斜めのときの中心
+                            console.log("continue Normal mode!");//zoom out
+                            this.openCamTargetBool();
+                        }
+                        break;
                 }
-            }
+            // }
         });
 
         Action.add(EVENT.BackToCategory, () =>{ //キーの代わりにくる変数
@@ -161,6 +196,7 @@ export class Scene extends THREE.Scene
                 }
             // }
         });
+
     }
 
     chooseRoom(camTargetBool,l,message){

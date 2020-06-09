@@ -41,7 +41,7 @@ export class Scene2 extends THREE.Scene
 
         for (let i = 0; i < this.PlateNum; i++) {
 
-            this.floorsize = 27;//12;
+            this.floorsize = 22;//12;
             this.geometry = new THREE.PlaneBufferGeometry(this.floorsize, this.floorsize);
             this.mesh = new THREE.Mesh(this.geometry, material);
             this.mesh.position.set(0,0,0);
@@ -57,7 +57,7 @@ export class Scene2 extends THREE.Scene
         }
 
         this.clock = new THREE.Clock();
-        this.tSpeed  =10;
+        this.tSpeed = 20.0;
         this.easeElapsedTime =0;
         this.eansingBool = true;
 
@@ -76,7 +76,7 @@ export class Scene2 extends THREE.Scene
         for (let i = 0; i < Circle_NUM; i++) {
             // 立方体個別の要素を作成
             const CirclesampleGeometry = new THREE.CircleGeometry(
-                400*(Math.random()+0.5),
+                800*(Math.random()+0.5),
                 7
             );
             // 座標調整の行列を作成
@@ -119,11 +119,11 @@ export class Scene2 extends THREE.Scene
         let angleTerm = 0;
         for (let i = 0; i < CELL_NUM; i++) {
             // 立方体個別の要素を作成
-            let y = 50*(Math.random()+0.5);
+            let y = 40*(Math.random()+0.5);
             const BillsampleGeometry = new THREE.BoxGeometry(
-                10*(Math.random()+0.5),
+                8*(Math.random()+0.5),
                 y,
-                10*(Math.random()+0.5)
+                8*(Math.random()+0.5)
             );
             // 座標調整の行列を作成
             const Billmatrix = new THREE.Matrix4();
@@ -133,9 +133,9 @@ export class Scene2 extends THREE.Scene
             //     // 20 * (j - CELL_NUM / 2)
             if(i%60 == 0){angleTerm += 1;}
             Billmatrix.makeTranslation(
-                140*(2*Math.random()-1)+ 400*Math.sin(angleTerm*50*Math.PI/180)+125,
+                120*(2*Math.random()-1)+ 800*Math.sin(angleTerm*50*Math.PI/180)+125,
                 y/2,
-                140*(2*Math.random()-1)+ 400*Math.cos(angleTerm*50*Math.PI/180)+125
+                120*(2*Math.random()-1)+ 800*Math.cos(angleTerm*50*Math.PI/180)+125
             );
 
 
@@ -215,7 +215,7 @@ export class Scene2 extends THREE.Scene
 
     opening()
     {
-        if(this.openingFrame == 170){
+        if(this.openingFrame == 220){
             for (let i = 0; i < this.meshList.length; i++) {
                 for (let j = 0; j < 4; j++) {
                 if(i >=80*j && i<80*(j+1)){
@@ -234,10 +234,10 @@ export class Scene2 extends THREE.Scene
                 }
             }
             this.easeElapsedTime =0;
-            this.tSpeed =4.0;
+            this.tSpeed =6.0;
         }
 
-        if(this.openingFrame == 230){
+        if(this.openingFrame == 280){
             for (let i = 0; i < this.meshList.length; i++) {
                 for (let j = 0; j < 4; j++) {
                 if(i >=80*j && i<80*(j+1)){
@@ -259,8 +259,7 @@ export class Scene2 extends THREE.Scene
             this.tSpeed =7.0;
         }
 
-
-        if(this.openingFrame == 370){
+        if(this.openingFrame == 430){
             if(this.openingIsEnd == false){
                 this.openingIsEnd = true;
                 this.openingUpdateBool = false;

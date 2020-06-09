@@ -174,74 +174,105 @@ export default class App
 
     onKeyUp(e)
     {
-        if (e.keyCode == KEYCODE.A){
-          Action.dispatch(EVENT.ShowCategory, "A");
-        }
-        if (e.keyCode == KEYCODE.B){
-          Action.dispatch(EVENT.ShowCategory, "B");
-        }
-        if (e.keyCode == KEYCODE.C){
-          Action.dispatch(EVENT.ShowCategory, "C");
-        }
-        if (e.keyCode == KEYCODE.D){
-          Action.dispatch(EVENT.ShowCategory, "D");
-        }
-        if (e.keyCode == KEYCODE.E){
-          Action.dispatch(EVENT.ShowCategory, "E");
-        }
-        if (e.keyCode == KEYCODE.F){
-          Action.dispatch(EVENT.ShowCategory, "F");
-        }
-        if (e.keyCode == KEYCODE.G){
-          Action.dispatch(EVENT.ShowCategory, "G");
-        }
-        if (e.keyCode == KEYCODE.BACKSPACE){
-          Action.dispatch(EVENT.BackToCategory);
-        }
+        // if (e.keyCode == KEYCODE.A){
+        //   Action.dispatch(EVENT.ShowCategory, "A", "normal");
+        // }
+        // if (e.keyCode == KEYCODE.B){
+        //   Action.dispatch(EVENT.ShowCategory, "B", "normal");
+        // }
+        // if (e.keyCode == KEYCODE.C){
+        //   Action.dispatch(EVENT.ShowCategory, "C", "normal");
+        // }
+        // if (e.keyCode == KEYCODE.D){
+        //   Action.dispatch(EVENT.ShowCategory, "D", "normal");
+        // }
+        // if (e.keyCode == KEYCODE.E){
+        //   Action.dispatch(EVENT.ShowCategory, "E", "normal");
+        // }
+        // if (e.keyCode == KEYCODE.F){
+        //   Action.dispatch(EVENT.ShowCategory, "F", "normal");
+        // }
+        // if (e.keyCode == KEYCODE.G){
+        //   Action.dispatch(EVENT.ShowCategory, "G", "normal");
+        // }
+        // if (e.keyCode == KEYCODE.BACKSPACE){
+        //   Action.dispatch(EVENT.BackToCategory);
+        // }
+        // this._scene.onKeyUp(e);//これがcamTargetBoolをfalseにするから最後にかく
 
-        this._scene.onKeyUp(e);//これがcamTargetBoolをfalseにするから最後にかく
+
+        if (e.keyCode == KEYCODE.A){
+            Action.dispatch(EVENT.ShowCategory, "A");
+          }
+          if (e.keyCode == KEYCODE.B){
+            Action.dispatch(EVENT.ShowCategory, "B");
+          }
+          if (e.keyCode == KEYCODE.C){
+            Action.dispatch(EVENT.ShowCategory, "C");
+          }
+          if (e.keyCode == KEYCODE.D){
+            Action.dispatch(EVENT.ShowCategory, "D");
+          }
+          if (e.keyCode == KEYCODE.E){
+            Action.dispatch(EVENT.ShowCategory, "E");
+          }
+          if (e.keyCode == KEYCODE.F){
+            Action.dispatch(EVENT.ShowCategory, "F");
+          }
+          if (e.keyCode == KEYCODE.G){
+            Action.dispatch(EVENT.ShowCategory, "G");
+          }
+          if (e.keyCode == KEYCODE.BACKSPACE){
+            Action.dispatch(EVENT.BackToCategory);
+          }
+          this._scene.onKeyUp(e);//これがcamTargetBoolをfalseにするから最後にかく
     }
 
 
     addEvent()//グラデめも    0x5de2ff, 0x3333a7
-    {
+    {   
+        // Action.add(EVENT.ShowCategory, category, mode =>{//0x730B1E
         Action.add(EVENT.ShowCategory, category =>{//0x730B1E
 
-            switch(category){
-                case "A" :
-                    //(0x295FCC, 0x9629CC);//0x2bd6e1
-                    this.chooseRoomColor(this._scene.camTargetBool_A, 0xd790b1, 0x9b0a0a);
-                    break;
-                case "B" :
-                    //(0x2EC7E5, 0x295FCC);//0x14662F
-                    this.chooseRoomColor(this._scene.camTargetBool_B,0xa6eb72, 0x14662F);
-                    break;
-                case "C" :
-                    //(0xa6eb72, 0x24B253);//0x807B0D
-                    this.chooseRoomColor(this._scene.camTargetBool_C, 0xbeba3c, 0x807B0D);
-                    break;
-                case "D" :
-                    //(0x268983, 0xa27b);//0x193C80//29CCBE,0xa297//
-                    this.chooseRoomColor(this._scene.camTargetBool_D, 0x2EC7E5, 0x295FCC);
-                    break;
-                case "E" :
-                    //(0x3a7d, 0x268983);//0x8C5605
-                    this.chooseRoomColor(this._scene.camTargetBool_E, 0xbeae3c, 0x9b4e0a);
-                    break;
-                case "F" :
-                    //(0x9629CC, 0x295FCC);//0x2B1980
-                    this.chooseRoomColor(this._scene.camTargetBool_F, 0x9629CC, 0x295FCC);
-                    break;
-                case "G" :
-                    //(0xCC2995, 0x9629CC);//0x8C1C66
-                    this.chooseRoomColor(this._scene.camTargetBool_G, 0x730B1E, 0x8C1C66);
-                    break;
-            }
+            // if(mode == "normal"){
+                switch(category){
+                    case "A" :
+                        //0x666000(0x295FCC, 0x9629CC);//0x2bd6e1
+                        this.chooseRoomColor(this._scene.camTargetBool_A, 0xd790b1, 0x9b0a0a);
+                        break;
+                    case "B" :
+                        //(0x2EC7E5, 0x295FCC);//0x14662F
+                        this.chooseRoomColor(this._scene.camTargetBool_B,0xa6eb72, 0x14662F);
+                        break;
+                    case "C" :
+                        //0x807B0D(0xa6eb72, 0x24B253);//0x807B0D
+                        this.chooseRoomColor(this._scene.camTargetBool_C, 0x825b30, 0xbeba3c);
+                        break;
+                    case "D" :
+                        //(0x268983, 0xa27b);//0x193C80//29CCBE,0xa297//
+                        this.chooseRoomColor(this._scene.camTargetBool_D, 0x2EC7E5, 0x295FCC);
+                        break;
+                    case "E" :
+                        //0xbeae3c(0x3a7d, 0x268983);//0x8C5605
+                        this.chooseRoomColor(this._scene.camTargetBool_E, 0xa77f01, 0x9b4e0a);
+                        break;
+                    case "F" :
+                        //(0x9629CC, 0x295FCC);//0x2B1980
+                        this.chooseRoomColor(this._scene.camTargetBool_F, 0x9629CC, 0x295FCC);
+                        break;
+                    case "G" :
+                        //(0xCC2995, 0x9629CC);//0x8C1C66
+                        this.chooseRoomColor(this._scene.camTargetBool_G, 0x730B1E, 0x8C1C66);
+                        break;
+                }
+            // }
         });
         
         Action.add(EVENT.BackToCategory, () =>{
             this.backToColor(this._scene.camTargetBool_BACKSPACE);
         });
+
+        this._scene.addEvent();
 
     }
 

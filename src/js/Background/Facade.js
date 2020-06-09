@@ -5,6 +5,7 @@
  */
 
 import { ICommonFacadeModuleObject } from "../Utils/Interfaces";
+import { isVR } from "../Utils/Helper";
 
 import App from "./App";
 import {Scene} from "./scene/scene"
@@ -19,7 +20,9 @@ const Facade =
 	{
 		this.props.instance = new App(new Scene());
 
-		this.addEvent();
+	
+			this.addEvent();
+	
 
 		return this;
 	},

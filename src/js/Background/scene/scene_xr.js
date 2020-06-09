@@ -196,62 +196,6 @@ export class Scene extends THREE.Scene
     }
 
 
-
-
-    // onKeyUp(e)
-    // {
-    //     if (e.keyCode == KEYCODE.S){//ユーザースタート
-    //     //   if (this.startVRanime == true){ //キーの代わりにくる変数
-    //         if(this.keyBool_startVRanime == true){
-    //             this.keyBool_startVRanime = false;
-    //             this.scene0 = new Scene0();
-    //             this.add(this.scene0);
-    //             this.updateBool = true;
-    //             console.log("start VR anime!");
-    //             // this.camTargetBool_SPACE = true;
-    //         }
-    //     }
-
-    //     if (e.keyCode == KEYCODE.A){
-    //         this.chooseRoom(this.camTargetBool_A, 0, "Go to room_A!");
-    //     }
-    //     if (e.keyCode == KEYCODE.B){
-    //         this.chooseRoom(this.camTargetBool_B, 1, "Go to room_B!");
-    //     }
-    //     if (e.keyCode == KEYCODE.C){
-    //         this.chooseRoom(this.camTargetBool_C, 3, "Go to room_C!");
-    //     }
-    //     if (e.keyCode == KEYCODE.D){
-    //         this.chooseRoom(this.camTargetBool_D, 4, "Go to room_D!");
-    //     }
-    //     if (e.keyCode == KEYCODE.E){
-    //         this.chooseRoom(this.camTargetBool_E, 6, "Go to room_E!");
-    //     }
-    //     if (e.keyCode == KEYCODE.F){
-    //         this.chooseRoom(this.camTargetBool_F, 7, "Go to room_F!");
-    //     }
-    //     if (e.keyCode == KEYCODE.G){
-    //         this.chooseRoom(this.camTargetBool_G, 9, "Go to room_G!");
-    //     }
-
-    //     if (e.keyCode == KEYCODE.BACKSPACE){//今部屋の中にいるんだけど違う部屋いきたいから７枚パネルのとこ戻ってね
-    //         if(this.camTargetBool_BACKSPACE == true){
-    //             this.camTargetBool_BACKSPACE = false;
-    //             this.scene0.scene2.backAnimationUpdateBool = false;
-    //             this.scene0.scene2.backAnimationframe = this.scene0.scene2.backAnimationframeStart;
-    //             this.scene0.scene2.waitingFrame = 0;
-    //             this.scene0.scene2.openingUpdateBool = true;
-
-    //             // this.baseCamTarget = new THREE.Vector3(-220-50,-30-25,-300-50);//ここ書かないと書き換えられちゃってるぽい
-    //             this.baseCamTarget = new THREE.Vector3(-180-50,-40-25,-220-50);
-    //             this.camTarget = this.baseCamTarget;
-    //             console.log("Please back to 7 panels!");
-    //             this.openCamTargetBool();
-    //         }
-    //     }
-    // }
-
-
     cam_opening(){
         //ここ不要だった、初期設定値だけでokだったので。
     }
