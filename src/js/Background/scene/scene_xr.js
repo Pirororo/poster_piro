@@ -94,7 +94,7 @@ export class Scene extends THREE.Scene
             if (this.scene0.scene2.openingIsEnd == true){
 
                 //VR版でカメラズームアウトするから７枚パネル出してね
-                console.log("Show Category!");
+                // console.log("VR_ Show Category!");
                 Action.dispatch(EVENT.ShowCategory);//送る変数
 
                 // if(this.camTargetBool_SPACE == true){
@@ -147,7 +147,7 @@ export class Scene extends THREE.Scene
                 this.scene0 = new Scene0();
                 this.add(this.scene0);
                 this.updateBool = true;
-                console.log("start VR anime!");
+                // console.log("start VR anime!");
                 // this.camTargetBool_SPACE = true;
             }
         });
@@ -189,7 +189,7 @@ export class Scene extends THREE.Scene
                 // this.baseCamTarget = new THREE.Vector3(-220-50,-30-25,-300-50);//ここ書かないと書き換えられちゃってるぽい
                 this.baseCamTarget = new THREE.Vector3(-180-50,-40-25,-220-50);
                 this.camTarget = this.baseCamTarget;
-                console.log("Please back to 7 panels!");
+                // console.log("VR_ Back to Category!");
                 this.openCamTargetBool();
             }
         });
@@ -201,8 +201,6 @@ export class Scene extends THREE.Scene
     }
     cam_backAnimation(){
 
-        // console.log("com?")
-        // console.log("this.scene0.scene2.backAnimationframe")
         if(this.scene0.scene2.backAnimationframe == 250){
             // this.camTarget = new THREE.Vector3(0, 0, 0);
             this.camTarget = new THREE.Vector3(-150, -50,-50);
@@ -229,7 +227,7 @@ export class Scene extends THREE.Scene
             this.camTarget.multiplyScalar(0.95);
             this.camTarget.add(this.baseCamTargetPlus);
             this.camTarget.multiplyScalar(-1);//ここVRオリジナル！！
-            console.log(message);
+            // console.log("VR_ " + message);
             this.resetCamTargetBool();
 
             // this.scene0.scene2.backAnimationUpdateBool = true;///////////////

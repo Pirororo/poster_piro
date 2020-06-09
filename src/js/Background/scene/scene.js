@@ -48,7 +48,7 @@ export class Scene extends THREE.Scene
             if(this.ShowStartupBool == true){
                 this.ShowStartupBool = false;
                 Action.dispatch(EVENT.ShowStartup);//送る変数    ☆ひらく
-                console.log("Opening is end and Show Startup");
+                // console.log("Opening is end and Show Startup");
             }
             this.scene0.scene2.openingIsEnd = false;
             this.camTargetBool_openingIsEnd = true;
@@ -136,11 +136,11 @@ export class Scene extends THREE.Scene
                 this.frameBool_skipAnime = false;
                 this.camera.frame = this.scene0.scene2.frameSlide-2;
                 this.scene0.scene2.frame = this.scene0.scene2.frameSlide-2;
-                console.log("skip animation !");
+                // console.log("skip animation !");
 
                 if(this.ShowStartupBool == true){
                     this.ShowStartupBool = false;
-                    console.log("Got signal [EVENT.ShowStartup] already!");
+                    // console.log("Got signal [EVENT.ShowStartup] already!");
                 }
             }
         });
@@ -177,7 +177,7 @@ export class Scene extends THREE.Scene
                             this.camTargetBool_openingIsEnd = false;
                             this.camera.camTarget = this.baseCamTarget;
                             this.camera.lookTarget = new THREE.Vector3(140, 70, 140);//斜めのときの中心
-                            console.log("continue Normal mode!");//zoom out
+                            // console.log("continue Normal mode!");//zoom out
                             this.openCamTargetBool();
                         }
                         break;
@@ -191,7 +191,7 @@ export class Scene extends THREE.Scene
                     this.camTargetBool_BACKSPACE = false;
                     this.camera.camTarget = this.baseCamTarget;
                     this.camera.lookTarget = new THREE.Vector3(140, 70, 140);//斜めのときの中心
-                    console.log("Back to 7 panels!");
+                    // console.log("Back to Category!");
                     this.openCamTargetBool();
                 }
             // }
@@ -209,7 +209,7 @@ export class Scene extends THREE.Scene
             this.camera.camTarget.subVectors(this.camera.lookTarget, this.baseCamTarget);
             this.camera.camTarget.multiplyScalar(0.9);
             this.camera.camTarget.add(this.baseCamTarget);
-            console.log(message);
+            // console.log("normal_ " + message);
             this.resetCamTargetBool();
         }
     }
