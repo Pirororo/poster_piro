@@ -2,6 +2,7 @@ import {MeshLine, MeshLineMaterial} from "three.meshline";
 import * as THREE from "three";
 import { convertCSVtoArray2D, loadCSV } from "../../Utils/AssetsLoader";
 
+
 export default class Line extends THREE.Object3D {
 
         /**
@@ -22,17 +23,39 @@ export default class Line extends THREE.Object3D {
             this.getlineLength = this.getlineLength.bind(this);
             this.loadCSVandConvertToArray2D = this.loadCSVandConvertToArray2D.bind(this);
             this.doSomething = this.doSomething.bind(this);
-            
+            this.showText = this.showText.bind(this);
 
+            // this.showText();
+            // this.add(this.text);
+
+            // var loader = new THREE.FontLoader();
+            // loader.load('helvetiker_regular.typeface.json', function(font){
+            //     var textGeometry = new THREE.TextGeometry("Hello Three.js!", {
+            //         font: font,
+            //         size: 20,
+            //         height: 5,
+            //         curveSegments: 12
+            //     });
+            //     var materials = [
+            //         new THREE.MeshBasicMaterial( { color: Math.random() * 0xffffff, overdraw: 0.5 } ),
+            //         new THREE.MeshBasicMaterial( { color: 0x000000, overdraw: 0.5 } )
+            //     ];
+            //     var textMesh = new THREE.Mesh(textGeometry, materials);
+            //     this.add(textMesh);
+            // });
+
+
+
+
+            this.lineLength = 0;
+            this.where = where;
+            this.inout = inout;
 
             this.meshes = {};//planeけしてみた
 
             if( !this.meshes[ 0 ] ) { this.meshes[ 0 ] = this.prepareMesh(); }
 
-            this.lineLength = 0;
-            this.where = where;
-            this.inout = inout;
-            
+
             this.data = [];
             this.loadCSVandConvertToArray2D();
             this.DATAisOK = false;
@@ -53,29 +76,39 @@ export default class Line extends THREE.Object3D {
 
 
         prepareMesh() {
-    
-            var geo = new Float32Array( 100 * 3 );//点は40個、長さは/10000000*0.5
+
+
+            var geo = new Float32Array( 40 * 3 );//点は40個、長さは/10000000*0.5
             for( var j = 0; j < geo.length; j += 3 ) {
-                geo[ j ] = geo[ j + 1 ] = geo[ j + 2 ] = 0;//最初の点の位置。全部いれてる
+                // //最初の点の位置。全部いれてる
+                geo[ j + 0 ] = 600*Math.sin(((this.where* 51.4286)+ (0.8* j/3)-5.5)* -Math.PI/180);
+                geo[ j + 1 ] = 0;
+                geo[ j + 2 ] = 600*Math.cos(((this.where* 51.4286)+ (0.8* j/3)-5.5)* -Math.PI/180);
+                // console.log(this.where);
+                // console.log(j/3);
+
             }
-    
+
             var g = new MeshLine();
             g.setGeometry( geo, function( p ) { return p; } );//function( p ) 
 
 
             let material = new MeshLineMaterial( {
-                color: 0xABABAB,
-                lineWidth: 0.6,//0.6
+                color: 0x4ea78e,//0x4ea78e,0x4F95BD
+                lineWidth: 1.1,//0.6
                 depthTest: false,//これがないと隠れちゃって描画されなかった。。。
+                opacity: 0.8,
+                transparent: true,
+                blending: THREE.AdditiveBlending
             });
     
             
             this.mesh = new THREE.Mesh( g.geometry, material );//.geometry = new THREE.BufferGeometry()
             this.mesh.geo = geo;
             this.mesh.g = g;
-    
+
             this.add( this.mesh );
-    
+
             return this.mesh;
         }
     
@@ -86,85 +119,43 @@ export default class Line extends THREE.Object3D {
             var geo = this.mesh.geo;
             var g = this.mesh.g;
 
-            //これがないと生えていかない。
+            //これがないと生えていかない。更新はyだけ
             for( var j = 0; j < geo.length; j+= 3 ) {
-                geo[ j ] = geo[ j + 3 ] * 1.0;
                 geo[ j + 1 ] = geo[ j + 4 ] * 1.0;
-                geo[ j + 2 ] = geo[ j + 5 ] * 1.0;
             }
 
-
-            let Randomselect = Math.random();//xyzどの軸に伸ばすか方向を決める
-            // let lineLength = 100 * (2*Math.random()-1) ;
             this.getlineLength();
-            let RandomDir = Math.random();
-            if(RandomDir <0.5){this.lineLength *= -1;}
-            else{this.lineLength *= 1;}//なぜかわかんないけどこれいれないとマイナスにしかライン走らなくなる
-            // console.log(this.lineLength);
 
+            //更新はyだけ
+            geo[ geo.length - 2 ] = this.lineLength;
 
-            if(Randomselect >0.66){	
-    
-                if(geo[ geo.length - 6 ]>90 && this.lineLength>0){this.lineLength *= -1;}
-                if(geo[ geo.length - 6 ]<-45&& this.lineLength<0){this.lineLength *= -1;}
-                geo[ geo.length - 3 ] = geo[ geo.length - 6 ] +this.lineLength;
-                geo[ geo.length - 2 ] = geo[ geo.length - 5 ];
-                geo[ geo.length - 1 ] = geo[ geo.length - 4 ];
-    
-            }else if(Randomselect >0.33){
-    
-                if(geo[ geo.length - 5 ]>90 && this.lineLength>0){this.lineLength *= -1;}
-                if(geo[ geo.length - 5 ]<-45&& this.lineLength<0){this.lineLength *= -1;}
-                geo[ geo.length - 3 ] = geo[ geo.length - 6 ];
-                geo[ geo.length - 2 ] = geo[ geo.length - 5 ] +this.lineLength;
-                geo[ geo.length - 1 ] = geo[ geo.length - 4 ];
-    
-            }else{
-    
-                if(geo[ geo.length - 4 ]>90 && this.lineLength>0){this.lineLength *= -1;}
-                if(geo[ geo.length - 4 ]<-45&& this.lineLength<0){this.lineLength *= -1;}
-                geo[ geo.length - 3 ] = geo[ geo.length - 6 ];
-                geo[ geo.length - 2 ] = geo[ geo.length - 5 ];
-                geo[ geo.length - 1 ] = geo[ geo.length - 4 ] +this.lineLength;
-            }
             g.setGeometry( geo );
         }
 
+
         getlineLength(){
 
-            //https://uxmilk.jp/11586
-                //Where: 関東ー北海道 = 0, 関東ー中部 = 1,,,
-                //InOut: in=1, out=2;
+            if(this.Times > 1400){this.Times = 0;}
+            this.lineLength = this.data[this.Times][2*this.where+ this.inout]*0.5;//長さ調整
 
-                this.lineLength = this.data[this.Times][2*this.where + this.inout]*1;//長さ調整
-
-                // console.log(this.data[this.Times][2*this.where + this.inout]*1);
-
-                this.Times += 1;//0行目を題名にする場合は前におく
-                return this.lineLength;
+            this.Times += 1;//0行目を題名にする場合は上のifの前におく
+            
+            return this.lineLength;
 
         }
+
 
         loadCSVandConvertToArray2D()//2回よばれるの気になる
         {
 
-            loadCSV("../data/kanto_all.csv", e =>
+            loadCSV("../data/kanto_7area.csv", e =>
             {
                 const result = e.result;
                 let data = convertCSVtoArray2D(result);
                 this.doSomething(data);
-
-                // console.group();
-                // console.log("Data from csv");
-                // console.dir(this.data);
-                // console.log(this.data[0][0]);
-                // console.groupEnd();
-
             });
-
-            // console.log(this.data[0][0]);//これは表示されない
-            
         }
+
 
         doSomething(data){
             this.DATAisOK = true;
@@ -172,15 +163,34 @@ export default class Line extends THREE.Object3D {
             console.log(this.data[0][0]);
         }
 
+
+        showText(){
+
+            // //テキスト表示
+            // var textGeo = new THREE.TextGeometry( 'Leg', {
+            //     size: 40, // 高さ40
+            //     curveSegments: 1, // 字曲線分割数1。カクカク。eが8角形に見える。
+            //     height:20, // 厚さ20
+            //     // フォント指定しないとhelvetikerの非ボールド、非イタリックに
+            //     bevelEnabled: true, bevelSize: 3, bevelThickness: 5, bevelSegments: 2
+            //     // ベベル有効、3太らせる、5伸ばす、ベベル分割数2    
+            // });
+            // var greenMaterial = new THREE.MeshLambertMaterial( { color: 0x00ff00 } );
+            // this.text = new THREE.Mesh( textGeo, greenMaterial );
+
+        }
+
+
         update(){
             if(this.DATAisOK ==  true){
                 if(this.frame < 1800){
                     this.frame += 1;
-                    if(this.frame% 2 == 0){//２回に１回
+                    if(this.frame% 4 == 0){//２回に１回
                         for( var i in this.meshes ) { this.checkIntersection(i); }
                     }
                 }else{ 
-                    this.frame = 1800 +2;//1800以上は読まないよー あれ、1800だと読んでしまう
+                    this.frame = 0;
+                    // this.frame = 1800 +2;
                 }
             }
         }

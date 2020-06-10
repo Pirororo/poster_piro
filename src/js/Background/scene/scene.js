@@ -130,7 +130,7 @@ export class Scene extends THREE.Scene
     addEvent()
     {
         Action.add(EVENT.ShowStartup, () =>{//キーの代わりにくる変数
-            if(this.frameBool_skipAnime == true
+            if(this.frameBool_skipAnime == true 
                 && this.scene0.scene2.frame < this.scene0.scene2.frameSlide-2){//ここ斜めになるtargetPosの時間の一歩手前！！
                 this.frameBool_skipAnime = false;
                 this.camera.frame = this.scene0.scene2.frameSlide-2;
@@ -171,7 +171,7 @@ export class Scene extends THREE.Scene
                     case "G" :
                         this.chooseRoom(this.camTargetBool_G, 9, "Go to room_G!");
                         break;
-                    default:
+                    case null :
                         if(this.camTargetBool_openingIsEnd == true){
                             this.camTargetBool_openingIsEnd = false;
                             this.camera.camTarget = this.baseCamTarget;
@@ -308,7 +308,7 @@ export class Scene1 extends THREE.Scene {
     }
 
     setup(){}
-
+    
     update(){
         // this._line.update();
 
@@ -345,8 +345,8 @@ export class Scene2 extends THREE.Scene {
         this.meshList = [];//raycast用
         this.meshGroup = new THREE.Group();
 
-        const material = new THREE.MeshBasicMaterial( {
-            color: 0xffffff,
+        const material = new THREE.MeshBasicMaterial( { 
+            color: 0xffffff, 
             wireframe: true,
             // wireframeLinewidth:3.5,//いみなかった
             opacity: 0.95,
@@ -395,7 +395,7 @@ export class Scene2 extends THREE.Scene {
 
         if(this.frame < 1800){
             this.frame += 2;//２倍速
-        }else{
+        }else{ 
             this.frame = 1800;//1800以上は読まないよー
             this.eansingBool == false;//頂点入れ替えもしない。
         }
@@ -406,7 +406,7 @@ export class Scene2 extends THREE.Scene {
             this.t = this.easeElapsedTime / this.tSpeed;
             if ( this.t > 1.0){this.t = 1.0;}    // クランプ
             this.rate = this.t * this.t * ( 3.0 - 2.0 * this.t );
-
+            
 
             for (let i = 0; i < this.meshList.length; i++) {
                 // this.meshList[i].scale = 10;//きかない
@@ -632,7 +632,7 @@ export class Scene2 extends THREE.Scene {
         //         }
         //     }
 
-
+           
         // }
 
 
