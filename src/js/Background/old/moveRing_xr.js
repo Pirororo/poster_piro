@@ -87,11 +87,11 @@ export default class MoveRing extends THREE.Object3D {
             vec2 center = vec2( .5 * uAspect, .5 );
             vec2  p = uv - center;
             float radius = uTime;// 時間で半径をアニメーションさせる
-            float lightness = 0.0003/ abs(length(p)- radius);
+            float lightness = 0.0005/ abs(length(p)- radius);
             float radius2 = uTime - 0.35;// 時間で半径をアニメーションさせる
-            float lightness2 = 0.0003/ abs(length(p)- radius2);
+            float lightness2 = 0.0005/ abs(length(p)- radius2);
             float radius3 = uTime - 0.42;// 時間で半径をアニメーションさせる
-            float lightness3 = 0.0003/ abs(length(p)- radius3);
+            float lightness3 = 0.0005/ abs(length(p)- radius3);
 
             float radiusP = uTime + 0.0;// 時間で半径をアニメーションさせる
             float lightnessP = 0.0003/ abs(length(p)- radiusP);// 半径を距離で割る

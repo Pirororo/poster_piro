@@ -80,9 +80,9 @@ export default class ObjectSet extends THREE.Object3D {
             //     // 20 * (j - CELL_NUM / 2)
             if(i%80 == 0){angleTerm += 1;}
             Billmatrix.makeTranslation(
-                (i%10-5)*20+ (800*Math.sin((angleTerm*51.429)*Math.PI/180))+(160),
+                (i%10-5)*20+ (700*Math.sin((angleTerm*51.4286+6)*Math.PI/180))+(160),
                 y/2,
-                (i%8-4)*20+ (800*Math.cos((angleTerm*51.429)*Math.PI/180))+(160)
+                (i%8-4)*20+ (700*Math.cos((angleTerm*51.4286+6)*Math.PI/180))+(160)
             );
 
             // ジオメトリをマージ（結合）
@@ -103,55 +103,93 @@ export default class ObjectSet extends THREE.Object3D {
         this.add(Billmesh);
 
 
-        
-        
-    //☆放射線
+
+    //☆名前パネル
         // 空のジオメトリを作成
-        const SPline_NUM = 7;
-        const SPlinegeometry = new THREE.Geometry();
-        
-        for (let i = 0; i < SPline_NUM; i++) {
-            // 立方体個別の要素を作成
-            const meshTemp = new THREE.Mesh( new THREE.PlaneGeometry(3,1600));
+        const NAME_NUM = 14;
+        const Namegeometry = new THREE.Geometry();
+        // Box
+        angleTerm = 0;
+        for (let i = 0; i < NAME_NUM; i++) {
+            const NamemeshTemp = new THREE.Mesh( new THREE.PlaneGeometry(100,20));
 
-            meshTemp.position.set(160,0,160);
-            meshTemp.rotation.x = 90*Math.PI/180;
-            meshTemp.rotation.z = (i*51.4 -14)*Math.PI/180;
-            // meshTemp.rotation.z = 90* Math.PI/180;
-
+            if(i%2 == 0){angleTerm += 1;}
+            
+            NamemeshTemp.position.set(
+                (600*Math.sin((angleTerm*51.4286+12)*Math.PI/180))+(160),
+                (i%2)*30+130,
+                (600*Math.cos((angleTerm*51.4286+12)*Math.PI/180))+(160)
+            );
+            NamemeshTemp.rotation.y = (angleTerm*51.429+10)*Math.PI/180;
 
             // メッシュをマージ（結合）
-            SPlinegeometry.mergeMesh(meshTemp);
+            Namegeometry.mergeMesh(NamemeshTemp);
+
         }
         // マテリアルを作成
-        const SPlinematerial = new THREE.MeshBasicMaterial( {
+        const Namegmaterial = new THREE.MeshBasicMaterial( {
             // color: 0xC7C7C7,
-            // wireframe: true,
-            side: THREE.BackSide,
+            wireframe: true,
             color: 0x4ea78e,
-            opacity: 0.9,
+            opacity: 0.8,
             transparent: true,
+            side: THREE.DoubleSide,
             blending: THREE.AdditiveBlending,
         } );
 
         // メッシュを作成
-        this.SPlinemesh = new THREE.Mesh(SPlinegeometry, SPlinematerial);
-        // this.add(this.SPlinemesh);
+        this.Namegmesh = new THREE.Mesh(Namegeometry, Namegmaterial);
+        this.add(this.Namegmesh);
 
 
-    //☆リング
-        this.RingRadius = 300;
-        this.RingGeometry = new THREE.RingGeometry(290,300,7,1,10);//最後がシータスタート
-        const Ringmaterial = new THREE.MeshBasicMaterial( {
-            side: THREE.DoubleSide,
-            color: 0x4ea78e,
-            opacity: 0.9,
-            transparent: true,
-        } );
-        this.Ringmesh = new THREE.Mesh(this.RingGeometry, Ringmaterial); 
-        this.Ringmesh.position.set(160, 0, 160);
-        this.Ringmesh.rotation.x = 90 * Math.PI/180;
-        // this.add(this.Ringmesh);
+        
+    // //☆放射線
+    //     // 空のジオメトリを作成
+    //     const SPline_NUM = 7;
+    //     const SPlinegeometry = new THREE.Geometry();
+        
+    //     for (let i = 0; i < SPline_NUM; i++) {
+    //         // 立方体個別の要素を作成
+    //         const meshTemp = new THREE.Mesh( new THREE.PlaneGeometry(3,1600));
+
+    //         meshTemp.position.set(160,0,160);
+    //         meshTemp.rotation.x = 90*Math.PI/180;
+    //         meshTemp.rotation.z = (i*51.4 -14)*Math.PI/180;
+    //         // meshTemp.rotation.z = 90* Math.PI/180;
+
+
+    //         // メッシュをマージ（結合）
+    //         SPlinegeometry.mergeMesh(meshTemp);
+    //     }
+    //     // マテリアルを作成
+    //     const SPlinematerial = new THREE.MeshBasicMaterial( {
+    //         // color: 0xC7C7C7,
+    //         // wireframe: true,
+    //         side: THREE.BackSide,
+    //         color: 0x4ea78e,
+    //         opacity: 0.9,
+    //         transparent: true,
+    //         blending: THREE.AdditiveBlending,
+    //     } );
+
+    //     // メッシュを作成
+    //     this.SPlinemesh = new THREE.Mesh(SPlinegeometry, SPlinematerial);
+    //     // this.add(this.SPlinemesh);
+
+
+    // //☆リング
+    //     this.RingRadius = 300;
+    //     this.RingGeometry = new THREE.RingGeometry(290,300,7,1,10);//最後がシータスタート
+    //     const Ringmaterial = new THREE.MeshBasicMaterial( {
+    //         side: THREE.DoubleSide,
+    //         color: 0x4ea78e,
+    //         opacity: 0.9,
+    //         transparent: true,
+    //     } );
+    //     this.Ringmesh = new THREE.Mesh(this.RingGeometry, Ringmaterial); 
+    //     this.Ringmesh.position.set(160, 0, 160);
+    //     this.Ringmesh.rotation.x = 90 * Math.PI/180;
+    //     // this.add(this.Ringmesh);
 
  
     }

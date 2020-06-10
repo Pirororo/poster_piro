@@ -34,10 +34,8 @@ export default class LightBar extends THREE.Object3D {
         // } );
 
 
-
         this.lightBarmesh = new THREE.Mesh(geo, mat); 
         this.lightBarmesh.position.set(160, 200, 160);
-        // this.lightBarmesh.position.set(0, 0, 0);
         this.lightBarmesh.rotation.x = 0* Math.PI/180;
         
         
@@ -57,16 +55,9 @@ export default class LightBar extends THREE.Object3D {
             this.frame = 0;
         }
 
-
         const sec = this.frame/1000;
         this.meshMatRing.uniforms.uTime.value = sec;// シェーダーに渡す時間を更新
         this.meshMatGrade.uniforms.uTime.value = sec;// シェーダーに渡す時間を更新
-
-
-
-        // console.log(this.uniforms.uTime.value);
-
-        // this.moveRingmesh.rotation.y = 120 * Math.PI/180;
 
 
     }
@@ -225,7 +216,7 @@ export default class LightBar extends THREE.Object3D {
             vec2  p = uv - center;
             
             //グラデ
-            vec2 q = mod(p, 0.14) - 0.0;
+            vec2 q = mod(p, 0.142857) - 0.0;
             float f = 0.2 / abs(q.x) ; 
             vec3 gradate  = color2 /(f) ; 
             // vec3 gradate = color * uv.x + color2 * (1.0 - uv.x);

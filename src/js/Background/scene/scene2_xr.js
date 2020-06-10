@@ -1,7 +1,7 @@
 
 import * as THREE from "three";
 import ObjectSet from '../objects/objectSet_xr.js';
-import MoveRing from '../objects/moveRing_xr.js';
+// import MoveRing from '../objects/moveRing_xr.js';
 import LightBar from '../objects/lightBar_xr.js';
 
 export class Scene2 extends THREE.Scene
@@ -28,7 +28,7 @@ export class Scene2 extends THREE.Scene
 
         //信号
         this.openingFrame = 0;
-        this.backAnimationframeStart = 550;
+        this.backAnimationframeStart = 990;
         this.backAnimationframe = this.backAnimationframeStart;
         this.waitingFrame = 0;
         this.openingUpdateBool = true;
@@ -125,19 +125,19 @@ export class Scene2 extends THREE.Scene
             this.opening();
         }
 
-        // //バックアニメーション
-        // if(this.backAnimationUpdateBool == true){
+        //バックアニメーション
+        if(this.backAnimationUpdateBool == true){
 
-        //     if(this.waitingFrame< 240){
-        //         this.waitingFrame += 1;
-        //     }
-        //     if(this.waitingFrame >= 240){
-        //         this.waitingFrame = 240+2;
+            // if(this.waitingFrame< 240){
+            //     this.waitingFrame += 1;
+            // }
+            // if(this.waitingFrame >= 240){
+            //     this.waitingFrame = 240+2;
 
-        //         this.backAnimationframe += 1;
-        //         this.backAnimation();
-        //     }
-        // }
+                this.backAnimationframe += 1;
+                this.backAnimation();
+            // }
+        }
     }
 
 
@@ -485,27 +485,57 @@ export class Scene2 extends THREE.Scene
 
 
 
-        // if(this.backAnimationframe == 1000){
-        //     for (let i = 0; i < this.meshList.length; i++) {
-        //         for (let j = 0; j < 4; j++) {
-        //         if(i >=80*j && i<80*(j+1)){
-        //             for (let k = 0; k < 4; k++) {
-        //             if(i >=80*j+(20*k) && i<80*j+(20*(k+1))){
-        //                 for (let l = 0; l < 10; l++) {
-        //                 if(i >=80*j+(20*k)+(2*l) && i<80*j+(20*k)+(2*(l+1))){
-        //                     this.posTarget[3*i+ 0] = 70*Math.sin((4*i*Math.PI/180))+50,
-        //                     this.posTarget[3*i+ 1] = 70*Math.cos((2*20*(j+k+l)*Math.PI/180))+25,
-        //                     this.posTarget[3*i+ 2] = -70*Math.sin((8*i*Math.PI/180))+50
-        //                 }
-        //                 }
-        //             }
-        //             }
-        //         }
-        //         }
-        //     }
-        //     this.easeElapsedTime =0;
-        //     this.tSpeed =12.0;
-        // }
+        if(this.backAnimationframe == 1000){
+            for (let i = 0; i < this.meshList.length; i++) {
+                for (let j = 0; j < 4; j++) {
+                if(i >=80*j && i<80*(j+1)){
+                    for (let k = 0; k < 4; k++) {
+                    if(i >=80*j+(20*k) && i<80*j+(20*(k+1))){
+                        for (let l = 0; l < 10; l++) {
+                        if(i >=80*j+(20*k)+(2*l) && i<80*j+(20*k)+(2*(l+1))){
+                            this.posTarget[3*i+ 0] = 150*Math.sin((4*i*Math.PI/180))+160,
+                            this.posTarget[3*i+ 1] = 100*Math.cos((2*20*(j+k+l)*Math.PI/180))+100,
+                            this.posTarget[3*i+ 2] = -150*Math.sin((8*i*Math.PI/180))+160
+                        }
+                        }
+                    }
+                    }
+                }
+                }
+            }
+            this.easeElapsedTime =0;
+            this.tSpeed =15.0;
+        }
+
+        if(this.backAnimationframe == 1150){
+            for (let i = 0; i < this.meshList.length; i++) {
+                for (let j = 0; j < 4; j++) {
+                if(i >=80*j && i<80*(j+1)){
+                    for (let k = 0; k < 4; k++) {
+                    if(i >=80*j+(20*k) && i<80*j+(20*(k+1))){
+                        for (let l = 0; l < 10; l++) {
+                        if(i >=80*j+(20*k)+(2*l) && i<80*j+(20*k)+(2*(l+1))){
+                                this.posTarget[3*i+ 0] = 20*(j+l+2),
+                                this.posTarget[3*i+ 1] = 20*l,
+                                this.posTarget[3*i+ 2] = 20*(k+l+2)
+                        }
+                        }
+                    }
+                    }
+                }
+                }
+            }
+            this.easeElapsedTime =0;
+            this.tSpeed =7.0;
+        }
+
+        if(this.backAnimationframe == 1150){
+            if(this.openingIsEnd == false){
+                this.openingIsEnd = true;
+                this.openingUpdateBool = false;
+                this.openingFrame = 0;
+            }
+        }
 
         // if(this.backAnimationframe == 1150){
         //     for (let i = 0; i < this.meshList.length; i++) {

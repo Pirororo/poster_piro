@@ -214,14 +214,14 @@ export class Scene extends THREE.Scene
             if(data.mode == "VR"){
                 if(this.camTargetBool_BACKSPACE == true){
                     this.camTargetBool_BACKSPACE = false;
-                    this.scene0.scene2.backAnimationUpdateBool = false;
+                    this.scene0.scene2.backAnimationUpdateBool = true;
                     this.scene0.scene2.backAnimationframe = this.scene0.scene2.backAnimationframeStart;
                     this.scene0.scene2.waitingFrame = 0;
-                    this.scene0.scene2.openingUpdateBool = true;
+                    this.scene0.scene2.openingUpdateBool = false;
 
                     // this.baseCamTarget = new THREE.Vector3(-220-50,-30-25,-300-50);//ここ書かないと書き換えられちゃってるぽい
                     this.baseCamTarget = new THREE.Vector3(-180-50,-40-25,-220-50);
-                    this.baseCamTarget = new THREE.Vector3(-50, -40-800, -50);
+                    // this.baseCamTarget = new THREE.Vector3(-50, -40-800, -50);
                     this.camTarget = this.baseCamTarget;
                     console.log("VR_ Back to Category!");
                     this.openCamTargetBool();
@@ -266,7 +266,7 @@ export class Scene extends THREE.Scene
             console.log("VR_ " + message);
             this.resetCamTargetBool();
 
-            // this.scene0.scene2.backAnimationUpdateBool = true;///////////////
+            this.scene0.scene2.backAnimationUpdateBool = false;
         }
     }
 
@@ -346,7 +346,7 @@ export class Scene1 extends THREE.Scene
                 this._line[2*i+j] = new Line(i,j+1);
                 this._line[2*i+j].position.set(
                     160,
-                    40 + j*20,
+                    40 ,
                     160
                 );
                 this.add(this._line[2*i+j]);
