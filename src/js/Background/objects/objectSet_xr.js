@@ -13,15 +13,13 @@ export default class ObjectSet extends THREE.Object3D {
     
     //☆床サークル
         // 空のジオメトリを作成
-        const Circle_NUM = 20;
+        const Circle_NUM = 10;
         const Circlegeometry = new THREE.Geometry()
         // Circle
         for (let i = 0; i < Circle_NUM; i++) {
             // 立方体個別の要素を作成
-            this.CircleRadius = 1000* Math.random();
             const CirclesampleGeometry = new THREE.CircleGeometry(
-                // this.CircleRadius,
-                1000/Circle_NUM*i,
+                900/Circle_NUM*i,
                 7//７角形
             );
             // 座標調整の行列を作成
@@ -55,6 +53,7 @@ export default class ObjectSet extends THREE.Object3D {
 
         this.circle = new THREE.Mesh( Circlegeometry, Circlematerial );
         this.circle.rotation.x = 90*Math.PI/180;
+        this.circle.rotation.z = -11*Math.PI/180;
         this.add(this.circle);
 
 
@@ -81,9 +80,9 @@ export default class ObjectSet extends THREE.Object3D {
             //     // 20 * (j - CELL_NUM / 2)
             if(i%80 == 0){angleTerm += 1;}
             Billmatrix.makeTranslation(
-                (i%10)*20+ (800*Math.sin((angleTerm*51.4 -12)*Math.PI/180))+(160),
+                (i%10-5)*20+ (800*Math.sin((angleTerm*51.429)*Math.PI/180))+(160),
                 y/2,
-                (i%8)*20+ (800*Math.cos((angleTerm*51.4 -12)*Math.PI/180))+(160)
+                (i%8-4)*20+ (800*Math.cos((angleTerm*51.429)*Math.PI/180))+(160)
             );
 
             // ジオメトリをマージ（結合）
@@ -117,7 +116,7 @@ export default class ObjectSet extends THREE.Object3D {
 
             meshTemp.position.set(160,0,160);
             meshTemp.rotation.x = 90*Math.PI/180;
-            meshTemp.rotation.z = (i*51.4 -12)*Math.PI/180;
+            meshTemp.rotation.z = (i*51.4 -14)*Math.PI/180;
             // meshTemp.rotation.z = 90* Math.PI/180;
 
 

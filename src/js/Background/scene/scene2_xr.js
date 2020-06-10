@@ -1,7 +1,7 @@
 
 import * as THREE from "three";
-import ObjectSet from '../objects/objectSet.js';
-import MoveRing from '../objects/moveRing.js';
+import ObjectSet from '../objects/objectSet_xr.js';
+import MoveRing from '../objects/moveRing_xr.js';
 
 export class Scene2 extends THREE.Scene
 {

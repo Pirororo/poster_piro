@@ -11,20 +11,23 @@ export default class MoveRing extends THREE.Object3D {
         super();
 
         this.frame = 0;
+        this.speed = 7;
 
+        // function createMeshMaterial(){
+        
         // uniform変数を定義
         this.uniforms = {
             // uAspect: { value: this.w / this.h},
-            uAspect:    { value: 1600 / 900 },
+            uAspect:    { value: 1 / 1 },
             uTime:    { value: 100.0 },
             color:    { value: new THREE.Color(0x734ca4) },
-            color2:    { value: new THREE.Color(0x4ea78) },
+            color2:    { value: new THREE.Color(0x4ea78e) },//0x4ea78
             // alpha:    {},
             resolution:    { value: new THREE.Vector2()} 
         };
 
-        this.uniforms.resolution.value.x = 1600;
-        this.uniforms.resolution.value.y = 900;
+        this.uniforms.resolution.value.x = 100;
+        this.uniforms.resolution.value.y = 100;
 
 
         // 頂点シェーダーのソース
@@ -63,7 +66,7 @@ export default class MoveRing extends THREE.Object3D {
             // gl_FragColor = color;
 
 
-            //グラデ
+            ////グラデ
             // vec2 uv = vec2( vUv.x * uAspect, vUv.y );
             // vec3 gradate = color * uv.y + color2 * (1.0 - uv.y);
             // gl_FragColor = vec4(gradate, 0.5 );
@@ -78,14 +81,6 @@ export default class MoveRing extends THREE.Object3D {
             float lightness = 0.0005/ abs(length(p)- radius);// 半径を距離で割る
             vec3 outColor = lightness * color2;
             gl_FragColor = vec4( vec3( outColor ),0.5 );
-
-
-            // lightness = clamp( lightness, 0.0, 1.0 );
-            // vec4 color = vec4( vec3( lightness ), 1.0 );
-            // color *= vec4( 0.2, 1.0, 0.5, 0.5 );
-            // gl_FragColor = color;
-
-
 
         }
         `;
@@ -102,8 +97,7 @@ export default class MoveRing extends THREE.Object3D {
 
 
         // return meshMat;
-
-
+        // }
 
 
 
@@ -127,10 +121,10 @@ export default class MoveRing extends THREE.Object3D {
 
     update(){
 
-        if(this.frame < 1000){
-            this.frame += 5;
-        }else{
-            this.frame = 0;
+        
+        this.frame += this.speed;
+        if(this.frame > 900 || this.frame < -100){
+            this.speed *= -1;
         }
         // this.RingRadius = this.frame;
         // console.log(this.RingRadius);
@@ -142,8 +136,6 @@ export default class MoveRing extends THREE.Object3D {
         // console.log(this.uniforms.uTime.value);
 
         // this.moveRingmesh.rotation.y = 120 * Math.PI/180;
-
-
 
 
     }

@@ -1,6 +1,6 @@
 
 import * as THREE from "three";
-import Line from '../objects/line.js';
+import Line from '../objects/line_xr.js';
 // import { EVENT, KEYCODE } from "../utils/props.js";
 import { KEYCODE } from "../utils/props.js";
 import { EVENT, Action } from "../../Utils/EventManager"
@@ -221,6 +221,7 @@ export class Scene extends THREE.Scene
 
                     // this.baseCamTarget = new THREE.Vector3(-220-50,-30-25,-300-50);//ここ書かないと書き換えられちゃってるぽい
                     this.baseCamTarget = new THREE.Vector3(-180-50,-40-25,-220-50);
+                    this.baseCamTarget = new THREE.Vector3(-50, -40-800, -50);
                     this.camTarget = this.baseCamTarget;
                     console.log("VR_ Back to Category!");
                     this.openCamTargetBool();
@@ -307,15 +308,15 @@ export class Scene0 extends THREE.Scene
     {
         super();
 
-        // this.scene1 = new Scene1();
-        // this.add(this.scene1);
+        this.scene1 = new Scene1();
+        this.add(this.scene1);
 
         this.scene2 = new Scene2();
         this.add(this.scene2);
     }
     update()
     {
-        // this.scene1.update();
+        this.scene1.update();
         this.scene2.update();
     }
 }
@@ -328,15 +329,34 @@ export class Scene1 extends THREE.Scene
     {
         super();
 
-        // this._line = [this._line1in, this._line1out,this._line2in, this._line2out];
-        this._line = [this._line1in, this._line1out];
+        this._line = [this._line1in, this._line1out,
+                        this._line2in, this._line2out,
+                        this._line3in, this._line3out,
+                        this._line4in, this._line4out,
+                        this._line5in, this._line5out,
+                        this._line6in, this._line6out,
+                        this._line7in, this._line7out
+                    ];
+
+        // this._line = [this._line1in, this._line1out];
 
         //今は関東ー北海道だけなのでi<1
         for (let i = 0 ; i < this._line.length/2; i++){
             for (let j= 0 ; j < 2 ; j++){
-                this._line[2*i+j] = new Line(i,j);
-                if(j%2 ==0){this._line[2*i+j].position.set(0,0,0);}//outは0,0,0から
-                else{this._line[2*i+j].position.set(150,70,150);}//inは離れたとこから
+                // this._line[2*i+j] = new Line(i,j);
+                // if(j%2 ==0){this._line[2*i+j].position.set(0,0,0);}//outは0,0,0から
+                // else{this._line[2*i+j].position.set(150,70,150);}//inは離れたとこから
+                // this.add(this._line[2*i+j]);
+
+                this._line[2*i+j] = new Line(i,j+1);
+                this._line[2*i+j].position.set(
+                    // (400*Math.sin((i*51.4 -12)*Math.PI/180))+(160),
+                    // 50 + j*20,
+                    // (400*Math.cos((i*51.4 -12)*Math.PI/180))+(160)
+                    160,
+                    50 + j*20,
+                    160
+                );
                 this.add(this._line[2*i+j]);
             }
         }
