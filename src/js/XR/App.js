@@ -30,12 +30,12 @@ const App =
 
 		this.components.background = BackgroundComponent;
 		// this.components.entrance = EntranceComponent;
-		this.components.gallery = GalleryComponent;
-		this.components.detail = DetailComponent;
+		// this.components.gallery = GalleryComponent;
+		// this.components.detail = DetailComponent;
 		this.components.raycastCheck = RaycastCheckComponent;
 		this.components.raycastTarget = RaycastTargetComponent;
 
-		this.elements.body = document.body;
+		// this.elements.body = document.body;
 		this.elements.contentContainer = document.getElementById(SELECTORS.ContentContainer);
 
 		this.addEvent();
@@ -60,8 +60,8 @@ const App =
 		// this.attachComponent(this.elements.scene, COMPONENTS.Entrance);
 
 		this.attachComponent(this.elements.scene, COMPONENTS.Background);
-		this.attachComponent(this.elements.scene, COMPONENTS.Gallery);
-		this.attachComponent(this.elements.scene, COMPONENTS.Detail);
+		// this.attachComponent(this.elements.scene, COMPONENTS.Gallery);
+		// this.attachComponent(this.elements.scene, COMPONENTS.Detail);
 
 		this.elements.xr_player = this.attachComponent(document.getElementById(SELECTORS.XRPlayer), COMPONENTS.RaycastCheck);
 		this.elements.xr_raycaster = document.getElementById(SELECTORS.Raycaster);
@@ -73,8 +73,8 @@ const App =
 	setupMainComponents()
 	{
 		this.attachComponent(this.elements.scene, COMPONENTS.Background);
-		this.attachComponent(this.elements.scene, COMPONENTS.Gallery);
-		this.attachComponent(this.elements.scene, COMPONENTS.Detail);
+		// this.attachComponent(this.elements.scene, COMPONENTS.Gallery);
+		// this.attachComponent(this.elements.scene, COMPONENTS.Detail);
 	},
 
 	attachComponent(element, key, value = "")

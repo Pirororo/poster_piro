@@ -33,8 +33,8 @@ export class Scene extends THREE.Scene
         // this.add(this.scene0);//onKeyup(e)へ！
 
         //最初の位置
-        this.camPos = new THREE.Vector3(0, -100, -240);//正面中心に収まる位置
-        this.camTarget = new THREE.Vector3(-140, 0, -140);
+        this.camPos = new THREE.Vector3(0, -200, -240);//正面中心に収まる位置
+        this.camTarget = new THREE.Vector3(-140, -100, -140);
 
         //Target指定なので都度１回だけ読むようにする
         this.keyBool_startVRanime = true;
@@ -233,21 +233,22 @@ export class Scene extends THREE.Scene
     cam_opening(){
         //ここ不要だった、初期設定値だけでokだったので。
     }
+
     cam_backAnimation(){
 
-        if(this.scene0.scene2.backAnimationframe == 250){
-            // this.camTarget = new THREE.Vector3(0, 0, 0);
-            this.camTarget = new THREE.Vector3(-150, -50,-50);
-        }
-        if(this.scene0.scene2.backAnimationframe == this.scene0.scene2.backAnimationframeStart+2){
-            this.camTarget = new THREE.Vector3(-150,-100,-150);
-        }//この座標が円中心座標
-        if(this.scene0.scene2.backAnimationframe == 1100){
-            this.camTarget = new THREE.Vector3(70, -80,-200);
-        }
-        // if(this.scene0.scene2.backAnimationframe == 1350){
-        //     this.camTarget = new THREE.Vector3(-150,-125,-150);
+        // if(this.scene0.scene2.backAnimationframe == 250){
+        //     // this.camTarget = new THREE.Vector3(0, 0, 0);
+        //     this.camTarget = new THREE.Vector3(-150, -50,-50);
         // }
+        // if(this.scene0.scene2.backAnimationframe == this.scene0.scene2.backAnimationframeStart+2){
+        //     this.camTarget = new THREE.Vector3(-150,-100,-150);
+        // }//この座標が円中心座標
+        // if(this.scene0.scene2.backAnimationframe == 1100){
+        //     this.camTarget = new THREE.Vector3(70, -80,-200);
+        // }
+        // // if(this.scene0.scene2.backAnimationframe == 1350){
+        // //     this.camTarget = new THREE.Vector3(-150,-125,-150);
+        // // }
     }
 
     chooseRoom(camTargetBool,l,message){
@@ -255,7 +256,7 @@ export class Scene extends THREE.Scene
             camTargetBool = false;
             this.lookTarget = new THREE.Vector3(
                 // 25*(1.5+l),8+(15*l),25*(1.5+l)
-                25*1.41*(1.5+l),8+(15*l),25*0*(1.5+l)//ここVRオリジナル！！45度回転してるので。ルート２かけてる
+                25*1.41*(1.5+l),8+(20*l),25*0*(1.5+l)//ここVRオリジナル！！45度回転してるので。ルート２かけてる
             );
             this.camTarget.subVectors(this.lookTarget, this.baseCamTargetPlus);//Plus
             this.camTarget.multiplyScalar(0.95);
@@ -319,6 +320,8 @@ export class Scene0 extends THREE.Scene
     }
 }
 
+
+
 export class Scene1 extends THREE.Scene
 {
     constructor()
@@ -344,5 +347,4 @@ export class Scene1 extends THREE.Scene
             this._line[i].update();
         }
     }
-
 }
