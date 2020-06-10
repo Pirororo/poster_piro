@@ -68,9 +68,9 @@ export default class ObjectSet extends THREE.Object3D {
             // 立方体個別の要素を作成
             let y = 60*(Math.random()+0.5);
             const BillsampleGeometry = new THREE.BoxGeometry(
-                10*(Math.random()+0.5),
+                10,
                 y,
-                10*(Math.random()+0.5)
+                10
             );
             // 座標調整の行列を作成
             const Billmatrix = new THREE.Matrix4();

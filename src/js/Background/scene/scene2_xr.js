@@ -2,6 +2,7 @@
 import * as THREE from "three";
 import ObjectSet from '../objects/objectSet_xr.js';
 import MoveRing from '../objects/moveRing_xr.js';
+import LightBar from '../objects/lightBar_xr.js';
 
 export class Scene2 extends THREE.Scene
 {
@@ -13,9 +14,13 @@ export class Scene2 extends THREE.Scene
         this.objectSet = new ObjectSet();
         this.add(this.objectSet);
 
-        //ムーブリングの呼び出し
-        this.moveRing = new MoveRing();
-        this.add(this.moveRing);
+        // //ムーブリングの呼び出し
+        // this.moveRing = new MoveRing();
+        // this.add(this.moveRing);
+
+        //ライトバーの呼び出し
+        this.lightBar = new LightBar();
+        this.add(this.lightBar);
 
         //メソッド連結
         this.opening = this.opening.bind(this);
@@ -81,8 +86,11 @@ export class Scene2 extends THREE.Scene
         //床とビルのオブジェクトのアップデート
         this.objectSet.update();
 
-        //ムーブリングのアップデート
-        this.moveRing.update();
+        // //ムーブリングのアップデート
+        // this.moveRing.update();
+
+        //ライトバーのアップデート
+        this.lightBar.update();
 
         //プレートのイージング
         if (this.eansingBool == true){
