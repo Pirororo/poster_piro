@@ -6,6 +6,7 @@ const dispatcher = {
 
 const EVENT =
 {
+SkipOpening: "SkipOpening",
 ShowStartup: "ShowStartup", // スタートアップ画面表示。VRか、NORMALか選択する画面
 ShowCategory: "ShowCategory", // スタートアップ画面 --> カテゴリ一覧を表示
 ShowPoster: "ShowPoster", // カテゴリ一覧画面 --> ポスター画面表示
@@ -15,6 +16,7 @@ BackToPoster: "BackToPoster", // 詳細画面 --> ポスター画面に戻る
 
 VRModeSelected: "VRModeSelected", // VRモードを選択した時
 VRModeStart: "VRModeStart", // VRモードをスタートした時
+ShowVREnterace: "ShowVREnterace",
 
 // ぶちょーデバッグ用（※のちほど、以下全てはShowCategoryに差し替えます）
   ShowCategoryA: "ShowCategoryA", // カテゴリーAを選択したとき

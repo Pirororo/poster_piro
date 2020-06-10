@@ -7,7 +7,7 @@ export default class GalleryModel {
     this.currentCategory = null;
     this.categoryId = categoryId;
     this.id = id;
-    this.sessionUrl = 'session/';
+    this.sessionUrl = '/session/';
     this.imgTexture = null;
     this.canvasTexture = null;
     this.boardWidth = 80;

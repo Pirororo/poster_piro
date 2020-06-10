@@ -4,17 +4,16 @@
  * Assembling each module instances.
  */
 
-// import Background from "./Background_test/Facade"; // will be created by Piro
 import Background from "./Background/Facade"; // will be created by Piro
-
 import Gallery from "./Gallery/Facade"; // will be created by Yonekura
 import Detail from "./Detail/Facade"; // will be created by Shinagawa
 import XRHelper from "./XR/Facade"; // will be created by Beharu
-
 import Startup from "./Startup/Facade";
 
 import Router from "./Utils/Router";
-import { isVR } from "./Utils/Helper";
+import { isVR, show } from "./Utils/Helper";
+import { SELECTORS } from "./Utils/Props";
+import { EVENT, Action } from "./Utils/EventManager";
 
 const Composer =
 {
@@ -22,28 +21,31 @@ const Composer =
 		isPause: false,
 	},
 	instances: {},
+	elements: {},
 	init()
 	{
-		if (!isVR)
-		{
-			Router.init();
-		}
+		// if (!isVR)
+		// {
+		// 	Router.init();
+		// }
+		Router.init();
 
 		this.instances.background = Background.init();
 		this.instances.startup = Startup.init()
 		this.instances.gallery = Gallery.init();
 		this.instances.xr = XRHelper.init();
+		this.instances.detail = Detail.init();
 
-		// this.instances.detail = Detail.init();
+		show(SELECTORS.BackgroundContainer);
 
-		if (isVR()) {
-			this.instances.xr = XRHelper.init();
-		}
-		else {
-			this.instances.background = Background.init();
-			this.instances.gallery = Gallery.init();
-			// this.instances.detail = Detail.init();
-		}
+		// if (isVR()) {
+		// 	this.instances.xr = XRHelper.init();
+		// }
+		// else {
+		// 	this.instances.background = Background.init();
+		// 	this.instances.gallery = Gallery.init();
+		// 	// this.instances.detail = Detail.init();
+		// }
 
 		this.addEvent();
 		this.setup();
@@ -90,8 +92,16 @@ const Composer =
 		this.instances.forIn((k, instance) => instance.onClick(e));
 	},
 
-	addEvent() {
+	addEvent()
+	{
+		// setTimeout(() => {
+		// 	// Action.dispatch(EVENT.SkipOpening);
+		// 	Action.dispatch(EVENT.ShowStartup);
+		// }, 100);
 
+		// setTimeout(() => {
+		// 	Action.dispatch(EVENT.ShowCategory, "initial");
+		// }, 500);
 	}
 };
 

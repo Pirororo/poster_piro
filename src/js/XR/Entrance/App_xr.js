@@ -14,22 +14,20 @@ export default
       ...this.containers,
       entrance: {}
     };
-
+    this.isEnable = true;
     this.addEvent();
+    this.generateContent();
   },
 
   generateContent()
   {
+
     this.containers.entrance.board = this.generateContainer(SELECTORS.XREntranceBoardContainer, this.scene);
     this.boardList.length = 0;
     this.hudUIList.length = 0;
 
     const contents = [];
-    const boardContent = document.getElementById(SELECTORS.GalleryStage);
-
-    contents.push({
-      summary: {}
-    });
+    contents.push({ image: {} });
 
     const amount = contents.length;
     for (let i = 0; i < amount; i++)
@@ -37,33 +35,32 @@ export default
       const parameter =
       {
         index: i,
-        name: `entrance_${i}`,
+        name: `entrance_content_container`,
         boardId: BOARD_ID.Entrance,
         containers: {
           board: this.containers.entrance.board,
-          boardContent
+          // boardContent
         },
         data: contents[i]
       };
       this.boardList.push(new EntranceBoard_xr(parameter));
     }
-
-    this.showBoard(54, this.boardList, 18);
-    // this.generateHUD(BOARD_ID.UI.BackToPoster, [0, 15, -20]);
+    this.showBoard(54, this.boardList, 15);
   },
 
   addEvent()
   {
-    Action.add(EVENT.VRModeSelected, () => {
-      this.generateContent();
+    Action.add(EVENT.ShowCategory, data => {
+
+      if (data.mode == "VR" && data.category == null)
+      {
+        this.isEnable = false;
+        this.destroy();
+      }
     });
 
-    Action.add(EVENT.ShowCategory, () => {
-
-    });
-
-    setTimeout(() => {
-      this.generateContent();
-    }, 200);
+    // setTimeout(() => {
+    //   this.generateContent();
+    // }, 200);
   }
 }

@@ -7,8 +7,105 @@
 #detail_container {
   z-index: 20;
   visibility: hidden;
+  position: relative;
 }
 
-#blocker {
+#frame_container {
   position: absolute;
+  z-index: 100;
+  top: 0;
+  right: -800px;
+  transition: all 0.6s;
 }
+
+#frame_container.fade-in {
+  right: 0;
+}
+
+#detail_iframe {
+  width: 750px;
+  height: 100vh;
+  border: none;
+}
+
+#close {
+  position: absolute;
+  font-size: 40px;
+  top: 10px;
+  right: 25px;
+  z-index: 200;
+  cursor: pointer;
+  text-decoration: none;
+  color: white;
+}
+
+#close.no_show {
+  display: none;
+}
+
+#close:hover,
+#close:focus {
+  color: #999;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  #detail_iframe {
+    width: 100vw;
+  }
+
+  .contents img {
+    width: 100vw;
+  }
+
+  #detail_iframe .contents .kiji .pdf_image img {
+    width: 20px;
+  }
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.8);
+  transition: all 0.6s;
+}
+
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  width: 90%;
+  max-width: 1200px;
+  transition: all 0.6s;
+}
+
+.slide {
+  display: none;
+}
+
+.close {
+  color: white;
+  position: absolute;
+  top: 40px;
+  right: 60px;
+  font-size: 40px;
+  font-weight: bold;
+  z-index: 500;
+}
+
+.close:hover,
+.close:focus {
+  color: #999;
+  text-decoration: none;
+  cursor: pointer;
+}
+

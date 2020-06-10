@@ -1,5 +1,6 @@
 import Router from "vanilla-router";
 import { EVENT, Action } from "./../Utils/EventManager";
+import { UA } from "./../Utils/Props";
 
 const _Router =
 {
@@ -18,24 +19,30 @@ const _Router =
 				https://openhouse.nii.ac.jp/session/a/01/
 				https://openhouse.nii.ac.jp/session/?path=a/01/
 				*/
-				const param = path.replace(/\/|(session)?/g, "");
+				const slug = path.replace(/\/|(session)?/g, "");
 
-				if (!this.check(param)) {
-					location.href = "/session";
-				}
+				// if (!this.check(slug)) {
+				// 	location.href = "/session";
+				// }
 
 				console.group();
 				console.log("Router report:");
-				console.log(`path: ${path}, slug: ${param}`);
+				console.log(`path: ${path}, slug: ${slug}`);
 				console.groupEnd();
 
-				Action.dispatch(EVENT.ShowDetail, { slug: param });
+				Action.dispatch(EVENT.ShowDetail, { slug });
 			}
 		});
 
+		console.dir(UA);
+
+		if (!UA.isValid()) {
+			location.href = "/invalid.html";
+		}
+
 		router.add("/session", path => {});
 		router.addUriListener();
-		router.navigateTo("/session/" + location.search.replace(`?${this.queryLabel}=`, ""));
+		// router.navigateTo("/session/" + location.search.replace(`?${this.queryLabel}=`, ""));
 	},
 
 	check(str)

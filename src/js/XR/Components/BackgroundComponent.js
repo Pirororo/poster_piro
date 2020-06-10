@@ -1,7 +1,6 @@
 import Background from "../../Background/App_xr";
 import { Scene as Background_Scene } from "../../Background/scene/scene_xr";
 import { SELECTORS, COMPONENTS } from "./../../Utils/Props";
-import { isVR } from "./../../Utils/Helper";
 
 const AFRAME = window.AFRAME;
 
@@ -20,12 +19,8 @@ export default AFRAME.registerComponent(COMPONENTS.Background,
 		this.props.container = this.el.appendChild(container);
 
 		this.modules.scene = new Background_Scene();
-		
-		// if (isVR)
-		// {
-		this.modules.scene.setup();//addEvent_VR()だけ入ってる
-		// this.modules.app = new Background(this.modules.scene);
-		// }
+		this.modules.scene.setup();
+		this.modules.app = new Background(this.modules.scene);
 
 		// attach each scenes to AFrame root scene
 		setTimeout(() => {
@@ -35,14 +30,14 @@ export default AFRAME.registerComponent(COMPONENTS.Background,
 
 	tick()
 	{
-		this.modules.scene.update();
+		this.modules.app.update();
 	},
 
 	onKeyUp(e)
 	{
-		if (this.modules.scene != null)
+		if (this.modules.app != null)
 		{
-			this.modules.scene.onKeyUp(e);
+			this.modules.app.onKeyUp(e);
 		}
 	}
 });

@@ -30,14 +30,13 @@
         width: 116px;
         height: 64px;
         left: 16px;
-        top: 16px;
+        top: 56px;
         opacity: 0;
         visibility: hidden;
         transition: all 0.3s ease-in-out;
         z-index: 20;
         display: block;
         transform: translateX(40px);
-
         cursor: pointer;
 
         img {
@@ -61,20 +60,26 @@
 
 // Tablet SP
 @media (max-width: 960px) {
+  $var: 50%;
   #pc {
     #gallery_container {
-      position: static;
+      // position: static;
+      // position: fixed;
+      position: relative;
+
       #gallery_stage {
         display: block;
         padding-top: 80px;
         .poster-wrapper {
           display: block;
           width: 100%;
-          margin: 40px 0 40px;
+          position: absolute;
+          left: 0;
+          top: 120px;
           padding: 0 0;
           transition: all 0.3s ease-in-out;
 
-          perspective: 600;
+          // perspective: 600;
           ul {
             // margin-top: 120px;
             width: 100%;
@@ -82,16 +87,17 @@
             justify-content: space-between;
             flex-wrap: wrap;
             li {
-              width: calc(49%);
+              width: 50%;
               height: auto;
               position: static;
-              margin-bottom: 8px;
+              margin-bottom: 16px;
               opacity: 0;
               transition: all 0.3s ease-in-out;
-
+              perspective: 500;
+              -webkit-perspective: 500;
               .poster-container {
                 height: auto;
-                width: 200px;
+                width: 100%;
 
                 img {
                   width: 100%;
@@ -99,20 +105,26 @@
                   opacity: 0.8;
                 }
                 p {
-                  font-size: 14px;
-                  padding-top: 8px;
+                  font-size: 12px;
+                  padding-top: 4px;
                   margin-bottom: 8px;
                   color: $white;
-                  font-weight: bold;
+                  font-weight: normal;
                   line-height: 1.2;
                 }
               }
             }
             li:nth-child(2n + 1) {
-              transform: rotateY(40deg) translate3d(0, 60px, 0);
+              transform: translateY(60px);
+              .poster-container {
+                transform: rotateY(40deg);
+              }
             }
             li:nth-child(2n) {
-              transform: rotateY(-40deg) translate3d(0, 60px, 0);
+              transform: translateY(60px);
+              .poster-container {
+                transform: rotateY(-40deg);
+              }
             }
           }
         }
@@ -155,10 +167,16 @@
               transition-delay: 1.2s;
             }
             li:nth-child(2n + 1) {
-              transform: rotateY(40deg) translate3d(0, 0, 0);
+              transform: translateY(0);
+              .poster-container {
+                transform: rotateY(40deg);
+              }
             }
             li:nth-child(2n) {
-              transform: rotateY(-40deg) translate3d(0, 0, 0);
+              transform: translateY(0);
+              .poster-container {
+                transform: rotateY(-40deg);
+              }
             }
           }
         }

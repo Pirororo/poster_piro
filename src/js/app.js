@@ -33,12 +33,12 @@ OpenHouse2020.PosterSession.App =
 		window.addEventListener("resize", () => this.onResize());
 		window.addEventListener("mousemove", e => this.onMouseMove(e));
 		window.addEventListener("keyup", e => this.onKeyUp(e));
-		document.addEventListener("click", e => this.onClick(e), );
+		document.addEventListener("click", e => this.onClick(e), false);
 	},
 	addExtensions()
 	{
 		ObjectExtenstions.init();
-	}
+	},
 };
 
 // Launch app when DOM will be ready

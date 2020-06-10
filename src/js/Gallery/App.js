@@ -7,8 +7,11 @@ import GalleryModel from './GalleryModel';
 import PosterBoard from './elements/posterBoard';
 import PosterDomBoard from './elements/PosterDomBoard';
 import CategoryBoard from './elements/CategoryBoard';
+
 import { SELECTORS } from "./../Utils/Props";
 import { EVENT, Action } from "./../Utils/EventManager";
+import { show, hide } from "./../Utils/Helper";
+import { SYNTH } from "./../Utils/Sound";
 
 export default class App {
   constructor() {
@@ -18,8 +21,11 @@ export default class App {
     this.posterData = posterData;
     this.posterFrag = false;
     this.isMobile = false;
+
+    this.isWebGLEnable = false;
   }
   init() {
+
     //初期カテゴリ
     this.categoryId = 'a';
 
@@ -57,6 +63,8 @@ export default class App {
   }
 
   draw() {
+    if (!this.isWebGLEnable) { return; }
+
     //レイキャスター
     this.raycaster.setFromCamera(this.mouse3D, this.camera);
     const intersects = this.raycaster.intersectObjects(this.rayReceiveObjects);
@@ -76,6 +84,7 @@ export default class App {
   }
 
   onMouseMove({ clientX, clientY }) {
+    if (this.mouse3D == null) { return; }
     this.mouse3D.x = (clientX / this.width) * 2 - 1;
     this.mouse3D.y = -(clientY / this.height) * 2 + 1;
   }
@@ -90,8 +99,10 @@ export default class App {
     //ToDo: レスポンシブの対応
     if (this.width < 768) {
       this.isMobile = true;
+      this.isWebGLEnable = false;
     } else {
       this.isMobile = false;
+      this.isWebGLEnable = true;
     }
     console.log('isMoble: ' + this.isMobile);
 
@@ -119,12 +130,18 @@ export default class App {
     //カテゴリを配置する
     const categoryStage = document.getElementById('category_stage');
     this.category = new CategoryBoard(categoryStage);
+    // setTimeout(() => {
+    //   SYNTH.categoryIn();
+
+    // }, 1000);
   }
 
 
-
-
   addPosterCanvasBoard() {
+
+    hide(SELECTORS.CategoryContainer);
+    show(SELECTORS.GalleryContainer);
+
     //Canvasを表示
     this.gallery_canvas = this.gallery_stage.querySelector('canvas');
     this.gallery_canvas.classList.add('in');
@@ -161,7 +178,7 @@ export default class App {
       this.board.view.group.lookAt(axisVec3);
       this.meshList.push(this.board); // 各ポスターを配列に保存
       //ポスターに名前をつける
-      this.meshList[i].view.imageShape.name = this.categoryId + (i + 1 < 10 ? "0" : "") + i;
+      this.meshList[i].view.imageShape.slug = this.categoryId + (i + 1 < 10 ? "0" : "") + (i + 1);
       // レイキャスターの対象に登録
       this.rayReceiveObjects.push(this.meshList[i].view.imageShape);
     }
@@ -271,6 +288,8 @@ export default class App {
     setTimeout(() => {
       this.backBtn.classList.add('in');
     }, 2000);
+    SYNTH.btnSound();
+
   }
 
 
@@ -282,6 +301,9 @@ export default class App {
     const domBoard = new PosterDomBoard(galleryStage, this.categoryId);
     this.addBackBtn();
     this.posterFrag = true;
+
+    hide(SELECTORS.CategoryContainer);
+    show(SELECTORS.GalleryContainer);
   }
 
   removePosterDomBorad() {
@@ -374,6 +396,11 @@ export default class App {
       default:
         break;
     }
+
+    if (categoryName != null) {
+      Action.dispatch(EVENT.ShowCategory, categoryName);
+    }
+
   }
 
 
@@ -384,30 +411,32 @@ export default class App {
     } else {
       this.addPosterDomBorad();
     }
+    SYNTH.btnSound();
+
   }
 
 
   onPosterRaycasterHandler(e) {
     const intersects = this.raycaster.intersectObjects(this.rayReceiveObjects);
     if (intersects.length > 0) {
-      const name = intersects[0].object.name;
-      console.dir(name);
+      const slug = intersects[0].object.slug;
 
-      Action.dispatch(EVENT.ShowDetail, { slug: name });
-      // document.dispatchEvent(new CustomEvent(EVENT.ShowDetail, {
-      //   detail: {
-      //     message: "Please show me a detail!"
-      //   }
-      // }));
-
+      console.log(`ShowDetail: ${slug}`);
+      
+      Action.dispatch(EVENT.ShowDetail, { slug });
+      SYNTH.btnSound();
     }
     this.posterFrag = true;
+
   }
 
 
   onPosterBackHandler(e) {
     //バックボタン
     if (e.target.id === 'back_btn') {
+
+      show(SELECTORS.CategoryContainer);
+
       if (!this.isMobile) {
         this.removePosterCanvasBoardAnime();
       } else {
@@ -416,8 +445,12 @@ export default class App {
       this.backBtn.classList.remove('in');
       setTimeout(() => {
         this.backBtn.remove();
+        hide(SELECTORS.GalleryContainer);
       }, 2000);
+      SYNTH.btnSound();
+
     }
+
   }
 
 
@@ -464,9 +497,18 @@ export default class App {
     this.scene.add(ligh);
   }
 
-  addEvent()
-  {
+  addEvent() {
     Action.add(EVENT.BackToPoster, () => {
+    });
+
+
+    Action.add(EVENT.ShowCategory, data => {
+      if (data.mode == "normal") {
+        setTimeout(() => {
+          show(SELECTORS.CategoryContainer);
+          this.init();
+        }, 1500);
+      }
     });
   }
 }

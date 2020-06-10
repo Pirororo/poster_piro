@@ -11,7 +11,7 @@ export default class PosterBoard_xr extends BoardViewBase
     this.name = `poster${params.index}`;
     this.boardId = BOARD_ID.Poster;
     this.materials = {
-      board: `shader: flat; color: #999; src: ${params.containers.boardContentBody}`,
+      board: `shader: flat; color: #999; transparent: true; src: ${params.containers.boardContentBody}`,
       title: `shader: html; color: #999; transparent: true; target: #${this.name}`
     };
     this.entities = {
@@ -32,18 +32,30 @@ export default class PosterBoard_xr extends BoardViewBase
     this.createBoard("title", this.containers.title, this.materials.title, false);
 
     this.createBoard();
+
+    this.hide();
+    this.fadeIn();
   }
 
   destroy()
   {
     super.destroy();
 
-    if (this.containers.titleContentBody != null)
+    if(this.entities.title != null && this.entities.title.parentElement != null)
     {
-      this.containers.title.removeChild(this.entities.title);
-      this.containers.titleContent.removeChild(this.containers.titleContentBody);
+      this.entities.title.remove();
       this.entities.title.destroy();
     }
+    if (this.containers.titleContentBody != null && this.containers.titleContentBody.parentElement != null) {
+      this.containers.titleContentBody.remove();
+    }
+
+    // if (this.containers.titleContentBody != null)
+    // {
+    //   this.containers.title.removeChild(this.entities.title);
+    //   this.containers.titleContent.removeChild(this.containers.titleContentBody);
+    //   this.entities.title.destroy();
+    // }
   }
 
   onRaycastForcedOn(raycaster)

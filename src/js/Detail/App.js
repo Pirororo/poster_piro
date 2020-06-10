@@ -1,82 +1,72 @@
-import * as THREE from "three";
-import { TrackballControls } from "three/examples/jsm/controls/TrackballControls";
-// import { CSS3DRenderer } from "three/examples/js/renderers/CSS3DRenderer";
-import { CSS3DRenderer } from "./js/CSS3DRenderer";
+import { SELECTORS, KEYCODE } from "../Utils/Props";
+import { EVENT, Action } from "../Utils/EventManager";
 
-import Element from "./js/Element";
-import pdfElement from "./js/PdfElement";
-import { EVENT, SELECTORS, KEYCODE } from "./../Utils/Props";
+export default class App {
+  constructor()
+  {
+    this.isEnable = false;
+    this.detail = document.getElementById(SELECTORS.DetailContainer);
+    this.gallery = document.getElementById(SELECTORS.GalleryContainer);
 
-const App =
-{
-  props: {
-    isEnable: false
-  },
+    this.close_btn = document.getElementById('close');
+    this.close_btn.classList.add('no_show');
+    this.frame_container = document.getElementById('frame_container');
+    this.iframe = document.getElementById('detail_iframe');
+    this.modal_box = document.getElementById('modal_box');
+    this.slide = document.getElementById('slide');
+
+    this.inner_container = this.iframe.contentWindow.document.getElementById('wp-container');
+    this.pdf_link = this.iframe.contentWindow.document.querySelectorAll('.pdf_link');
+  }
+
   init()
   {
-    let { camera, scene, renderer, controls } = this.props;
+    document.querySelector('body').setAttribute('id', 'pc');
 
-    var container = document.getElementById(SELECTORS.DetailStage);
-
-    camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 5000 );
-    camera.position.set( 0, 0, 2000 );
-
-    scene = new THREE.Scene();
-
-    renderer = new CSS3DRenderer();
-    renderer.setSize( window.innerWidth, window.innerHeight );
-    container.appendChild( renderer.domElement );
-
-    var group = new THREE.Group();
-    group.add( new pdfElement( 0, 300, 450, 0 ) );
-    group.add( new Element( 'https://www.youtube.com/embed/G9AtkiCESAg', 1000, 0, 0,  -Math.PI / 8 ) );
-    group.add( new Element( 'https://www.youtube.com/embed/9PVjlAm-A1A', -1000, 0, 0, Math.PI / 8 ) );
-    group.add( new Element( 'https://salty-waters-60310.herokuapp.com/a07', 0, -300, 450, 0 ) );
-    scene.add( group );
-
-    controls = new TrackballControls( camera, renderer.domElement );
-    controls.rotateSpeed = 4;
-
-    // Block iframe events when dragging camera
-
-    var blocker = document.getElementById(SELECTORS.DetailBlocker);
-    blocker.style.display = 'none';
-
-    controls.addEventListener( 'start', function () {
-
-      blocker.style.display = '';
-
-    } );
-    controls.addEventListener( 'end', function () {
-
-      blocker.style.display = 'none';
-
-    } );
-
-    this.props = {
-      ...this.props,
-      ...{ camera, scene, renderer, controls }
-    };
-
+    this.onResize();
     this.addEvent();
-  },
+  }
 
   draw()
   {
-    const { controls, renderer, scene, camera } = this.props;
 
-    controls.update();
-    renderer.render( scene, camera );
-  },
+  }
 
   onResize()
   {
-    const { controls, renderer, scene, camera } = this.props;
+    if (this.inner_container) {
+      if (window.innerWidth < 750) {
+        this.inner_container.style.width = "90vw";
+        this.inner_container.style.margin = "0 auto";
+      } else {
+        this.inner_container.style.width = "700px";
+      }
+    } else {
+      console.log('no inner_container');
+    }
 
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize( window.innerWidth, window.innerHeight );
-  },
+  }
+
+  onClick(e)
+  {
+    if (e.target.id === 'close') {
+        this.frame_container.classList.remove('fade-in');
+        this.close_btn.classList.add('no_show');
+        this.hide();
+    }
+
+    if (e.target.id === 'close_modal') {
+      document.getElementById('modal_box').style.display = "none";
+    }
+
+    if (e.target.classList.contains('pdf_link')) {
+      e.preventDefault();
+      console.log(e.target.src);
+      this.slide.src = e.target.src;
+      this.modal_box.style.display = "block";
+      this.slide.style.display = "block";
+    }
+  }
 
   onKeyUp(e)
   {
@@ -84,32 +74,33 @@ const App =
     {
       this.hide();
     }
-  },
+  }
 
   addEvent()
   {
-    document.addEventListener(EVENT.ShowDetail, e => this.show());
-  },
+    Action.add(EVENT.ShowDetail, e => {
+      this.slug = e.slug;
+      console.log(`received: ${this.slug}`);
+      this.iframe.src = `https://openhouse.nii.ac.jp/wp/${this.slug}/`;
+      this.show();
+      this.frame_container.classList.add('fade-in');
+      this.close_btn.classList.remove('no_show');
+
+    })
+  }
 
   show()
   {
-    const detail = document.getElementById(SELECTORS.DetailContainer);
-    const gallery = document.getElementById(SELECTORS.GalleryContainer);
-
-    this.props.isEnable = true;
-    detail.style.visibility = "visible";
-    gallery.style.visibility = "hidden";
-  },
+    this.isEnable = true;
+    this.detail.style.visibility = "visible";
+    this.detail.style.opacity = 1;
+    // this.gallery.style.visibility = "hidden";
+  }
 
   hide()
   {
-    const detail = document.getElementById(SELECTORS.DetailContainer);
-    const gallery = document.getElementById(SELECTORS.GalleryContainer);
-
-    this.props.isEnable = false;
-    detail.style.visibility = "hidden";
-    gallery.style.visibility = "visible";
+    this.isEnable = false;
+    this.detail.style.visibility = "hidden";
+    this.gallery.style.visibility = "visible";
   }
-};
-
-export default App;
+}

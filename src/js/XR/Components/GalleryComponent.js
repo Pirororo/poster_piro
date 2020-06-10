@@ -1,6 +1,7 @@
 import "aframe-html-shader";
 import Gallery from "../Gallery/App_xr";
-import { COMPONENTS } from "./../../Utils/Props";
+import { SELECTOR, COMPONENTS, SELECTORS } from "./../../Utils/Props";
+import { show, hide } from "./../../Utils/Helper";
 
 const AFRAME = window.AFRAME;
 
@@ -8,6 +9,7 @@ export default AFRAME.registerComponent(COMPONENTS.Gallery,
 {
  props: {},
  modules: {},
+ elements: {},
  init()
  {
 		console.log("Gallery Component Init.");
@@ -15,8 +17,13 @@ export default AFRAME.registerComponent(COMPONENTS.Gallery,
 		this.props.scene = this.el.object3D;
 		this.props.container = this.el.appendChild(document.createElement("a-entity"));
 
+		this.elements.container = document.getElementById(SELECTORS.GalleryContainer);
+		this.elements.container.classList.add("show");
+
 		this.modules.gallery = Gallery;
 		this.modules.gallery.init(this.props.container);
+
+		show(SELECTORS.GalleryContainer);
 	},
 
 	tick()

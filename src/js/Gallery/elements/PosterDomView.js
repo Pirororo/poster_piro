@@ -5,8 +5,10 @@ export default class PosterDomView {
   constructor(stage, posterData) {
     this.stage = stage;
     this.posterData = posterData
-    this.sessionUrl = 'session/'
+    this.sessionUrl = '/session/'
     this.posterWrapperli = [];
+
+    console.dir(posterData);
   }
 
   setup() {
@@ -21,8 +23,7 @@ export default class PosterDomView {
     for (let i = 0; i < this.posterData.imgPath.length; i++) {
       // li
       this.posterWrapperli[i] = document.createElement('li');
-      this.posterWrapperli[i].setAttribute("data-slug", this.posterData.categoryId + (i + 1 < 10 ? "0" : "") + i);
-      this.posterWrapperli[i].addEventListener("click", e => this.onClick(e));
+      this.posterWrapperli[i].setAttribute("data-slug", this.posterData.categoryId + (i + 1 < 10 ? "0" : "") + (i + 1));
 
       posterWrapperUl.appendChild(this.posterWrapperli[i]);
       //div.category-container
@@ -30,6 +31,8 @@ export default class PosterDomView {
       const posterContainer = this.createPosterElement(this.sessionUrl + this.posterData.imgPath[i], splitText, 'poster-container cat' + i);
       // categoryContainer.setAttribute('class', 'c' + i);
       this.posterWrapperli[i].appendChild(posterContainer);
+      this.posterWrapperli[i].addEventListener("click", e => this.onClick(this.posterWrapperli[i], e));
+
     }
     setTimeout(() => {
       this.posteryWrapper.classList.add('in');
@@ -79,9 +82,9 @@ export default class PosterDomView {
     return divEle;
   }
 
-  onClick(e)
-  {
-    const slug = e.target.getAttribute("data-slug");
+  onClick(target, e) {
+    const slug = target.getAttribute("data-slug");
+    console.log(`ShowDetail: ${slug}`);
     Action.dispatch(EVENT.ShowDetail, { slug });
   }
 }

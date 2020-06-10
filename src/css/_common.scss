@@ -4,6 +4,8 @@
 	-----------------------------------------------
 */
 
+@import url("https://use.typekit.net/gqz2wji.css");
+
 html,
 body {
   margin: 0;
@@ -24,16 +26,25 @@ article {
 }
 
 #content_container {
-	position: fixed;
-  width: 100%;
-	height: 100%;
+
+  .common_container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: opacity ease-out 1s;
+    opacity: 0;
+    visibility: hidden;
+  }
+  .show {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .hide {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
-.common_container {
-	position: fixed;
-	top: 0;
-	left: 0;
-  width: 100%;
-  height: 100%;
-  visibility: hidden;
-}

@@ -64,10 +64,10 @@ header {
 	filter: blur(4px);
 	background-size: cover;
 	opacity: 0;
-	animation: fade-in 0.5s ease 2.5s 1 forwards normal;
+	animation: fade-in 0.5s ease 0.5s 1 forwards normal;
 }
 
-.notification-container {
+.index-container {
 	position: absolute;
 	left: 0;
 	top: 0;
@@ -81,20 +81,73 @@ header {
 	display: flex;
 	align-items: center;
 	opacity: 0;
-	animation: fade-in 0.5s ease 1s 1 forwards normal;
+	animation: fade-in 0.5s ease 2.5s 1 forwards normal;
 
-	section.notification {
+	main {
 		text-align: center;
 		width: 100%;
 		margin: -124px auto 0;
 
 		h2 {
-			font-size: 36px;
+			font-size: 48px;
 			margin-bottom: 24px;
 		}
 		p.comingsoon {
 			font-size: 20px;
 			line-height: 1.6;
+		}
+		#start-wrap {
+			.read {
+				font-size: 14px;
+				line-height: 1.6;
+				span {
+					font-size: 15px;
+					font-weight: bold;
+					margin: 0 0.2rem;
+				}
+			}
+
+			.start-btn {
+				display: block;
+				width: 230px;
+				margin: 64px auto 16px;
+				a {
+					padding: 24px 0 24px;
+					display: flex;
+					justify-content: center;
+					transition: all 0.5s ease;
+					background: rgba(0, 0, 0, 0.2);
+					text-decoration: none;
+					cursor: pointer;
+					svg {
+						margin-right: 8px;
+					}
+					div {
+						color: #fff;
+						font-family: neue-haas-unica, sans-serif;
+						font-weight: 200;
+						font-style: normal;
+						font-size: 40px;
+					}
+					&:hover {
+						background: rgba(0, 0, 0, 0.5);
+					}
+				}
+			}
+		}
+		#start-wrap.invalid {
+			display: none;
+		}
+		#notification {
+			display: none;
+			font-size: 16px;
+			line-height: 1.6;
+			a {
+				color: #fff;
+			}
+		}
+		#notification.invalid {
+			display: block;
 		}
 	}
 }

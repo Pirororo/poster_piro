@@ -9,9 +9,13 @@ export default AFRAME.registerComponent(COMPONENTS.RaycastTarget,
 	{
 		this.el.addEventListener("click", e =>
 		{
-			this.el.object3DMap.mesh.material.color.set(0xff0000);
+			// this.el.object3DMap.mesh.material.color.set(0xff0000);
 			switch (this.el.instance.boardId)
 			{
+				case BOARD_ID.Entrance:
+					Action.dispatch(EVENT.ShowCategory, { mode: "VR" });
+					Action.dispatch(EVENT.VRModeStart);
+					break;
 				case BOARD_ID.Poster:
 					Action.dispatch(EVENT.ShowDetail, {
 						slug: this.el.instance.slug,
@@ -23,7 +27,9 @@ export default AFRAME.registerComponent(COMPONENTS.RaycastTarget,
 					break;
 
 				case BOARD_ID.UI.BackToCategory:
-					Action.dispatch(EVENT.BackToCategory);
+					Action.dispatch(EVENT.BackToCategory, {
+						mode: "VR"
+					});
 					break;
 				case BOARD_ID.UI.BackToPoster:
 					Action.dispatch(EVENT.BackToPoster);

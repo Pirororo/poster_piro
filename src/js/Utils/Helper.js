@@ -70,6 +70,35 @@ const invoke = (func, time = 0, args = {}) =>
 	setTimeout(() => func(args), time);
 };
 
+const getElement = id => {
+	if (id == null) { return null; }
+	return document.getElementById(id);
+};
+
+const display = (id, action = "show") => {
+	const element = document.getElementById(id);
+	if (element == null) {
+		console.log(`${id} is not found`);
+		return false;
+	}
+	if (action === "show")
+	{
+		element.classList.add("show");
+		element.classList.remove("hide");
+	}
+	else if (action === "hide")
+	{
+		element.classList.add("hide");
+		element.classList.remove("show");
+	}
+};
+const show = id => {
+	display(id, "show");
+};
+const hide = id => {
+	display(id, "hide");
+};
+
 export {
 	WebXRPermissionHelper,
 	isVR,
@@ -77,5 +106,8 @@ export {
 	getWidth,
 	getHeight,
 	getStageSize,
-	invoke
+	invoke,
+	getElement,
+	show,
+	hide
 }

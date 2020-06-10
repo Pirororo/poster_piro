@@ -18,5 +18,8 @@ export default class CategoryBoard_xr extends BoardViewBase
   {
     this.containers.boardContentBody = this.createContent(Content(this.params));
     this.createBoard();
+
+    this.hide();
+    this.fadeIn();
   }
 }

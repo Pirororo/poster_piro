@@ -1,7 +1,7 @@
 /**
- * Class XR.Facade
+ * Class Detail.Facade
  *
- * Facade class of XR helpers
+ * Facade class of Detail app
  */
 
 import { ICommonFacadeModuleObject } from "../Utils/Interfaces";
@@ -15,28 +15,26 @@ const Facade =
 	},
 	init()
 	{
-		this.props.instance = App;
-		this.props.instance.init();
+		this.props.instance =  new App;
+		this.addEvent();
 		return this;
-  },
-	setup()
-	{
-		// this.props.instance.setup();
-  },
-	update()
-	{
-		// this.props.instance.update();
   },
 	draw()
 	{
 		this.props.instance.draw();
+  },
+  onClick(e) {
+		this.props.instance.onClick(e);
 	},
-	destroy()
-	{
-	},
-	onResize() { this.props.instance.onResize(); },
-	// onMouseMove(e) { this.props.instance.onMouseMove(e); },
-	onKeyUp(e) { this.props.instance.onKeyUp(e); }
+  onResize() { this.props.instance.onResize();
+  },
+
+  onKeyUp(e) { this.props.instance.onKeyUp(e);
+  },
+  addEvent() {
+		this.props.instance.addEvent();
+	}
+
 };
 
 export default Facade;

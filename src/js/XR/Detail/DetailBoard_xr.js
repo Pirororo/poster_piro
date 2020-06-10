@@ -41,5 +41,8 @@ export default class DetailBoard_xr extends BoardViewBase
       this.materials.board,
       false
     );
+
+    this.hide();
+    this.fadeIn();
   }
 }

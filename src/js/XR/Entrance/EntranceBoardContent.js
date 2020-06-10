@@ -1,10 +1,7 @@
 export default (data) =>
 {
 
-	let output = `
-	<div class="entrance_content_container summary">
-	<div class="entrance_content_container_inner">
-	`;
+	let output = ``;
 
 	output = `${output}
 	<div class="entrance_summary_container">
@@ -12,7 +9,7 @@ export default (data) =>
 	</div>
 	`;
 
-	output = `${output}</div></div>`;
+	// output = `${output}`;
 
 	return output;
 }

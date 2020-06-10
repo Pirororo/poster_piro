@@ -1,7 +1,7 @@
-import { BOARD_ID, SELECTORS } from "../../Utils/Props";
-import { loadJSON } from "../../Utils/AssetsLoader";
-import { EVENT, Action } from "./../../Utils/EventManager"
 import axios from "axios";
+
+import { BOARD_ID, SELECTORS } from "../../Utils/Props";
+import { EVENT, Action } from "./../../Utils/EventManager"
 
 import XRModuleBase from "../Common/XRModuleBase";
 import DetailBoard_xr from "./DetailBoard_xr";
@@ -17,16 +17,15 @@ export default
       ...this.containers,
       detail: {}
     };
+    this.endPoint = "https://openhouse.nii.ac.jp/wp/wp-json/wp/v2/posts/";
     this.addEvent();
   },
 
   fetchEntry(slug)
   {
-    const endPoint = "https://openhouse.nii.ac.jp/wp/wp-json/wp/v2/posts/";
-
     return new Promise((resolve, reject) => {
 
-      axios.get(`${endPoint}?slug=${slug}`)
+      axios.get(`${this.endPoint}?slug=${slug}`)
       .then(result => {
         if ("data" in result && result.data.length > 0)
         {
@@ -97,29 +96,11 @@ export default
       summary_jp,
       summary_en
     } = data;
-    const summary_split = Array.from(summary_jp).length > 250;
-    if (!summary_split)
-    {
-      contents.push({ summary: {
-        slug,
-        summary_split,
-        summary_jp,
-        summary_en
-      }});
-    }
-    else
-    {
-      contents.push({ summary: {
-        slug,
-        summary_split,
-        summary_jp
-      }});
-      contents.push({ summary: {
-        slug,
-        summary_split,
-        summary_en
-      }});
-    }
+    const summaries = [];
+
+    this.generatePanelFromSentence(summary_jp, summaries);
+    this.generatePanelFromSentence(summary_en, summaries, ".");
+    summaries.forEach(summary => contents.push({ summary: { summary }}));
 
     // create boards from contents
     const amount = contents.length;
@@ -141,6 +122,24 @@ export default
     }
     this.showBoard(54, this.boardList, 18);
     this.generateHUD(BOARD_ID.UI.BackToPoster, [0, 15, -20]);
+  },
+
+  generatePanelFromSentence(sentence, panels = [], delimiter = "。", limit = 250, start = 0)
+  {
+    if (sentence.length > limit)
+    {
+      const ending = sentence.indexOf(delimiter, limit);
+      if (ending > -1)
+      {
+        panels.push(sentence.substring(start, ending + 1));
+        this.generatePanelFromSentence(sentence, panels, delimiter, ending + limit + 1, ending + 1);
+      }
+      else
+      {
+        panels.push(sentence.substring(start, limit));
+        this.generatePanelFromSentence(sentence, panels, delimiter, limit + limit, start + limit);
+      }
+    }
   },
 
   addEvent()

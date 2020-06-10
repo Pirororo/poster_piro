@@ -13,3 +13,20 @@
   width: 100%;
   height: 100%;
 }
+
+
+#posetersession_logo {
+	color: #fff;
+	font-family: neue-haas-unica, sans-serif;
+	font-weight: 200;
+	font-style: normal;
+	position: fixed;
+	top: 16px;
+	left: 24px;
+	.posetersession_title {
+		font-size: 18px;
+	}
+	.posetersession_copy {
+		font-size: 24px;
+	}
+}

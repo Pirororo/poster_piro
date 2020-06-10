@@ -3,6 +3,7 @@
  */
 
 import { EVENT as _EVENT } from "./EventManager";
+import { getElement } from "./Helper";
 
 const VR = {
   enable: false,
@@ -31,6 +32,9 @@ const SELECTORS =
   StartupVRMode: "startup_vrmode_container",
   StartupNormalMode: "startup_normalmode_container",
 
+  EntranceContainer: "entrance_container",
+  EntranceStage: "entrance_stage",
+
   CategoryContainer: "category_container",
   CategoryStage: "category_stage",
 
@@ -39,7 +43,7 @@ const SELECTORS =
 
   DetailContainer: "detail_container",
   DetailStage: "detail_stage",
-  DetailBlocker: "detail_blocker",
+  DetailFrame: "detail_frame",
 
   XRScene: "xr_scene",
   XRCamera: "xr_camera",
@@ -63,6 +67,7 @@ const COMPONENTS = {
   Detail: "detail-component",
   RaycastCheck: "raycast-check-component",
   RaycastTarget: "raycast-target-component",
+  RaycastCursorListener: "raycast-cursor-listener-component",
 };
 
 const BOARD_ID = {
@@ -86,10 +91,44 @@ const BOARD_ID = {
   }
 };
 
-
 const COLOR = {
   RaycastFocusOff: 0x999999,
   RaycastFocusOn: 0xFFFFFF
+};
+
+const UA = ((ua) =>
+{
+	return {
+		ua,
+		isIE: (() => ua.indexOf('msie') != -1 || ua.indexOf('trident') != -1)(),
+		isEdge: (() => ua.indexOf('edge') != -1)(),
+		isChrome: (() => ua.indexOf('chrome') != -1)(),
+		isSafari: (() => ua.indexOf('safari') != -1 && ua.indexOf('chrome') == -1)(),
+		isFirefox: (() => ua.indexOf('firefox') != -1)(),
+		isOpera: (() => ua.indexOf('opera') != -1)(),
+		isIOS: /i(phone|pod|pad)/.test(ua),
+		isIOSChrome: /crios/.test(ua),
+		isIPhone: /i(phone|pod)/.test(ua),
+		isIPad: /ipad/.test(ua),
+		isAndroid: /android/.test(ua),
+		isAndroidMobile: /android(.+)?mobile/.test(ua),
+		isTouchDevice: 'ontouchstart' in window,
+		isMobile: /i(phone|pod)/.test(ua)||/android(.+)?mobile/.test(ua),
+		isTablet: /ipad/.test(ua)||/android(.+)(?!mobile)/.test(ua)
+	}
+})(window.navigator.userAgent.toLowerCase());
+
+UA.isValid = () => {
+  const pc = !UA.isMobile && (UA.isChrome || UA.isSafari);
+  const mobile = UA.isMobile && (UA.isSafari || UA.isChrome)
+
+//  console.log(`Result: ${pc || mobile}, PC: ${pc}, Mobile: ${mobile}`);
+
+  return pc || mobile;
+};
+
+UA.isAndroidChrome = () => {
+  return UA.isAndroidMobile && UA.isChrome;
 };
 
 export {
@@ -99,5 +138,6 @@ export {
   SELECTORS,
   COMPONENTS,
   BOARD_ID,
-  COLOR
+  COLOR,
+  UA
 };

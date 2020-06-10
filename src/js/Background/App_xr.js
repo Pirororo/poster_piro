@@ -17,6 +17,9 @@ export default class App
     this._renderer.setSize(getWidth() , getHeight());
     this._renderer.setPixelRatio(1);
     this.clock = new THREE.Clock();
+
+    // this._wrapper = document.getElementById('WebGL-output');
+    // this._wrapper.appendChild(this._renderer.domElement);
   }
 
   update()

@@ -12,12 +12,16 @@
 
   <div id="content_container">
 
-		<div id="hud_container" class="common_container">
+    <div id="hud_container" class="common_container">
       <div class="common_screen_shade"></div>
       <div id="hud_ui_stage"></div>
     </div>
 
     <div id="background_container" class="common_container">
+      <div id="posetersession_logo">
+        <div class="posetersession_title">Openhouse 2020</div>
+        <div class="posetersession_copy">Poster Session</div>
+      </div>
       <div id="Stats-output"></div>
       <div id="WebGL-output"></div>
     </div>
@@ -41,8 +45,18 @@
     </div>
 
     <div id="detail_container" class="common_container">
+      <div class="common_screen_shade"></div>
       <div id="detail_stage"></div>
-      <div id="detail_blocker"></div>
+      <div id="frame_container">
+        <a href="#" id="close">&times;</a>
+        <iframe id="detail_iframe"></iframe>
+      </div>
+      <div id="modal_box" class="modal">
+        <span class="close cursor" id="close_modal">&times;</span>
+        <div class="modal-content">
+          <img id="slide" class="slide" style="width:100%">
+        </div>
+      </div>
     </div>
 
   </div>

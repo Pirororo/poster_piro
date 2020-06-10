@@ -2,6 +2,7 @@ import { posterData } from "../../Gallery/posterData";
 import { BOARD_ID, SELECTORS } from "../../Utils/Props";
 import { invoke } from "./../../Utils/Helper";
 import { EVENT, Action } from "./../../Utils/EventManager"
+import TWEEN from '@tweenjs/tween.js';
 
 import XRModuleBase from "../Common/XRModuleBase";
 import PosterBoard_xr from "./PosterBoard_xr";
@@ -24,14 +25,15 @@ export default
         title: null
       }
     };
-    this.currentCategory = "";
     this.addEvent();
-    this.generateCategory(posterData);
+
+    setTimeout(() => {
+      this.generateCategory(posterData);
+    }, 4000);
   },
 
-  generatePosters(category = this.currentCategory)
+  generatePosters(category = this.category)
   {
-    this.currentCategory = category;
     this.containers.poster.panel = this.generateContainer(SELECTORS.XRGalleryPosterPanelContainer, this.scene);
     this.containers.poster.title = this.generateContainer(SELECTORS.XRGalleryPosterTitleContainer, this.containers.poster.panel);
     this.containers.poster.titleContent = document.getElementById(SELECTORS.GalleryStage);
@@ -51,7 +53,7 @@ export default
         boardId: BOARD_ID.Poster,
         containers: {
           board: this.containers.poster.panel,
-          boardContentBody: data.imgPath[i],
+          boardContentBody: `/session/${data.imgPath[i]}`,
           title: this.containers.poster.title,
           titleContent: this.containers.poster.titleContent,
           titleContentBody: data.posterTitle[i].replace(/<br>/g, "")
@@ -109,21 +111,34 @@ export default
 
   addEvent()
   {
-    Action.add(EVENT.ShowPoster, data => {
-      console.log(`Category ${data}`);
-      if (data != null) {
+    Action.add(EVENT.ShowPoster, category => {
+
+      if (category != null) {
         this.destroy();
-        this.generatePosters(data);
+        this.category = category;
+        this.generatePosters(category);
+
+        // console.log(`ShowCagegory: ${category.toUpperCase()}`);
+        // dispatch for Background
+        Action.dispatch(EVENT.ShowCategory, {
+          category: category.toUpperCase(),
+          mode: "VR"
+        });
       }
     });
 
     Action.add(EVENT.ShowDetail, () => this.destroy());
 
-    Action.add(EVENT.BackToCategory, () => {
-      this.destroy();
-      this.generateCategory(posterData);
+    Action.add(EVENT.BackToCategory, data => {
+      if (data.mode == "VR")
+      {
+        this.destroy();
+        this.generateCategory(posterData);
+      }
     });
 
-    Action.add(EVENT.BackToPoster, () => this.generatePosters());
+    Action.add(EVENT.BackToPoster, () => {
+      this.generatePosters(this.category);
+    });
   }
 }

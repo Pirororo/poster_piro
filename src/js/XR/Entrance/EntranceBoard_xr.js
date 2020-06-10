@@ -8,22 +8,27 @@ export default class EntranceBoard_xr extends BoardViewBase
   {
     super(params);
 
-    this.width = 18;
-    this.height = 18; //this.width * 0.5625;
+    this.width = 20;
+    this.height = this.width * 0.5625;
     this.scale = new THREE.Vector3(this.width, this.height, 1);
     this.materials = {
-      board: `shader: html; color: #fff; transparent: true; target: #${this.name}`
+      board: `shader: flat; color: #fff; transparent: true; src: /session/img/vr_start_screen.png`
     };
     this.init();
   }
 
   init()
   {
-    const { data } = this.params;
-    const key = Object.keys(data)[0];
-
-    this.containers.boardContentBody = this.createContent(Content(data[key]));
-
     this.createBoard();
+  }
+
+  onRaycastForcedOn(raycaster)
+  {
+    this.entities.board.object3DMap.mesh.material.color = new THREE.Color(1, 1, 1);
+  }
+
+  onRaycastForcedOff(raycaster)
+  {
+    this.entities.board.object3DMap.mesh.material.color = new THREE.Color(0.9, 0.9, 0.9);
   }
 }

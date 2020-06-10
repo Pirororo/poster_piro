@@ -1,6 +1,6 @@
 
 import * as THREE from "three";
-import Line from '../objects/line_xr.js';
+import Line from '../objects/line.js';
 // import { EVENT, KEYCODE } from "../utils/props.js";
 import { KEYCODE } from "../utils/props.js";
 import { EVENT, Action } from "../../Utils/EventManager"
@@ -33,8 +33,8 @@ export class Scene extends THREE.Scene
         // this.add(this.scene0);//onKeyup(e)へ！
 
         //最初の位置
-        this.camPos = new THREE.Vector3(0, -200, -240);//正面中心に収まる位置
-        this.camTarget = new THREE.Vector3(-140, -100, -140);
+        this.camPos = new THREE.Vector3(0, -100, -240);//正面中心に収まる位置
+        this.camTarget = new THREE.Vector3(-140, 0, -140);
 
         //Target指定なので都度１回だけ読むようにする
         this.keyBool_startVRanime = true;
@@ -136,7 +136,7 @@ export class Scene extends THREE.Scene
         if (e.keyCode == KEYCODE.BACKSPACE){
         Action.dispatch(EVENT.BackToCategory, {mode:"VR"});
         }
-    
+
         // if (e.keyCode == KEYCODE.S){
         // Action.dispatch(EVENT.VRModeStart);
         // }
@@ -168,8 +168,10 @@ export class Scene extends THREE.Scene
 
 
     addEvent_VR(){
+        // console.log("Add Event VR");
 
         Action.add(EVENT.VRModeStart, () =>{
+            console.log("VR Mode Start from Background");
             if(this.keyBool_startVRanime == true){
                 this.keyBool_startVRanime = false;
                 this.scene0 = new Scene0();
@@ -180,8 +182,8 @@ export class Scene extends THREE.Scene
             }
         });
 
-        Action.add(EVENT.ShowCategory, data =>{ 
-        // Action.add(EVENT.ShowCategory, category =>{ 
+        Action.add(EVENT.ShowCategory, data =>{
+        // Action.add(EVENT.ShowCategory, category =>{
             if(data.mode == "VR"){
                 switch(data.category){
                     case "A" :
@@ -214,14 +216,13 @@ export class Scene extends THREE.Scene
             if(data.mode == "VR"){
                 if(this.camTargetBool_BACKSPACE == true){
                     this.camTargetBool_BACKSPACE = false;
-                    this.scene0.scene2.backAnimationUpdateBool = true;
+                    this.scene0.scene2.backAnimationUpdateBool = false;
                     this.scene0.scene2.backAnimationframe = this.scene0.scene2.backAnimationframeStart;
                     this.scene0.scene2.waitingFrame = 0;
-                    this.scene0.scene2.openingUpdateBool = false;
+                    this.scene0.scene2.openingUpdateBool = true;
 
                     // this.baseCamTarget = new THREE.Vector3(-220-50,-30-25,-300-50);//ここ書かないと書き換えられちゃってるぽい
                     this.baseCamTarget = new THREE.Vector3(-180-50,-40-25,-220-50);
-                    // this.baseCamTarget = new THREE.Vector3(-50, -40-800, -50);
                     this.camTarget = this.baseCamTarget;
                     console.log("VR_ Back to Category!");
                     this.openCamTargetBool();
@@ -234,22 +235,21 @@ export class Scene extends THREE.Scene
     cam_opening(){
         //ここ不要だった、初期設定値だけでokだったので。
     }
-
     cam_backAnimation(){
 
-        // if(this.scene0.scene2.backAnimationframe == 250){
-        //     // this.camTarget = new THREE.Vector3(0, 0, 0);
-        //     this.camTarget = new THREE.Vector3(-150, -50,-50);
+        if(this.scene0.scene2.backAnimationframe == 250){
+            // this.camTarget = new THREE.Vector3(0, 0, 0);
+            this.camTarget = new THREE.Vector3(-150, -50,-50);
+        }
+        if(this.scene0.scene2.backAnimationframe == this.scene0.scene2.backAnimationframeStart+2){
+            this.camTarget = new THREE.Vector3(-150,-100,-150);
+        }//この座標が円中心座標
+        if(this.scene0.scene2.backAnimationframe == 1100){
+            this.camTarget = new THREE.Vector3(70, -80,-200);
+        }
+        // if(this.scene0.scene2.backAnimationframe == 1350){
+        //     this.camTarget = new THREE.Vector3(-150,-125,-150);
         // }
-        // if(this.scene0.scene2.backAnimationframe == this.scene0.scene2.backAnimationframeStart+2){
-        //     this.camTarget = new THREE.Vector3(-150,-100,-150);
-        // }//この座標が円中心座標
-        // if(this.scene0.scene2.backAnimationframe == 1100){
-        //     this.camTarget = new THREE.Vector3(70, -80,-200);
-        // }
-        // // if(this.scene0.scene2.backAnimationframe == 1350){
-        // //     this.camTarget = new THREE.Vector3(-150,-125,-150);
-        // // }
     }
 
     chooseRoom(camTargetBool,l,message){
@@ -257,7 +257,7 @@ export class Scene extends THREE.Scene
             camTargetBool = false;
             this.lookTarget = new THREE.Vector3(
                 // 25*(1.5+l),8+(15*l),25*(1.5+l)
-                25*1.41*(1.5+l),8+(20*l),25*0*(1.5+l)//ここVRオリジナル！！45度回転してるので。ルート２かけてる
+                25*1.41*(1.5+l),8+(15*l),25*0*(1.5+l)//ここVRオリジナル！！45度回転してるので。ルート２かけてる
             );
             this.camTarget.subVectors(this.lookTarget, this.baseCamTargetPlus);//Plus
             this.camTarget.multiplyScalar(0.95);
@@ -266,7 +266,7 @@ export class Scene extends THREE.Scene
             console.log("VR_ " + message);
             this.resetCamTargetBool();
 
-            this.scene0.scene2.backAnimationUpdateBool = false;
+            // this.scene0.scene2.backAnimationUpdateBool = true;///////////////
         }
     }
 
@@ -308,20 +308,18 @@ export class Scene0 extends THREE.Scene
     {
         super();
 
-        this.scene1 = new Scene1();
-        this.add(this.scene1);
+        // this.scene1 = new Scene1();
+        // this.add(this.scene1);
 
         this.scene2 = new Scene2();
         this.add(this.scene2);
     }
     update()
     {
-        this.scene1.update();
+        // this.scene1.update();
         this.scene2.update();
     }
 }
-
-
 
 export class Scene1 extends THREE.Scene
 {
@@ -329,26 +327,15 @@ export class Scene1 extends THREE.Scene
     {
         super();
 
-        this._line = [this._line1in, this._line1out,
-                        this._line2in, this._line2out,
-                        this._line3in, this._line3out,
-                        this._line4in, this._line4out,
-                        this._line5in, this._line5out,
-                        this._line6in, this._line6out,
-                        this._line7in, this._line7out
-                    ];
-
+        // this._line = [this._line1in, this._line1out,this._line2in, this._line2out];
+        this._line = [this._line1in, this._line1out];
 
         //今は関東ー北海道だけなのでi<1
         for (let i = 0 ; i < this._line.length/2; i++){
             for (let j= 0 ; j < 2 ; j++){
-
-                this._line[2*i+j] = new Line(i,j+1);
-                this._line[2*i+j].position.set(
-                    160,
-                    40 ,
-                    160
-                );
+                this._line[2*i+j] = new Line(i,j);
+                if(j%2 ==0){this._line[2*i+j].position.set(0,0,0);}//outは0,0,0から
+                else{this._line[2*i+j].position.set(150,70,150);}//inは離れたとこから
                 this.add(this._line[2*i+j]);
             }
         }
@@ -359,4 +346,5 @@ export class Scene1 extends THREE.Scene
             this._line[i].update();
         }
     }
+
 }

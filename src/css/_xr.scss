@@ -26,19 +26,12 @@ body {
 
 #xr_mode
 {
-
-	#startup_container {
-		visibility: hidden;
-	}
-
-	#category_container,
-	#gallery_container,
-	#detail_container {
-		visibility: visible;
-	}
-
 	.common_container {
 		width: auto;
+
+		&.show {
+			visibility: visible;
+		}
 	}
 
 	.common_screen_shade {
@@ -49,13 +42,17 @@ body {
 		background-color: #000;
 	}
 
+	#content_container {
+		position: fixed;
+	}
+
 	#hud_container {
 		z-index: 100;
 		visibility: visible;
 	}
 
 	#background_container {
-		z-index: 1;
+		z-index: 100;
 	}
 
 	#startup_container {
@@ -75,27 +72,49 @@ body {
 
 	#gallery_container {
 		z-index: 30;
+		&.show {
+			visibility: visible;
+		}
 	}
 
 	#detail_container {
 		z-index: 40;
 	}
 
-
-	#entrance_container,
+	#background_container,
 	#category_container,
 	#gallery_container,
 	#detail_container {
 		visibility: visible;
 	}
 
+	#entrance_container,
 	#startup_container {
 		visibility: hidden;
 	}
 
+	#posetersession_logo {
+		top: 90px;
+		left: 90px;
+		transform: scale(0.5, 0.5);
+	}
 	// #xr_scene {
 	// 	z-index: 200;
 	// }
+
+	/*
+		Entrance
+	*/
+
+	#entrance_container {
+		width: 100%;
+	}
+
+	.entrance_content_container {
+		width: 100%;
+		height: 100%;
+		background-color: red;
+	}
 
 	/*
 		HUD
@@ -125,15 +144,15 @@ body {
 	*/
 	.gallery_poster_title {
 		position: absolute;
-		top: 0;
+		top: 2rem;
 		width: 14.5em;
 		height: 7em;
 		font-size: 36px;
 		line-height: 1.4;
 		color:#fff;
 		font-weight: bold;
-		background-color: rgba(0, 0, 0, 0.8);
-		padding: 1em 0.25em 0;
+		background-color: rgba(0, 0, 0, 1);
+		padding: 1em 0.5em 0;
 		box-sizing: border-box;
 		user-select: none;
 	}
@@ -145,7 +164,7 @@ body {
 		position: absolute;
 		width: 512px;
 		height: 512px;
-		padding: 80px 0.5em 0;
+		padding: 7rem 0.5em 0;
 		font-size: 36px;
 		line-height: 1.4;
 		text-align: center;
@@ -157,25 +176,32 @@ body {
 	}
 
 	.category_a {
-		background: rgba(150, 41, 204, 0.6);
+		background: $colorA;
+		// background: rgba(150, 41, 204, 0.6);
 	}
 	.category_b {
-		background: rgba(41, 95, 204, 0.6);
+		background: $colorB;
+		// background: rgba(41, 95, 204, 0.6);
 	}
 	.category_c {
-		background: rgba(36, 179, 83, 0.6);
+		background: $colorC;
+		// background: rgba(36, 179, 83, 0.6);
 	}
 	.category_d {
-		background: rgba(46, 199, 230, 0.6);
+		background: $colorD;
+		// background: rgba(46, 199, 230, 0.6);
 	}
 	.category_e {
-		background: rgba(41, 204, 190, 0.6);
+		background: $colorE;
+		// background: rgba(41, 204, 190, 0.6);
 	}
 	.category_f {
-		background: rgba(68, 41, 204, 0.6);
+		background: $colorF;
+		// background: rgba(68, 41, 204, 0.6);
 	}
 	.category_s {
-		background: rgba(204, 41, 149, 0.6);
+		background: $colorS;
+		// background: rgba(204, 41, 149, 0.6);
 	}
 
 	.category_id {
@@ -223,7 +249,7 @@ body {
 		width: 512px;
 		height: 512px;
 		// height: calc(512px * 0.5625);
-		padding: 2rem;
+		padding: 0 2em;
 		font-size: 24px;
 		line-height: 1.4;
 		text-align: left;
@@ -242,31 +268,38 @@ body {
 		position: relative;
 		width: 100%;
 		height: 100%;
+		top: 0.5rem;
 		overflow: hidden;
 	}
 
 	.detail_header_container {
 		position: relative;
-		margin-bottom: 2.5rem;
+		display: flex;
+		margin-bottom: 1.5rem;
 	}
 	.slug {
 		position: relative;
+		width: 20%;
 		line-height: 1;
-		font-size: 1.4em;
-		padding: 0.1rem 0 0 0;
+		font-size: 1.5em;
+		font-weight: bold;
+		padding: 0rem 0 0 0;
+	}
+	.detail_header_label_container {
+		display: flex;
+		flex-wrap: wrap;
+		width: 80%;
 	}
 	.category_jp {
-		position: absolute;
-		left: 4.5rem;
-		top: 0;
-		font-size: 0.6em;
+		width: 100%;
+		font-size: 0.53em;
 		font-weight: bold;
+		padding-top: 0.1rem;
 	}
 	.category_en {
-		position: absolute;
-		left: 4.5rem;
-		top: 1.2rem;
-		font-size: 0.5em;
+		width: 100%;
+		font-size: 0.40em;
+		padding-bottom: 0.1rem;
 	}
 
 	.detail_theme_container {
@@ -280,16 +313,18 @@ body {
 	.theme_en {
 		font-size: 0.4em;
 		margin-bottom: 1rem;
+		line-height: 1.1;
 	}
 
 	.detail_title_container {
 		position: relative;
-		margin-bottom: 1.5em;
+		margin-bottom: 1.2em;
 	}
 	.title_jp {
-		font-size: 1em;
+		font-size: 0.85em;
 		font-weight: bold;
-		margin-bottom: 0.5rem
+		line-height: 1.2;
+		margin-bottom: 0.1rem
 	}
 	.title_en {
 		font-size: 0.5em;
@@ -305,11 +340,14 @@ body {
 	.research_field_jp,
 	.group_members_jp {
 		font-weight: bold;
+		font-size: 1em;
+		line-height: 1.2;
 	}
 	.leader_name_en,
 	.research_field_en,
 	.group_members_en {
-		font-size: 0.8em;
+		font-size: 0.7em;
+		line-height: 1.2;
 		margin-bottom: 0.5rem;
 	}
 
@@ -318,6 +356,10 @@ body {
 		font-size: 0.7em;
 		line-height: 1.7;
 	}
+	.summary {
+		font-size: 0.9em;
+	}
+
 	.summary_jp {
 		font-size: 1em;
 		margin-bottom: 1rem;

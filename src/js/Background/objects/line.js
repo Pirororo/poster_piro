@@ -132,22 +132,37 @@ export default class Line extends THREE.Object3D {
 
         getlineLength(){
 
+
             //https://uxmilk.jp/11586
+            // let count60frm = 0;
+            // count60frm +=1;
+            // if(count60frm%(60/4) ==0){
+                
                 //Where: 関東ー北海道 = 0, 関東ー中部 = 1,,,
                 //InOut: in=1, out=2;
 
+
                 this.lineLength = this.data[this.Times][2*this.where + this.inout]*1;//長さ調整
 
+                // console.log("hai");
+                // console.log(this.data[this.Times][2*this.where + this.inout]*1);
                 // console.log(this.data[this.Times][2*this.where + this.inout]*1);
 
-                this.Times += 1;//0行目を題名にする場合は前におく
+                // if(this.Times > 1800){this.Times = 1800 +2;}
+                this.Times += 1;//0行目を題名にする場合は上のifの前におく
+
                 return this.lineLength;
 
+            // }
         }
 
         loadCSVandConvertToArray2D()//2回よばれるの気になる
         {
 
+            // //Github Pageではこっちをあける
+            // loadCSV("https://pirororo.github.io/poster_piro/build/data/kanto_all.csv", e =>
+
+            //いつもはこっち
             loadCSV("../data/kanto_all.csv", e =>
             {
                 const result = e.result;

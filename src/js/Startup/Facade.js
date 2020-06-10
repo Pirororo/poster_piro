@@ -19,8 +19,14 @@ const Facade =
 		this.props.instance = App;
 		this.props.instance.init();
 
+		this.addEvent();
+
 		return this;
-  },
+	},
+	addEvent()
+	{
+		this.props.instance.addEvent();
+	}
 };
 
 export default Facade;

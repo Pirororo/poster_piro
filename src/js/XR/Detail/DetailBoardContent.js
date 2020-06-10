@@ -14,9 +14,10 @@ export default (data) =>
 		research_field_en,
 		group_members_jp,
 		group_members_en,
-		summary_jp,
-		summary_en,
-		summary_split
+		summary
+		// summary_jp,
+		// summary_en,
+		// summary_split
 	} = data;
 	let output = `
 	<div class="detail_content_container summary entry_${slug}">
@@ -31,8 +32,10 @@ export default (data) =>
 			output = `${output}
 			<header class="detail_header_container">
 			<div class="slug">${slug.toUpperCase()}</div>
+			<div class="detail_header_label_container">
 			<p class="category_jp">${category_jp}</p>
 			<p class="category_en">${category_en}</p>
+			</div>
 			</header>
 
 			<div class="detail_theme_container">
@@ -55,11 +58,16 @@ export default (data) =>
 			break;
 		case "summary":
 			output = `${output}
-			<div class="detail_summary_container ${summary_split ? 'split' : ""}">
-			<p class="summary_jp">${summary_jp || ""}</p>
-			<p class="summary_en">${(summary_jp == summary_en ? "" : summary_en) || ""}</p>
+			<div class="detail_summary_container">
+			<p class="summary">${summary}</p>
 			</div>
 			`;
+			// output = `${output}
+			// <div class="detail_summary_container ${summary_split ? 'split' : ""}">
+			// <p class="summary_jp">${summary_jp || ""}</p>
+			// <p class="summary_en">${(summary_jp == summary_en ? "" : summary_en) || ""}</p>
+			// </div>
+			// `;
 			break;
 		default:
 			break;

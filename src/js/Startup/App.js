@@ -1,6 +1,8 @@
 import { ICommonFacadeModuleObject } from "./../Utils/Interfaces";
 import { SELECTORS } from "./../Utils/Props";
 import { EVENT, Action } from "./../Utils/EventManager";
+import { show, hide } from "./../Utils/Helper";
+import { SYNTH } from "./../Utils/Sound";
 
 import "./style.scss";
 import Content from "./content.html";
@@ -8,16 +10,16 @@ import Content from "./content.html";
 const App =
 {
 	...ICommonFacadeModuleObject,
-	props: {},
-  elements: {},
-	init()
-	{
-    console.log("Startup Init.");
+	props: {
+		isSelected: false
+	},
+	elements: {},
+	init() {
+		console.log("Startup Init.");
 
 		this.elements.body = document.body;
 		this.elements.container = document.getElementById(SELECTORS.StartupStage);
 		this.elements.container.insertAdjacentHTML("afterbegin", Content);
-		this.elements.contentContainer = document.getElementById(SELECTORS.StartupContentContainer);
 
 		this.elements =
 		{
@@ -26,37 +28,43 @@ const App =
 			normalMode: document.getElementById(SELECTORS.StartupNormalMode)
 		};
 
-		this.addEvent();
-
 		return this;
 	},
 
-	setup()
-	{
-		this.elements.contentContainer.classList.add("active");
+	setup() {
+		if (this.props.isSelected) { return; }
+		this.props.isSelected = true;
+		show(SELECTORS.StartupContainer);
 	},
 
-	destroy()
-	{
-		this.elements.contentContainer.classList.remove("active");
+	destroy() {
+		hide(SELECTORS.StartupContainer);
 	},
 
-	addEvent()
-	{
+	addEvent() {
 		this.elements.vrMode.addEventListener("click", () => {
 			console.log("VR MODE");
 			this.destroy();
 			setTimeout(() => {
 				Action.dispatch(EVENT.VRModeSelected);
+				Action.dispatch(EVENT.VRModeStart);
 			}, 1000);
+			SYNTH.btnSound();
+
 		});
 
 		this.elements.normalMode.addEventListener("click", () => {
 			console.log("Normal MODE");
 			this.destroy();
-			Action.dispatch(EVENT.ShowCategory);
+
+			Action.dispatch(EVENT.ShowCategory, {
+				mode: "normal"
+			});
+			SYNTH.btnSound();
+
 		});
 
+		Action.add(EVENT.SkipOpening, () => this.setup());
 		Action.add(EVENT.ShowStartup, () => this.setup());
 
 		// setTimeout(() => {
