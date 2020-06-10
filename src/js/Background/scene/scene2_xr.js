@@ -37,7 +37,7 @@ export class Scene2 extends THREE.Scene
 
         //イージング
         this.clock = new THREE.Clock();
-        this.tSpeed = 20.0;
+        this.tSpeed = 30.0;
         this.easeElapsedTime =0;
         this.eansingBool = true;
 
@@ -143,7 +143,7 @@ export class Scene2 extends THREE.Scene
 
     opening()
     {
-        if(this.openingFrame == 220){
+        if(this.openingFrame == 200){
             for (let i = 0; i < this.meshList.length; i++) {
                 for (let j = 0; j < 4; j++) {
                 if(i >=80*j && i<80*(j+1)){
@@ -152,7 +152,7 @@ export class Scene2 extends THREE.Scene
                         for (let l = 0; l < 20; l++) {
                         if(i >=80*j+(20*k)+(1*l) && i<80*j+(20*k)+(1*(l+1))){
                             this.posTarget[3*i+ 0] = 20*j,
-                            this.posTarget[3*i+ 1] = 5*l,
+                            this.posTarget[3*i+ 1] = 10*l,
                             this.posTarget[3*i+ 2] = 20*k
                         }
                         }
@@ -162,7 +162,7 @@ export class Scene2 extends THREE.Scene
                 }
             }
             this.easeElapsedTime =0;
-            this.tSpeed =6.0;
+            this.tSpeed =7.0;
         }
 
         if(this.openingFrame == 280){

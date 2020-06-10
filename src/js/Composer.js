@@ -30,20 +30,20 @@ const Composer =
 		}
 
 		this.instances.background = Background.init();
-		// this.instances.startup = Startup.init()
-		// this.instances.gallery = Gallery.init();
+		this.instances.startup = Startup.init()
+		this.instances.gallery = Gallery.init();
 		this.instances.xr = XRHelper.init();
 
 		// this.instances.detail = Detail.init();
 
-		// if (isVR()) {
-		// 	this.instances.xr = XRHelper.init();
-		// }
-		// else {
-		// 	this.instances.background = Background.init();
-		// 	this.instances.gallery = Gallery.init();
-		// 	// this.instances.detail = Detail.init();
-		// }
+		if (isVR()) {
+			this.instances.xr = XRHelper.init();
+		}
+		else {
+			this.instances.background = Background.init();
+			this.instances.gallery = Gallery.init();
+			// this.instances.detail = Detail.init();
+		}
 
 		this.addEvent();
 		this.setup();

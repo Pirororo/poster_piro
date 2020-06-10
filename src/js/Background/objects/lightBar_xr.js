@@ -135,14 +135,14 @@ export default class LightBar extends THREE.Object3D {
             vec2 center = vec2( .5 * uAspect, .5 );
             vec2  p = uv - center;
             float radius = uTime;// 時間で半径をアニメーションさせる
-            float lightness = 0.0003/ abs(length(p)- radius);
+            float lightness = 0.0002/ abs(length(p)- radius);
             float radius2 = uTime - 0.35;// 時間で半径をアニメーションさせる
-            float lightness2 = 0.0003/ abs(length(p)- radius2);
+            float lightness2 = 0.0002/ abs(length(p)- radius2);
             float radius3 = uTime - 0.4;// 時間で半径をアニメーションさせる
-            float lightness3 = 0.0003/ abs(length(p)- radius3);
+            float lightness3 = 0.0002/ abs(length(p)- radius3);
 
             float radiusP = uTime + 0.0;// 時間で半径をアニメーションさせる
-            float lightnessP = 0.0003/ abs(length(p)- radiusP);// 半径を距離で割る
+            float lightnessP = 0.0002/ abs(length(p)- radiusP);// 半径を距離で割る
 
 
             vec3 outColor = (lightness + lightness2 + lightness3 +lightnessP)* color2;
@@ -227,13 +227,13 @@ export default class LightBar extends THREE.Object3D {
             // vec2 center = vec2( 0.5 * uAspect, 0.0 );
             // vec2  p = uv - center;
             float radius = uTime;// 時間で半径をアニメーションさせる
-            float lightness = 0.0005/ abs(length(p)- radius);
+            float lightness = 0.0002/ abs(length(p)- radius);
             float radius2 = uTime - 0.2;// 時間で半径をアニメーションさせる
-            float lightness2 = 0.0003/ abs(length(p)- radius2);
+            float lightness2 = 0.002/ abs(length(p)- radius2);
             float radius3 = uTime - 0.4;// 時間で半径をアニメーションさせる
-            float lightness3 = 0.0003/ abs(length(p)- radius3);
+            float lightness3 = 0.002/ abs(length(p)- radius3);
             float radius4 = uTime + 0.2;// 時間で半径をアニメーションさせる
-            float lightness4 = 0.0003/ abs(length(p)- radius4);
+            float lightness4 = 0.002/ abs(length(p)- radius4);
             vec3 outColor = (lightness + lightness2 + lightness3 + lightness4)* color2;
             // gl_FragColor = vec4( vec3( outColor ),0.5 );
             gl_FragColor = vec4( vec3( outColor )+vec3( gradate ),0.5 );
