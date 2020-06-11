@@ -45,14 +45,15 @@ const Facade =
 	destroy()
 	{
 	},
-	// onResize() { this.props.instance.onResize(); },
+	onResize() { 
+		this.props.instance.onResize(); 
+	},
 	// onMouseMove(e) { this.props.instance.onMouseMove(e); },
 	
 	onKeyUp(e)
 	{
-		this.props.instance.onKeyUp(e);
+		// this.props.instance.onKeyUp(e);
 	},
-	
 	addEvent()
 	{
 		this.props.instance.addEvent(); 

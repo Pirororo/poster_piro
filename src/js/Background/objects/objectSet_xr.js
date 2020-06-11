@@ -137,15 +137,15 @@ export default class ObjectSet extends THREE.Object3D {
         this.meshgroup = new THREE.Group();
         angleTerm = 0;
         for (let i = 0; i < NAME_NUM; i++) {
-            this.Namegeometry = new THREE.PlaneGeometry(350,130);//350,135
+            this.Namegeometry = new THREE.PlaneGeometry(330,127);//350,135
             this.Namemesh = new THREE.Mesh(this.Namegeometry,this.Namematerial[i]);
 
             if(i%1 == 0){angleTerm += 1;}
             
             this.Namemesh.position.set(
-                (580*Math.sin((angleTerm*51.4286+10)*Math.PI/180))+(160),
+                (580*Math.sin((angleTerm*51.4286+13)*Math.PI/180))+(160),
                 (i%1)*30+270,
-                (580*Math.cos((angleTerm*51.4286+10)*Math.PI/180))+(160)
+                (580*Math.cos((angleTerm*51.4286+13)*Math.PI/180))+(160)
             );
             this.Namemesh.rotation.y = (angleTerm*51.429+10+180)*Math.PI/180;
 
