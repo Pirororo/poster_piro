@@ -171,7 +171,7 @@ export class Scene extends THREE.Scene
                     case "G" :
                         this.chooseRoom(this.camTargetBool_G, 9, "Go to room_G!");
                         break;
-                    case null :
+                    default :
                         if(this.camTargetBool_openingIsEnd == true){
                             this.camTargetBool_openingIsEnd = false;
                             this.camera.camTarget = this.baseCamTarget;
