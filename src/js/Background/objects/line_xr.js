@@ -185,7 +185,7 @@ export default class Line extends THREE.Object3D {
             if(this.DATAisOK ==  true){
                 if(this.frame < 1800){
                     this.frame += 1;
-                    if(this.frame% 4 == 0){//２回に１回
+                    if(this.frame% 2 == 0){//２回に１回
                         for( var i in this.meshes ) { this.checkIntersection(i); }
                     }
                 }else{ 

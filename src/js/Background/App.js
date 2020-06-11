@@ -145,8 +145,8 @@ export default class App
         // this.orbitControls.update(delta);
 
 
-        //fps表示の更新
-        this._stats.update();
+        // //fps表示の更新
+        // this._stats.update();
 
         //２回に１回読む
         this.masterFrame += 1;
@@ -339,18 +339,18 @@ export default class App
 
     _initStats()
     {
-        this._stats = new Stats();
-        this._stats.setMode(0); // 0: fps, 1: ms
+        // this._stats = new Stats();
+        // this._stats.setMode(0); // 0: fps, 1: ms
 
 
-        // Align top-left
-        this._stats.domElement.style.position = 'absolute';
-        this._stats.domElement.style.left = '0px';
-        this._stats.domElement.style.top = '0px';
+        // // Align top-left
+        // this._stats.domElement.style.position = 'absolute';
+        // this._stats.domElement.style.left = '0px';
+        // this._stats.domElement.style.top = '0px';
 
-        document.getElementById("Stats-output").appendChild(this._stats.domElement);
+        // document.getElementById("Stats-output").appendChild(this._stats.domElement);
 
-        return this._stats;
+        // return this._stats;
     }
 
 }

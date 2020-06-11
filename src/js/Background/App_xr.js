@@ -17,12 +17,20 @@ export default class App
     this._renderer.setSize(getWidth() , getHeight());
     this._renderer.setPixelRatio(1);
     this.clock = new THREE.Clock();
+
+    this.masterFrame = 0;
   }
 
   update()
   {
     //this._stats.update();
-    this._scene.update();
+    
+    this.masterFrame += 1;
+    if(this.masterFrame == 2){
+        this._scene.update();
+        this.masterFrame =0;
+    }
+
   }
 
   onKeyUp(e)

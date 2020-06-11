@@ -32,7 +32,11 @@ const Facade =
 	},
 	update()
 	{
-		this.props.instance.update();
+		// if(this.props.instance.scene.scene0.scene2.objectSet.loadBool == true){
+		// 	console.log(this.props.instance.loadBool);
+
+			this.props.instance.update();
+		// }
 	},
 	draw()
 	{

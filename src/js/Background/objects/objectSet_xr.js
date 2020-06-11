@@ -10,6 +10,7 @@ export default class ObjectSet extends THREE.Object3D {
         super();
 
         this.frame = 0;
+        // this.createMesh = this.createMesh.bind(this);
     
     //☆床サークル
         // 空のジオメトリを作成
@@ -66,11 +67,11 @@ export default class ObjectSet extends THREE.Object3D {
         let angleTerm = 0;
         for (let i = 0; i < CELL_NUM; i++) {
             // 立方体個別の要素を作成
-            let y = 60*(Math.random()+0.5);
+            let y = 90*(Math.random()+0.3);
             const BillsampleGeometry = new THREE.BoxGeometry(
-                10,
+                11,
                 y,
-                10
+                11
             );
             // 座標調整の行列を作成
             const Billmatrix = new THREE.Matrix4();
@@ -80,9 +81,9 @@ export default class ObjectSet extends THREE.Object3D {
             //     // 20 * (j - CELL_NUM / 2)
             if(i%80 == 0){angleTerm += 1;}
             Billmatrix.makeTranslation(
-                (i%10-5)*20+ (700*Math.sin((angleTerm*51.4286+6)*Math.PI/180))+(160),
+                (i%10-5)*20+ (700*Math.sin((angleTerm*51.4286+14)*Math.PI/180))+(160),
                 y/2,
-                (i%8-4)*20+ (700*Math.cos((angleTerm*51.4286+6)*Math.PI/180))+(160)
+                (i%8-4)*20+ (700*Math.cos((angleTerm*51.4286+14)*Math.PI/180))+(160)
             );
 
             // ジオメトリをマージ（結合）
@@ -105,41 +106,60 @@ export default class ObjectSet extends THREE.Object3D {
 
 
     //☆名前パネル
+
         // 空のジオメトリを作成
-        const NAME_NUM = 14;
-        const Namegeometry = new THREE.Geometry();
+        const NAME_NUM = 7;
+        this.Namegeometry = new THREE.Geometry();
         // Box
         angleTerm = 0;
         for (let i = 0; i < NAME_NUM; i++) {
-            const NamemeshTemp = new THREE.Mesh( new THREE.PlaneGeometry(100,20));
+            const NamemeshTemp = new THREE.Mesh( new THREE.PlaneGeometry(300,105));
 
-            if(i%2 == 0){angleTerm += 1;}
+            if(i%1 == 0){angleTerm += 1;}
             
             NamemeshTemp.position.set(
-                (600*Math.sin((angleTerm*51.4286+12)*Math.PI/180))+(160),
-                (i%2)*30+130,
-                (600*Math.cos((angleTerm*51.4286+12)*Math.PI/180))+(160)
+                (600*Math.sin((angleTerm*51.4286+10)*Math.PI/180))+(160),
+                (i%1)*30+300,
+                (600*Math.cos((angleTerm*51.4286+10)*Math.PI/180))+(160)
             );
-            NamemeshTemp.rotation.y = (angleTerm*51.429+10)*Math.PI/180;
+            NamemeshTemp.rotation.y = (angleTerm*51.429+10+180)*Math.PI/180;
 
             // メッシュをマージ（結合）
-            Namegeometry.mergeMesh(NamemeshTemp);
+            this.Namegeometry.mergeMesh(NamemeshTemp);
 
         }
         // マテリアルを作成
-        const Namegmaterial = new THREE.MeshBasicMaterial( {
-            // color: 0xC7C7C7,
-            wireframe: true,
-            color: 0x4ea78e,
-            opacity: 0.8,
-            transparent: true,
-            side: THREE.DoubleSide,
-            blending: THREE.AdditiveBlending,
-        } );
+        let loader = new THREE.TextureLoader();
+        // let material = [
+        //     new THREE.MeshBasicMaterial({map: loader.load( './img/hokkaido.png' )}),
+        //     new THREE.MeshBasicMaterial({map: loader.load( 'a/sai5.png' )}),
+        //     new THREE.MeshBasicMaterial({map: loader.load( 'a/sai3.png' )}),
+        //     new THREE.MeshBasicMaterial({map: loader.load( 'a/sai4.png' )}),
+        //     new THREE.MeshBasicMaterial({map: loader.load( 'a/sai1.png' )}),
+        //     new THREE.MeshBasicMaterial({map: loader.load( 'a/sai6.png' )})
+        // ];
 
-        // メッシュを作成
-        this.Namegmesh = new THREE.Mesh(Namegeometry, Namegmaterial);
-        this.add(this.Namegmesh);
+        // this.loadBool = false;
+
+        // loader.load("../img/hokkaido.png", function(texture) {
+            // this.createMesh(texture); // mesh作成 
+            this.Namematerial = new THREE.MeshBasicMaterial( {
+                // color: 0xC7C7C7,
+                // wireframe: true,
+                // color: 0x4ea78e,
+                // opacity: 0.9,
+                // transparent: true,
+                side: THREE.frontSide,
+                blending: THREE.AdditiveBlending,
+                // map: texture
+                map: loader.load("../img/hokkaido3.png")
+            } );
+            // メッシュを作成
+            this.Namemesh = new THREE.Mesh(this.Namegeometry, this.Namematerial);
+            this.add(this.Namemesh);
+            // render();
+            // this.loadBool = true;
+        // });
 
 
         
@@ -193,6 +213,10 @@ export default class ObjectSet extends THREE.Object3D {
 
  
     }
+
+    // createMesh(texture){
+        
+    // }
 
     update(){
     

@@ -34,10 +34,12 @@ export class Scene2 extends THREE.Scene
         this.openingUpdateBool = true;
         this.backAnimationUpdateBool = false;
         this.openingIsEnd = false;
+        this.randomAnimeBool = false;
+        this.randomAnime = 0;
 
         //イージング
         this.clock = new THREE.Clock();
-        this.tSpeed = 30.0;
+        this.tSpeed = 25.0;
         this.easeElapsedTime =0;
         this.eansingBool = true;
 
@@ -76,7 +78,6 @@ export class Scene2 extends THREE.Scene
         }
 
         this.add(this.meshGroup);
-
     }
 
 
@@ -95,7 +96,7 @@ export class Scene2 extends THREE.Scene
         //プレートのイージング
         if (this.eansingBool == true){
             this.easeElapsedTime += this.clock.getDelta();
-            this.t = this.easeElapsedTime / this.tSpeed;
+            this.t = this.easeElapsedTime / this.tSpeed*1.5;
             if ( this.t > 1.0){this.t = 1.0;}    // クランプ
             this.rate = this.t * this.t * ( 3.0 - 2.0 * this.t );
 
@@ -121,7 +122,7 @@ export class Scene2 extends THREE.Scene
 
         //オープニング
         if(this.openingUpdateBool == true){
-            this.openingFrame += 1;
+            this.openingFrame += 2;
             this.opening();
         }
 
@@ -129,12 +130,12 @@ export class Scene2 extends THREE.Scene
         if(this.backAnimationUpdateBool == true){
 
             // if(this.waitingFrame< 240){
-            //     this.waitingFrame += 1;
+            //     this.waitingFrame += 2;
             // }
             // if(this.waitingFrame >= 240){
             //     this.waitingFrame = 240+2;
 
-                this.backAnimationframe += 1;
+                this.backAnimationframe += 2;
                 this.backAnimation();
             // }
         }
@@ -143,7 +144,7 @@ export class Scene2 extends THREE.Scene
 
     opening()
     {
-        if(this.openingFrame == 200){
+        if(this.openingFrame == 230){
             for (let i = 0; i < this.meshList.length; i++) {
                 for (let j = 0; j < 4; j++) {
                 if(i >=80*j && i<80*(j+1)){
@@ -165,7 +166,7 @@ export class Scene2 extends THREE.Scene
             this.tSpeed =7.0;
         }
 
-        if(this.openingFrame == 280){
+        if(this.openingFrame == 300){
             for (let i = 0; i < this.meshList.length; i++) {
                 for (let j = 0; j < 4; j++) {
                 if(i >=80*j && i<80*(j+1)){
@@ -187,7 +188,7 @@ export class Scene2 extends THREE.Scene
             this.tSpeed =7.0;
         }
 
-        if(this.openingFrame == 430){
+        if(this.openingFrame == 450){
             if(this.openingIsEnd == false){
                 this.openingIsEnd = true;
                 this.openingUpdateBool = false;
@@ -368,35 +369,6 @@ export class Scene2 extends THREE.Scene
         // // }
 
 
-        // if(this.backAnimationframe == 600){
-        //     for (let i = 0; i < this.meshList.length; i++) {
-        // //     for (let i = 0; i < this.meshList.length; i++) {
-        // //         for (let j = 0; j < 8; j++) {
-        // //         if(i >=40*j && i<40*(j+1)){
-        // //             for (let k = 0; k < 8; k++) {
-        // //             if(i >=40*j+(5*k) && i<40*j+(5*(k+1))){
-        // //                 for (let l = 0; l < 5; l++) {
-        // //                 if(i >=40*j+(5*k)+(1*l) && i<40*j+(5*k)+(1*(l+1))){
-        //         for (let j = 0; j < 20; j++) {
-        //         if(i >=16*j && i<16*(j+1)){
-        //             for (let k = 0; k < 16; k++) {
-        //             if(i >=16*j+(1*k) && i<16*j+(1*(k+1))){
-        //                 for (let l = 0; l < 1; l++) {
-        //                 if(i >=16*j+(1*k)+(1*l) && i<16*j+(1*k)+(1*(l+1))){
-        //                     this.posTarget[3*i+ 0] = 20*j,
-        //                     this.posTarget[3*i+ 1] =  (30*Math.sin((30*(j+k)+((this.backAnimationframe+60)*2))*Math.PI/180)),
-        //                     this.posTarget[3*i+ 2] = 20*k
-        //                 }
-        //                 }
-        //             }
-        //             }
-        //         }
-        //         }
-        //     }
-        //     this.easeElapsedTime =0;
-        // }
-
-
 
 
         // if(this.backAnimationframe == 660){ this.eansingBool = false;}
@@ -439,27 +411,7 @@ export class Scene2 extends THREE.Scene
 
         // if(this.backAnimationframe == 980){ this.eansingBool = true;}
 
-        // // if(this.backAnimationframe == 780){
-        // //     for (let i = 0; i < this.meshList.length; i++) {
-        // //         for (let j = 0; j < 8; j++) {
-        // //         if(i >=40*j && i<40*(j+1)){
-        // //             for (let k = 0; k < 8; k++) {
-        // //             if(i >=40*j+(5*k) && i<40*j+(5*(k+1))){
-        // //                 for (let l = 0; l < 5; l++) {
-        // //                 if(i >=40*j+(5*k)+(1*l) && i<40*j+(5*k)+(1*(l+1))){
-        // //                     this.posTarget[3*i+ 0] = 80*Math.sin((i*2*Math.PI/180))+50,
-        // //                     this.posTarget[3*i+ 1] = 0+25,
-        // //                     this.posTarget[3*i+ 2] = 80*Math.cos((i*2*Math.PI/180))+50
-        // //                 }
-        // //                 }
-        // //             }
-        // //             }
-        // //         }
-        // //         }
-        // //     }
-        // //     this.easeElapsedTime =0;
-        // //     this.tSpeed =30;
-        // // }
+
 
         // // if(this.backAnimationframe == 900){
         // //     for (let i = 0; i < this.meshList.length; i++) {
@@ -485,28 +437,99 @@ export class Scene2 extends THREE.Scene
 
 
 
-        if(this.backAnimationframe == 1000){
-            for (let i = 0; i < this.meshList.length; i++) {
-                for (let j = 0; j < 4; j++) {
-                if(i >=80*j && i<80*(j+1)){
-                    for (let k = 0; k < 4; k++) {
-                    if(i >=80*j+(20*k) && i<80*j+(20*(k+1))){
-                        for (let l = 0; l < 10; l++) {
-                        if(i >=80*j+(20*k)+(2*l) && i<80*j+(20*k)+(2*(l+1))){
-                            this.posTarget[3*i+ 0] = 150*Math.sin((4*i*Math.PI/180))+160,
-                            this.posTarget[3*i+ 1] = 100*Math.cos((2*20*(j+k+l)*Math.PI/180))+100,
-                            this.posTarget[3*i+ 2] = -150*Math.sin((8*i*Math.PI/180))+160
-                        }
-                        }
-                    }
-                    }
+        if(this.randomAnimeBool == true){
+            this.randomAnime = Math.random();
+            this.randomAnimeBool = false;
+        }
+         
+        if(this.randomAnime >= 0.66){
+            if(this.backAnimationframe == 1002){ this.eansingBool = false;}
+            if(this.backAnimationframe > 1002 && this.backAnimationframe < 1146){
+
+                for (let i = 0; i < this.meshList.length; i++) {
+                    this.meshList[i].position.x = this.positions[3*i+ 0];
+                    this.meshList[i].position.y = this.positions[3*i+ 1];
+                    this.meshList[i].position.z = this.positions[3*i+ 2];
                 }
+
+                for (let i = 0; i < this.meshList.length; i++) {
+                    for (let j = 0; j < 20; j++) {
+                    if(i >=16*j && i<16*(j+1)){
+                        for (let k = 0; k < 16; k++) {
+                        if(i >=16*j+(1*k) && i<16*j+(1*(k+1))){
+                            for (let l = 0; l < 1; l++) {
+                            if(i >=16*j+(1*k)+(1*l) && i<16*j+(1*k)+(1*(l+1))){
+                    // for (let j = 0; j < 8; j++) {
+                    // if(i >=40*j && i<40*(j+1)){
+                    //     for (let k = 0; k < 8; k++) {
+                    //     if(i >=40*j+(5*k) && i<40*j+(5*(k+1))){
+                    //         for (let l = 0; l < 5; l++) {
+                    //         if(i >=40*j+(5*k)+(1*l) && i<40*j+(5*k)+(1*(l+1))){
+                                this.positions[3*i+ 0] = 15*j,
+                                this.positions[3*i+ 1] = (30*Math.sin((30*(j+k)+(this.backAnimationframe*2))*Math.PI/180))+70,
+                                this.positions[3*i+ 2] = 15*k
+                            }
+                            }
+                        }
+                        }
+                    }
+                    }
                 }
             }
-            this.easeElapsedTime =0;
-            this.tSpeed =15.0;
+
         }
 
+        else if(this.randomAnime < 0.66 && this.randomAnime >= 0.33 ){
+            if(this.backAnimationframe == 1000){
+                for (let i = 0; i < this.meshList.length; i++) {
+                    for (let j = 0; j < 8; j++) {
+                    if(i >=40*j && i<40*(j+1)){
+                        for (let k = 0; k < 8; k++) {
+                        if(i >=40*j+(5*k) && i<40*j+(5*(k+1))){
+                            for (let l = 0; l < 5; l++) {
+                            if(i >=40*j+(5*k)+(1*l) && i<40*j+(5*k)+(1*(l+1))){
+                                this.posTarget[3*i+ 0] = 120*Math.sin((i*2*Math.PI/180))+160,
+                                this.posTarget[3*i+ 1] = 0+125,
+                                this.posTarget[3*i+ 2] = 120*Math.cos((i*2*Math.PI/180))+160
+                            }
+                            }
+                        }
+                        }
+                    }
+                    }
+                }
+                this.easeElapsedTime =0;
+                this.tSpeed =8;
+            }
+        }
+
+
+
+        else{
+            if(this.backAnimationframe == 1000){
+                for (let i = 0; i < this.meshList.length; i++) {
+                    for (let j = 0; j < 4; j++) {
+                    if(i >=80*j && i<80*(j+1)){
+                        for (let k = 0; k < 4; k++) {
+                        if(i >=80*j+(20*k) && i<80*j+(20*(k+1))){
+                            for (let l = 0; l < 10; l++) {
+                            if(i >=80*j+(20*k)+(2*l) && i<80*j+(20*k)+(2*(l+1))){
+                                this.posTarget[3*i+ 0] = 150*Math.sin((4*i*Math.PI/180))+120,
+                                this.posTarget[3*i+ 1] = 100*Math.cos((2*20*(j+k+l)*Math.PI/180))+100,
+                                this.posTarget[3*i+ 2] = -150*Math.sin((8*i*Math.PI/180))+120
+                            }
+                            }
+                        }
+                        }
+                    }
+                    }
+                }
+                this.easeElapsedTime =0;
+                this.tSpeed =15.0;
+            }
+        }
+
+        if(this.backAnimationframe == 1150){ this.eansingBool = true;}
         if(this.backAnimationframe == 1150){
             for (let i = 0; i < this.meshList.length; i++) {
                 for (let j = 0; j < 4; j++) {

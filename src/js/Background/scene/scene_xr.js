@@ -13,7 +13,6 @@ export class Scene extends THREE.Scene
     {
         super();
 
-        // this.frame = 1200;
 
         this.cam_opening = this.cam_opening.bind(this);
         this.cam_backAnimation = this.cam_backAnimation.bind(this);
@@ -225,6 +224,7 @@ export class Scene extends THREE.Scene
                     this.camTarget = this.baseCamTarget;
                     console.log("VR_ Back to Category!");
                     this.openCamTargetBool();
+                    this.scene0.scene2.randomAnimeBool = true;
                 }
             }
         });
