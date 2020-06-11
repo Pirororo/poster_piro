@@ -7,45 +7,29 @@
 import Background from "./Background/Facade"; // will be created by Piro
 import Gallery from "./Gallery/Facade"; // will be created by Yonekura
 import Detail from "./Detail/Facade"; // will be created by Shinagawa
-import XRHelper from "./XR/Facade"; // will be created by Beharu
+import XR from "./XR/Facade"; // will be created by Beharu
 import Startup from "./Startup/Facade";
 
-import Router from "./Utils/Router";
+// import Router from "./Utils/Router";
 import { isVR, show } from "./Utils/Helper";
 import { SELECTORS } from "./Utils/Props";
 import { EVENT, Action } from "./Utils/EventManager";
 
 const Composer =
 {
-	props: {
-		isPause: false,
-	},
+	props: {},
 	instances: {},
 	elements: {},
 	init()
 	{
-		// if (!isVR)
-		// {
-		// 	Router.init();
-		// }
-		Router.init();
-
+		// Router.init();
 		this.instances.background = Background.init();
 		this.instances.startup = Startup.init()
 		this.instances.gallery = Gallery.init();
-		this.instances.xr = XRHelper.init();
 		this.instances.detail = Detail.init();
+		this.instances.xr = XR.init();
 
 		show(SELECTORS.BackgroundContainer);
-
-		// if (isVR()) {
-		// 	this.instances.xr = XRHelper.init();
-		// }
-		// else {
-		// 	this.instances.background = Background.init();
-		// 	this.instances.gallery = Gallery.init();
-		// 	// this.instances.detail = Detail.init();
-		// }
 
 		this.addEvent();
 		this.setup();
@@ -58,27 +42,13 @@ const Composer =
 	},
 	update() {
 		this.instances.forIn((k, instance) => instance.update());
-
-		window.requestAnimationFrame(() => {
-			if (!this.props.isPause) {
-				this.update();
-			}
-		});
-
+		window.requestAnimationFrame(() => this.update());
 		this.draw();
 	},
 	draw() {
 		this.instances.forIn((k, instance) => instance.draw());
 	},
-	destroy() {
-	},
-	pause() {
-		this.props.isPause = true;
-	},
-	resume() {
-		this.props.isPause = false;
-	},
-
+	destroy() {},
 	onResize() {
 		this.instances.forIn((k, instance) => instance.onResize());
 	},
@@ -94,6 +64,8 @@ const Composer =
 
 	addEvent()
 	{
+		// Dispath Events for Debug
+
 		// setTimeout(() => {
 		// 	// Action.dispatch(EVENT.SkipOpening);
 		// 	Action.dispatch(EVENT.ShowStartup);

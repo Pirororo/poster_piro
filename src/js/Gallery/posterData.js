@@ -30,7 +30,7 @@ export const posterData = {
   },
   b: {
     categoryId: 'B',
-    categoryEn: 'Computation, Logic, <br> Quantum information',
+    categoryEn: 'Computation, Logic, Quantum information',
     categoryJp: '数理・論理・量子情報',
     copy: '考え方をかんがえる',
     imgPath: [

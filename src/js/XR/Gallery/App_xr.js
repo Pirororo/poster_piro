@@ -26,10 +26,13 @@ export default
       }
     };
     this.addEvent();
+  },
 
+  setup()
+  {
     setTimeout(() => {
       this.generateCategory(posterData);
-    }, 4000);
+    }, 6000);
   },
 
   generatePosters(category = this.category)
@@ -68,13 +71,11 @@ export default
 
   generateHUDs()
   {
-    // this.generateHUD();
     this.generateHUD(BOARD_ID.UI.BackToCategory, [0, 12, 0]);
     invoke(() => { this.generateHUD(BOARD_ID.UI.ShowCategoryA, [0, 12, 0], 10)});
     invoke(() => { this.generateHUD(BOARD_ID.UI.ShowCategoryD, [0, 12, 0], 20)});
     invoke(() => { this.generateHUD(BOARD_ID.UI.ShowCategoryG, [0, 12, 0], 30)});
     invoke(() => { this.generateHUD(BOARD_ID.UI.VRModeStart, [0, 12, 0], 40)});
-
     invoke(() => {
       this.showBoard(34, this.boardList, 20);
       this.showBoard(34, this.hudUIList, 20, -150);
@@ -106,7 +107,8 @@ export default
       };
       this.boardList.push(new CategoryBoard_xr(parameter));
     }
-    this.generateHUDs();
+    this.showBoard(34, this.boardList, 20);
+    // this.generateHUDs();
   },
 
   addEvent()
@@ -118,7 +120,6 @@ export default
         this.category = category;
         this.generatePosters(category);
 
-        // console.log(`ShowCagegory: ${category.toUpperCase()}`);
         // dispatch for Background
         Action.dispatch(EVENT.ShowCategory, {
           category: category.toUpperCase(),

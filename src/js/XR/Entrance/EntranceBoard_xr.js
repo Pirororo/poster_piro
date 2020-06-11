@@ -12,7 +12,7 @@ export default class EntranceBoard_xr extends BoardViewBase
     this.height = this.width * 0.5625;
     this.scale = new THREE.Vector3(this.width, this.height, 1);
     this.materials = {
-      board: `shader: flat; color: #fff; transparent: true; src: /session/img/vr_start_screen.png`
+      board: `shader: flat; color: #fff; transparent: true; src: /img/ui/vr_start_screen.png`
     };
     this.init();
   }

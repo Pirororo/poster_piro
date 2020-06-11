@@ -1,7 +1,7 @@
 import "aframe-html-shader";
 import Gallery from "../Gallery/App_xr";
-import { SELECTOR, COMPONENTS, SELECTORS } from "./../../Utils/Props";
-import { show, hide } from "./../../Utils/Helper";
+import { COMPONENTS, SELECTORS } from "./../../Utils/Props";
+import { show, isDebugMode } from "./../../Utils/Helper";
 
 const AFRAME = window.AFRAME;
 
@@ -22,8 +22,10 @@ export default AFRAME.registerComponent(COMPONENTS.Gallery,
 
 		this.modules.gallery = Gallery;
 		this.modules.gallery.init(this.props.container);
-
 		show(SELECTORS.GalleryContainer);
+
+		// Don't call setup() if under Debug Mode
+		if (!isDebugMode()) { this.modules.gallery.setup(); }
 	},
 
 	tick()

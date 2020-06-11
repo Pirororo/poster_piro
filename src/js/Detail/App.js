@@ -15,8 +15,6 @@ export default class App {
     this.modal_box = document.getElementById('modal_box');
     this.slide = document.getElementById('slide');
 
-    this.inner_container = this.iframe.contentWindow.document.getElementById('wp-container');
-    this.pdf_link = this.iframe.contentWindow.document.querySelectorAll('.pdf_link');
   }
 
   init()
@@ -34,6 +32,7 @@ export default class App {
 
   onResize()
   {
+    this.inner_container = this.iframe.contentWindow.document.getElementById('wp-container');
     if (this.inner_container) {
       if (window.innerWidth < 750) {
         this.inner_container.style.width = "90vw";
@@ -49,6 +48,9 @@ export default class App {
 
   onClick(e)
   {
+    console.log(e.target.id);
+    console.log(e.target.classList);
+
     if (e.target.id === 'close') {
         this.frame_container.classList.remove('fade-in');
         this.close_btn.classList.add('no_show');
@@ -59,21 +61,17 @@ export default class App {
       document.getElementById('modal_box').style.display = "none";
     }
 
-    if (e.target.classList.contains('pdf_link')) {
-      e.preventDefault();
+    if (e.target.tagName === 'img') {
+      // e.preventDefault();
       console.log(e.target.src);
-      this.slide.src = e.target.src;
-      this.modal_box.style.display = "block";
-      this.slide.style.display = "block";
+      this.showModal(e);
+      
     }
   }
 
   onKeyUp(e)
   {
-    if (e.keyCode === KEYCODE.SPACE)
-    {
-      this.hide();
-    }
+
   }
 
   addEvent()
@@ -81,12 +79,11 @@ export default class App {
     Action.add(EVENT.ShowDetail, e => {
       this.slug = e.slug;
       console.log(`received: ${this.slug}`);
-      this.iframe.src = `https://openhouse.nii.ac.jp/wp/${this.slug}/`;
-      this.show();
-      this.frame_container.classList.add('fade-in');
-      this.close_btn.classList.remove('no_show');
 
-    })
+      this.iframe.src = `https://openhouse.nii.ac.jp/wp/${this.slug}/`;
+      this.iframe.onload = this.showPage();
+        
+    });
   }
 
   show()
@@ -101,6 +98,24 @@ export default class App {
   {
     this.isEnable = false;
     this.detail.style.visibility = "hidden";
-    this.gallery.style.visibility = "visible";
+    // this.gallery.style.visibility = "visible";
+  }
+
+  showPage()
+  {
+    setTimeout(() => {
+      this.show();
+      this.frame_container.classList.add('fade-in');
+      this.close_btn.classList.remove('no_show');
+    }, 800);
+  }
+
+  showModal(e)
+  {
+    this.slide.src = e.target.src;
+    this.modal_box.style.display = "block";
+    this.slide.style.display = "block";
   }
 }
+
+

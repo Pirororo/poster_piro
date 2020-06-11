@@ -215,12 +215,12 @@ export default class LightBar extends THREE.Object3D {
             vec2 center = vec2( 0.5 * uAspect, 0.0 );
             vec2  p = uv - center;
             
-            // //グラデ
-            // vec2 q = mod(p, 0.142857) - 0.0;
-            // float f = 0.2 / abs(q.x) ; 
-            // vec3 gradate  = color2 /(f) ; 
-            // // vec3 gradate = color * uv.x + color2 * (1.0 - uv.x);
-            // // gl_FragColor = vec4(gradate, 0.5 );
+            //グラデ
+            vec2 q = mod(p, 0.142857) - 0.0;
+            float f = 0.2 / abs(q.x) ; 
+            vec3 gradate  = color2 /(f) ; 
+            // vec3 gradate = color * uv.x + color2 * (1.0 - uv.x);
+            // gl_FragColor = vec4(gradate, 0.5 );
 
 
             //横ライン
@@ -235,8 +235,8 @@ export default class LightBar extends THREE.Object3D {
             float radius4 = uTime + 0.2;// 時間で半径をアニメーションさせる
             float lightness4 = 0.002/ abs(length(p)- radius4);
             vec3 outColor = (lightness + lightness2 + lightness3 + lightness4)* color2;
-            gl_FragColor = vec4( vec3( outColor ),0.5 );
-            // gl_FragColor = vec4( vec3( outColor )+vec3( gradate ),0.5 );
+            // gl_FragColor = vec4( vec3( outColor ),0.5 );
+            gl_FragColor = vec4( vec3( outColor )+vec3( gradate ),0.5 );
 
 
         }

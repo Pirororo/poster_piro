@@ -132,7 +132,6 @@ export default class App {
     this.category = new CategoryBoard(categoryStage);
     // setTimeout(() => {
     //   SYNTH.categoryIn();
-
     // }, 1000);
   }
 
@@ -281,14 +280,14 @@ export default class App {
     this.backBtn = document.createElement('div');
     this.backBtn.setAttribute('id', 'back_btn');
     const backBtnImg = document.createElement('img');
-    backBtnImg.setAttribute('src', './img/ui/btn_back.png');
+    backBtnImg.setAttribute('src', '/img/ui/btn_back.png');
     backBtnImg.setAttribute('alt', 'back');
     this.backBtn.appendChild(backBtnImg);
     this.gallery_stage.appendChild(this.backBtn);
     setTimeout(() => {
       this.backBtn.classList.add('in');
     }, 2000);
-    SYNTH.btnSound();
+    //
 
   }
 
@@ -357,48 +356,61 @@ export default class App {
 
   onCategoryHandler(e) {
     const categoryName = e.target.className;
+    let categoryId = "";
     switch (categoryName) {
       case 'cat0':
-        this.categoryId = 'a';
+        categoryId = "a";
+        this.categoryId = categoryId;
         this.category.destroy();
         this.checkResponsiveBoard();
+        Action.dispatch(EVENT.ShowCategory, { category: "A", mode: "normal" });
         break;
       case 'cat1':
-        this.categoryId = 'b';
+        categoryId = "b";
+        this.categoryId = categoryId;
         this.category.destroy();
         this.checkResponsiveBoard();
+        Action.dispatch(EVENT.ShowCategory, { category: "B", mode: "normal" });
         break;
       case 'cat2':
-        this.categoryId = 'c';
-        this.category.destroy();
+        categoryId = "c";
+        this.categoryId = categoryId;
         this.checkResponsiveBoard();
+        Action.dispatch(EVENT.ShowCategory, { category: "C", mode: "normal" });
         break;
       case 'cat3':
-        this.categoryId = 'd';
+        categoryId = "d";
+        this.categoryId = categoryId;
         this.category.destroy();
         this.checkResponsiveBoard();
+        Action.dispatch(EVENT.ShowCategory, { category: "D", mode: "normal" });
         break;
       case 'cat4':
-        this.categoryId = 'e';
-        this.category.destroy();
+        categoryId = "e";
+        this.categoryId = categoryId;
         this.checkResponsiveBoard();
+        Action.dispatch(EVENT.ShowCategory, { category: "E", mode: "normal" });
         break;
       case 'cat5':
-        this.categoryId = 'f';
+        categoryId = "f";
+        this.categoryId = categoryId;
         this.category.destroy();
         this.checkResponsiveBoard();
+        Action.dispatch(EVENT.ShowCategory, { category: "F", mode: "normal" });
         break;
       case 'cat6':
-        this.categoryId = 's';
+        categoryId = "s";
+        this.categoryId = categoryId;
         this.category.destroy();
         this.checkResponsiveBoard();
+        Action.dispatch(EVENT.ShowCategory, { category: "G", mode: "normal" });
         break;
       default:
         break;
     }
 
     if (categoryName != null) {
-      Action.dispatch(EVENT.ShowCategory, categoryName);
+      Action.dispatch(EVENT.ShowCategory, { mode: "normal", category: categoryId.toUpperCase() });
     }
 
   }
@@ -422,7 +434,7 @@ export default class App {
       const slug = intersects[0].object.slug;
 
       console.log(`ShowDetail: ${slug}`);
-      
+
       Action.dispatch(EVENT.ShowDetail, { slug });
       SYNTH.btnSound();
     }
@@ -443,15 +455,18 @@ export default class App {
         this.removePosterDomBorad();
       }
       this.backBtn.classList.remove('in');
+
+      SYNTH.btnSound();
+      Action.dispatch(EVENT.BackToCategory, { mode: "normal" });
+
       setTimeout(() => {
         this.backBtn.remove();
         hide(SELECTORS.GalleryContainer);
       }, 2000);
       SYNTH.btnSound();
-
     }
-
   }
+
 
 
   // THREEjsの設定
@@ -470,8 +485,8 @@ export default class App {
 
   createCamera() {
     this.camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1);
-    this.camera.position.set(0, 80, 150);
-    this.camera.lookAt(new THREE.Vector3(0, 50, -80));
+    this.camera.position.set(0, 5, 200);
+    this.camera.lookAt(new THREE.Vector3(0, 5, -50));
     this.scene.add(this.camera);
   }
 
@@ -498,12 +513,9 @@ export default class App {
   }
 
   addEvent() {
-    Action.add(EVENT.BackToPoster, () => {
-    });
-
 
     Action.add(EVENT.ShowCategory, data => {
-      if (data.mode == "normal") {
+      if (data.mode == "normal" && !("category" in data)) {
         setTimeout(() => {
           show(SELECTORS.CategoryContainer);
           this.init();

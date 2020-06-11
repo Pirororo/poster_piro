@@ -9,6 +9,7 @@ Thumbs.db
 test/
 *copy*.*
 *backup*.*
+build/
 
 node_modules
 @Materials

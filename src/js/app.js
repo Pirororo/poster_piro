@@ -5,7 +5,7 @@
  */
 import "./../css/style.scss";
 import ObjectExtenstions from "./Utils/ObjectExtensions";
-import { isVR, setVRMode } from "./Utils/Helper";
+import { setDebugMode } from "./Utils/Helper";
 import Composer from "./Composer";
 
 // Define namespace
@@ -27,7 +27,6 @@ OpenHouse2020.PosterSession.App =
 	onMouseMove(e) { this.delegator.onMouseMove(e); },
 	onKeyUp(e) { this.delegator.onKeyUp(e); },
 	onClick(e) { this.delegator.onClick(e); },
-
 	addEvent()
 	{
 		window.addEventListener("resize", () => this.onResize());
@@ -41,13 +40,16 @@ OpenHouse2020.PosterSession.App =
 	},
 };
 
+
 // Launch app when DOM will be ready
 window.addEventListener("DOMContentLoaded", () =>
 {
-	const isVRMode = document.getElementsByTagName("a-scene").length > 0;
+	window.console.log = () => {};
+	window.console.dir = () => {};
 
-	setVRMode(isVRMode);
-	console.log(`VRMode: ${isVR()}`);
+	const isDebugMode = document.getElementsByTagName("a-scene").length > 0;
+	setDebugMode(isDebugMode);
+	console.log(`DebugMode: ${isDebugMode}`);
 
   OpenHouse2020.PosterSession.App.init();
 });

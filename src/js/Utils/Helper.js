@@ -4,7 +4,7 @@
  *
  */
 
-import { VR } from "./Props";
+import { VR, DebugMode } from "./Props";
 
 const WebXRPermissionHelper =
 {
@@ -46,13 +46,13 @@ const WebXRPermissionHelper =
 	}
 };
 
-const isVR = (scene = null) => {
-	return VR.enable;
-};
+const getVRMode = () => VR.enable;
+const setVRMode = (value = true) => VR.enable = value;
+const isVR = () => VR.enable;
 
-const setVRMode = (value = true) => {
-	VR.enable = value;
-};
+const setDebugMode = (value = true) => DebugMode.enable = value;
+const getDebugMode = () => DebugMode.enable;
+const isDebugMode = () => DebugMode.enable;
 
 const getWidth = () => {
 	return window.innerWidth;
@@ -99,15 +99,38 @@ const hide = id => {
 	display(id, "hide");
 };
 
+const getParamsFromURIQueries = () =>
+{
+	const queryString = location.search.substring(1);
+	if (queryString == null) { return null; }
+
+	const queries = queryString.split("&");
+  const params = {};
+	for (let i = 0, len = queries.length; i < len; i++)
+	{
+		const keyValue = queries[i].split("=");
+		params[keyValue[0]] = keyValue[1];
+	}
+	return params;
+}
+
 export {
 	WebXRPermissionHelper,
+
 	isVR,
 	setVRMode,
+	getVRMode,
+	isDebugMode,
+	setDebugMode,
+	getDebugMode,
+
 	getWidth,
 	getHeight,
 	getStageSize,
+
 	invoke,
 	getElement,
 	show,
-	hide
+	hide,
+	getParamsFromURIQueries
 }

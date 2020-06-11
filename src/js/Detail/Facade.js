@@ -6,6 +6,7 @@
 
 import { ICommonFacadeModuleObject } from "../Utils/Interfaces";
 import App from "./App";
+import { isVR } from "../Utils/Helper";
 
 const Facade =
 {
@@ -21,6 +22,7 @@ const Facade =
   },
 	draw()
 	{
+    if (isVR) { return; }
 		this.props.instance.draw();
   },
   onClick(e) {

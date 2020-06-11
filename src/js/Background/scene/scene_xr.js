@@ -346,7 +346,7 @@ export class Scene1 extends THREE.Scene
                 this._line[2*i+j] = new Line(i,j+1);
                 this._line[2*i+j].position.set(
                     160,
-                    190,
+                    40 ,
                     160
                 );
                 this.add(this._line[2*i+j]);

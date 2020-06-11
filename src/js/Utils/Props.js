@@ -3,7 +3,10 @@
  */
 
 import { EVENT as _EVENT } from "./EventManager";
-import { getElement } from "./Helper";
+
+const DebugMode = {
+  enable: false
+};
 
 const VR = {
   enable: false,
@@ -121,9 +124,7 @@ const UA = ((ua) =>
 UA.isValid = () => {
   const pc = !UA.isMobile && (UA.isChrome || UA.isSafari);
   const mobile = UA.isMobile && (UA.isSafari || UA.isChrome)
-
 //  console.log(`Result: ${pc || mobile}, PC: ${pc}, Mobile: ${mobile}`);
-
   return pc || mobile;
 };
 
@@ -132,6 +133,7 @@ UA.isAndroidChrome = () => {
 };
 
 export {
+  DebugMode,
 	KEYCODE,
 	EVENT,
 	VR,

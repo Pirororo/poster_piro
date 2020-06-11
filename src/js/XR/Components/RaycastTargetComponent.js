@@ -1,5 +1,6 @@
 import { COMPONENTS, BOARD_ID } from "../../Utils/Props";
 import { EVENT, Action } from "./../../Utils/EventManager";
+import { SYNTH } from "./../../Utils/Sound";
 
 const AFRAME = window.AFRAME;
 
@@ -9,6 +10,7 @@ export default AFRAME.registerComponent(COMPONENTS.RaycastTarget,
 	{
 		this.el.addEventListener("click", e =>
 		{
+			SYNTH.btnSound();
 			// this.el.object3DMap.mesh.material.color.set(0xff0000);
 			switch (this.el.instance.boardId)
 			{

@@ -26,7 +26,7 @@ export default class DetailBoard_xr extends BoardViewBase
     switch(key)
     {
       case "image":
-        this.materials.board = `shader: flat; color: #fff; src: ${imageDir}${data[key]}`;
+        this.materials.board = `shader: flat; color: #fff; transparent: true; src: ${imageDir}${data[key]}`;
         this.width = 18;
         this.height = this.width * 0.5625;
         this.scale = new THREE.Vector3(this.width, this.height, 1);
@@ -35,6 +35,7 @@ export default class DetailBoard_xr extends BoardViewBase
         data[key].key = key;
         this.containers.boardContentBody = this.createContent(Content(data[key]));
     }
+
     this.createBoard(
       "board",
       this.containers.board,

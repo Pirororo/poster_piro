@@ -50,9 +50,12 @@ export default
     const boardContent = document.getElementById(SELECTORS.DetailStage);
     const data = await this.fetchEntry(slug).catch(error => {
       console.error(error);
+    });
+
+    if (data == null) {
       Action.dispatch(EVENT.BackToPoster);
       return;
-    });
+    }
 
     // generate images
     const pdfs = [ data.pdf_name_01, data.pdf_name_02, data.pdf_name_03 ].filter(data => data != "");
@@ -98,8 +101,8 @@ export default
     } = data;
     const summaries = [];
 
-    this.generatePanelFromSentence(summary_jp, summaries);
-    this.generatePanelFromSentence(summary_en, summaries, ".");
+    this.generatePanelFromSentence(summary_jp, summaries, "。", 300);
+    this.generatePanelFromSentence(summary_en, summaries, " ", 700);
     summaries.forEach(summary => contents.push({ summary: { summary }}));
 
     // create boards from contents
@@ -118,13 +121,14 @@ export default
         },
         data: contents[i]
       };
+
       this.boardList.push(new DetailBoard_xr(parameter));
     }
-    this.showBoard(54, this.boardList, 18);
-    this.generateHUD(BOARD_ID.UI.BackToPoster, [0, 15, -20]);
+    this.showBoard(50, this.boardList, 19);
+    this.generateHUD(BOARD_ID.UI.BackToPoster, [0, 14, -19]);
   },
 
-  generatePanelFromSentence(sentence, panels = [], delimiter = "。", limit = 250, start = 0)
+  generatePanelFromSentence(sentence, panels = [], delimiter = "。", limit = 300, start = 0)
   {
     if (sentence.length > limit)
     {
@@ -138,6 +142,14 @@ export default
       {
         panels.push(sentence.substring(start, limit));
         this.generatePanelFromSentence(sentence, panels, delimiter, limit + limit, start + limit);
+      }
+    }
+    else
+    {
+      const rest = sentence.substring(start);
+      if (rest.length > 0)
+      {
+        panels.push(rest);
       }
     }
   },

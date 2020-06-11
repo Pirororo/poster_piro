@@ -19,9 +19,9 @@ const Facade =
 
 		return this;
   },
-	onResize() { this.props.instance.onResize(); },
-	onMouseMove(e) { this.props.instance.onMouseMove(e); },
-	onKeyUp(e) { this.props.instance.onKeyUp(e); }
+	// onResize() { this.props.instance.onResize(); },
+	// onMouseMove(e) { this.props.instance.onMouseMove(e); },
+	// onKeyUp(e) { this.props.instance.onKeyUp(e); }
 };
 
 export default Facade;
