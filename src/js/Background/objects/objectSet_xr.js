@@ -143,9 +143,9 @@ export default class ObjectSet extends THREE.Object3D {
             if(i%1 == 0){angleTerm += 1;}
             
             this.Namemesh.position.set(
-                (580*Math.sin((angleTerm*51.4286+13)*Math.PI/180))+(160),
-                (i%1)*30+270,
-                (580*Math.cos((angleTerm*51.4286+13)*Math.PI/180))+(160)
+                (700*Math.sin((angleTerm*51.4286-7)*Math.PI/180))+(160),
+                (i%1)*30+320,
+                (700*Math.cos((angleTerm*51.4286-7)*Math.PI/180))+(160)
             );
             this.Namemesh.rotation.y = (angleTerm*51.429+10+180)*Math.PI/180;
 
@@ -225,6 +225,8 @@ export default class ObjectSet extends THREE.Object3D {
         // this.RingGeometry.verticesNeedUpdate=true;
 
         // this.circle.rotation.x = 90*Math.PI/180;
+
+        
 
     }
 }

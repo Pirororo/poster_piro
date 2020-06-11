@@ -82,9 +82,9 @@ export default class Line extends THREE.Object3D {
             var geo = new Float32Array( 40 * 3 );//点は40個、長さは/10000000*0.5
             for( var j = 0; j < geo.length; j += 3 ) {
                 // //最初の点の位置。全部いれてる
-                geo[ j + 0 ] = 600*Math.sin((((this.where-1)* 51.4286)+ (0.75* j/3)-5.5)* -Math.PI/180);
+                geo[ j + 0 ] = 750*Math.sin((((this.where-1)* 51.4286)+ (1.1* j/3)-5.5)* -Math.PI/180);
                 geo[ j + 1 ] = 0;
-                geo[ j + 2 ] = 600*Math.cos((((this.where-1)* 51.4286)+ (0.75* j/3)-5.5)* -Math.PI/180);
+                geo[ j + 2 ] = 750*Math.cos((((this.where-1)* 51.4286)+ (1.1* j/3)-5.5)* -Math.PI/180);
                 // console.log(this.where);
                 // console.log(j/3);
 
@@ -96,7 +96,7 @@ export default class Line extends THREE.Object3D {
 
             let material = new MeshLineMaterial( {
                 color: 0x4ea78e,//0x4ea78e,0x4F95BD
-                lineWidth: 1.1,//0.6
+                lineWidth: 1.5,//0.6
                 depthTest: false,//これがないと隠れちゃって描画されなかった。。。
                 opacity: 0.8,
                 transparent: true,
@@ -193,6 +193,7 @@ export default class Line extends THREE.Object3D {
                     this.frame = 0;
                     // this.frame = 1800 +2;
                 }
+
             }
         }
 

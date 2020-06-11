@@ -773,10 +773,10 @@ export class Scene2 extends THREE.Scene {
                 }
             }
             this.easeElapsedTime =0;
-            this.tSpeed =6.0;
+            this.tSpeed =7.0;
         }
 
-        if(this.frame == 1420){
+        if(this.frame == 1700){
             if(this.openingIsEnd == false){
                 this.openingIsEnd = true;
             }

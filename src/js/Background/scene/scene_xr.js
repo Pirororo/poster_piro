@@ -5,6 +5,8 @@ import Line from '../objects/line_xr.js';
 import { KEYCODE } from "../utils/props.js";
 import { EVENT, Action } from "../../Utils/EventManager"
 import {Scene2} from './scene2_xr.js';
+import ObjectSet from '../objects/objectSet_xr.js';
+import LightBar from '../objects/lightBar_xr.js';
 
 
 export class Scene extends THREE.Scene
@@ -25,15 +27,15 @@ export class Scene extends THREE.Scene
         //7枚パネルの基準のカメラポジション
         // this.baseCamTarget = new THREE.Vector3(-220-50,-30-25,-300-50);
         // this.baseCamTargetPlus = new THREE.Vector3(220+50,30+25,300+50);
-        this.baseCamTarget = new THREE.Vector3(-180-50,-40-25,-220-50);//こっちのが近い
-        this.baseCamTargetPlus = new THREE.Vector3(180+50,40+25,220+50);
+        this.baseCamTarget = new THREE.Vector3(-130-50,-40-25,-180-50);//こっちのが近い
+        this.baseCamTargetPlus = new THREE.Vector3(130+50,40+25,180+50);
 
         // this.scene0 = new Scene0();//onKeyup(e)へ！
         // this.add(this.scene0);//onKeyup(e)へ！
 
         //最初の位置
         this.camPos = new THREE.Vector3(0, -200, -240);//正面中心に収まる位置
-        this.camTarget = new THREE.Vector3(-140, -100, -140);
+        this.camTarget = new THREE.Vector3(-110, -100, -110);
 
         //Target指定なので都度１回だけ読むようにする
         this.keyBool_startVRanime = true;
@@ -219,7 +221,7 @@ export class Scene extends THREE.Scene
                     this.scene0.scene2.openingUpdateBool = false;
 
                     // this.baseCamTarget = new THREE.Vector3(-220-50,-30-25,-300-50);//ここ書かないと書き換えられちゃってるぽい
-                    this.baseCamTarget = new THREE.Vector3(-180-50,-40-25,-220-50);
+                    this.baseCamTarget = new THREE.Vector3(-130-50,-40-25,-180-50);
                     // this.baseCamTarget = new THREE.Vector3(-50, -40-800, -50);
                     this.camTarget = this.baseCamTarget;
                     console.log("VR_ Back to Category!");
@@ -317,6 +319,7 @@ export class Scene0 extends THREE.Scene
     update()
     {
         this.scene1.update();
+        // this.scene1.rotation.y += 0.002;
         this.scene2.update();
     }
 }
@@ -352,11 +355,32 @@ export class Scene1 extends THREE.Scene
                 this.add(this._line[2*i+j]);
             }
         }
+
+        //床とビルのオブジェクトセット呼び出し
+        this.objectSet = new ObjectSet();
+        this.add(this.objectSet);
+
+        //ライトバーの呼び出し
+        this.lightBar = new LightBar();
+        this.add(this.lightBar);
+        
     }
     update()
     {
         for (let i = 0 ; i < this._line.length ; i++){
             this._line[i].update();
+            // this._line[i].rotation.y += 0.002;
         }
+
+        //床とビルのオブジェクトのアップデート
+        this.objectSet.update();
+        // this.objectSet.meshgroup.rotation.y += 0.002;
+
+        //ライトバーのアップデート
+        this.lightBar.update();
+
+        
+
+        
     }
 }

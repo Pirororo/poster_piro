@@ -1,26 +1,11 @@
 
 import * as THREE from "three";
-import ObjectSet from '../objects/objectSet_xr.js';
-// import MoveRing from '../objects/moveRing_xr.js';
-import LightBar from '../objects/lightBar_xr.js';
 
 export class Scene2 extends THREE.Scene
 {
     constructor()
     {
         super();
-
-        //床とビルのオブジェクトセット呼び出し
-        this.objectSet = new ObjectSet();
-        this.add(this.objectSet);
-
-        // //ムーブリングの呼び出し
-        // this.moveRing = new MoveRing();
-        // this.add(this.moveRing);
-
-        //ライトバーの呼び出し
-        this.lightBar = new LightBar();
-        this.add(this.lightBar);
 
         //メソッド連結
         this.opening = this.opening.bind(this);
@@ -84,14 +69,6 @@ export class Scene2 extends THREE.Scene
 
     update()
     {
-        //床とビルのオブジェクトのアップデート
-        this.objectSet.update();
-
-        // //ムーブリングのアップデート
-        // this.moveRing.update();
-
-        //ライトバーのアップデート
-        this.lightBar.update();
 
         //プレートのイージング
         if (this.eansingBool == true){
@@ -475,6 +452,7 @@ export class Scene2 extends THREE.Scene
                     }
                     }
                 }
+                this.easeElapsedTime =0;
             }
 
         }
@@ -514,9 +492,9 @@ export class Scene2 extends THREE.Scene
                         if(i >=80*j+(20*k) && i<80*j+(20*(k+1))){
                             for (let l = 0; l < 10; l++) {
                             if(i >=80*j+(20*k)+(2*l) && i<80*j+(20*k)+(2*(l+1))){
-                                this.posTarget[3*i+ 0] = 150*Math.sin((4*i*Math.PI/180))+120,
+                                this.posTarget[3*i+ 0] = 120*Math.sin((4*i*Math.PI/180))+120,
                                 this.posTarget[3*i+ 1] = 100*Math.cos((2*20*(j+k+l)*Math.PI/180))+100,
-                                this.posTarget[3*i+ 2] = -150*Math.sin((8*i*Math.PI/180))+120
+                                this.posTarget[3*i+ 2] = -120*Math.sin((8*i*Math.PI/180))+120
                             }
                             }
                         }
@@ -552,7 +530,7 @@ export class Scene2 extends THREE.Scene
             this.tSpeed =7.0;
         }
 
-        if(this.backAnimationframe == 1150){
+        if(this.backAnimationframe == 1152){
             if(this.openingIsEnd == false){
                 this.openingIsEnd = true;
                 this.openingUpdateBool = false;
