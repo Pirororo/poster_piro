@@ -20,9 +20,9 @@ const Facade =
 	{
 		this.props.instance = new App(new Scene());
 
-
+	
 			this.addEvent();
-
+	
 
 		return this;
 	},
@@ -45,17 +45,18 @@ const Facade =
 	destroy()
 	{
 	},
-	onResize() { this.props.instance.onResize(); },
+	onResize() { 
+		this.props.instance.onResize(); 
+	},
 	// onMouseMove(e) { this.props.instance.onMouseMove(e); },
-
+	
 	onKeyUp(e)
 	{
-		this.props.instance.onKeyUp(e);
+		// this.props.instance.onKeyUp(e);
 	},
-
 	addEvent()
 	{
-		this.props.instance.addEvent();
+		this.props.instance.addEvent(); 
 	}
 
 };

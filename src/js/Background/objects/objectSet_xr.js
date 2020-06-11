@@ -60,106 +60,101 @@ export default class ObjectSet extends THREE.Object3D {
 
 
     //☆ボックス
-        // 空のジオメトリを作成
-        const CELL_NUM = 560;
-        const Billgeometry = new THREE.Geometry();
-        // Box
+
+        // // 空のジオメトリを作成
+        // const CELL_NUM = 560;
+        // const Billgeometry = new THREE.Geometry();
+        // // Box
         let angleTerm = 0;
-        for (let i = 0; i < CELL_NUM; i++) {
-            // 立方体個別の要素を作成
-            let y = 90*(Math.random()+0.3);
-            const BillsampleGeometry = new THREE.BoxGeometry(
-                11,
-                y,
-                11
-            );
-            // 座標調整の行列を作成
-            const Billmatrix = new THREE.Matrix4();
-            // matrix.makeTranslation(
-            //     // 20 * (i - CELL_NUM / 2),
-            //     // 0,
-            //     // 20 * (j - CELL_NUM / 2)
-            if(i%80 == 0){angleTerm += 1;}
-            Billmatrix.makeTranslation(
-                (i%10-5)*20+ (700*Math.sin((angleTerm*51.4286+14)*Math.PI/180))+(160),
-                y/2,
-                (i%8-4)*20+ (700*Math.cos((angleTerm*51.4286+14)*Math.PI/180))+(160)
-            );
+        // for (let i = 0; i < CELL_NUM; i++) {
+        //     // 立方体個別の要素を作成
+        //     let y = 90*(Math.random()+0.3);
+        //     const BillsampleGeometry = new THREE.BoxGeometry(
+        //         11,
+        //         y,
+        //         11
+        //     );
+        //     // 座標調整の行列を作成
+        //     const Billmatrix = new THREE.Matrix4();
+        //     // matrix.makeTranslation(
+        //     //     // 20 * (i - CELL_NUM / 2),
+        //     //     // 0,
+        //     //     // 20 * (j - CELL_NUM / 2)
+        //     if(i%80 == 0){angleTerm += 1;}
+        //     Billmatrix.makeTranslation(
+        //         (i%10-5)*20+ (700*Math.sin((angleTerm*51.4286+14)*Math.PI/180))+(160),
+        //         y/2,
+        //         (i%8-4)*20+ (700*Math.cos((angleTerm*51.4286+14)*Math.PI/180))+(160)
+        //     );
 
-            // ジオメトリをマージ（結合）
-            Billgeometry.merge(BillsampleGeometry, Billmatrix);
-        }
-        // マテリアルを作成
-        const Billmaterial = new THREE.MeshBasicMaterial( {
-            // color: 0xC7C7C7,
-            wireframe: true,
-            color: 0x4ea78e,
-            opacity: 0.4,
-            transparent: true,
-            blending: THREE.AdditiveBlending,
-        } );
+        //     // ジオメトリをマージ（結合）
+        //     Billgeometry.merge(BillsampleGeometry, Billmatrix);
+        // }
+        // // マテリアルを作成
+        // const Billmaterial = new THREE.MeshBasicMaterial( {
+        //     // color: 0xC7C7C7,
+        //     wireframe: true,
+        //     color: 0x4ea78e,
+        //     opacity: 0.4,
+        //     transparent: true,
+        //     blending: THREE.AdditiveBlending,
+        // } );
 
-        // メッシュを作成
-        const Billmesh = new THREE.Mesh(Billgeometry, Billmaterial);
-        this.add(Billmesh);
+        // // メッシュを作成
+        // const Billmesh = new THREE.Mesh(Billgeometry, Billmaterial);
+        // this.add(Billmesh);
 
 
 
     //☆名前パネル
+        // マテリアルを作成
+        let loader = new THREE.TextureLoader();
+        this.Namematerial = [
+            new THREE.MeshBasicMaterial({
+                        side: THREE.FrontSide,
+                        blending: THREE.AdditiveBlending,
+                        map: loader.load( '../img/namePanels-01.png' )}),
+            new THREE.MeshBasicMaterial({side: THREE.FrontSide,blending: THREE.AdditiveBlending,map: loader.load( '../img/namePanels-02.png' )}),
+            new THREE.MeshBasicMaterial({side: THREE.FrontSide,blending: THREE.AdditiveBlending,map: loader.load( '../img/namePanels-03.png' )}),
+            new THREE.MeshBasicMaterial({side: THREE.FrontSide,blending: THREE.AdditiveBlending,map: loader.load( '../img/namePanels-04.png' )}),
+            new THREE.MeshBasicMaterial({side: THREE.FrontSide,blending: THREE.AdditiveBlending,map: loader.load( '../img/namePanels-05.png' )}),
+            new THREE.MeshBasicMaterial({side: THREE.FrontSide,blending: THREE.AdditiveBlending,map: loader.load( '../img/namePanels-06.png' )}),
+            new THREE.MeshBasicMaterial({side: THREE.FrontSide,blending: THREE.AdditiveBlending,map: loader.load( '../img/namePanels-07.png' )})
+        ];
+
+
+        // let makeMesh = function(pass){
+        //     this.Namematerial = new THREE.MeshBasicMaterial( {
+        //         side: THREE.FrontSide,
+        //         map: loader.load('pass')
+        //     } );
+        // }
 
         // 空のジオメトリを作成
         const NAME_NUM = 7;
-        this.Namegeometry = new THREE.Geometry();
+        // this.Namegeometry = new THREE.Geometry();
         // Box
+        this.meshgroup = new THREE.Group();
         angleTerm = 0;
         for (let i = 0; i < NAME_NUM; i++) {
-            const NamemeshTemp = new THREE.Mesh( new THREE.PlaneGeometry(300,105));
+            this.Namegeometry = new THREE.PlaneGeometry(330,127);//350,135
+            this.Namemesh = new THREE.Mesh(this.Namegeometry,this.Namematerial[i]);
 
             if(i%1 == 0){angleTerm += 1;}
             
-            NamemeshTemp.position.set(
-                (600*Math.sin((angleTerm*51.4286+10)*Math.PI/180))+(160),
-                (i%1)*30+300,
-                (600*Math.cos((angleTerm*51.4286+10)*Math.PI/180))+(160)
+            this.Namemesh.position.set(
+                (580*Math.sin((angleTerm*51.4286+13)*Math.PI/180))+(160),
+                (i%1)*30+270,
+                (580*Math.cos((angleTerm*51.4286+13)*Math.PI/180))+(160)
             );
-            NamemeshTemp.rotation.y = (angleTerm*51.429+10+180)*Math.PI/180;
+            this.Namemesh.rotation.y = (angleTerm*51.429+10+180)*Math.PI/180;
 
-            // メッシュをマージ（結合）
-            this.Namegeometry.mergeMesh(NamemeshTemp);
+            this.meshgroup.add(this.Namemesh);
 
         }
-        // マテリアルを作成
-        let loader = new THREE.TextureLoader();
-        // let material = [
-        //     new THREE.MeshBasicMaterial({map: loader.load( './img/hokkaido.png' )}),
-        //     new THREE.MeshBasicMaterial({map: loader.load( 'a/sai5.png' )}),
-        //     new THREE.MeshBasicMaterial({map: loader.load( 'a/sai3.png' )}),
-        //     new THREE.MeshBasicMaterial({map: loader.load( 'a/sai4.png' )}),
-        //     new THREE.MeshBasicMaterial({map: loader.load( 'a/sai1.png' )}),
-        //     new THREE.MeshBasicMaterial({map: loader.load( 'a/sai6.png' )})
-        // ];
 
-        // this.loadBool = false;
+        this.add(this.meshgroup);
 
-        // loader.load("../img/hokkaido.png", function(texture) {
-            // this.createMesh(texture); // mesh作成 
-            this.Namematerial = new THREE.MeshBasicMaterial( {
-                // color: 0xC7C7C7,
-                // wireframe: true,
-                // color: 0x4ea78e,
-                // opacity: 0.9,
-                // transparent: true,
-                side: THREE.frontSide,
-                blending: THREE.AdditiveBlending,
-                // map: texture
-                map: loader.load("../img/hokkaido3.png")
-            } );
-            // メッシュを作成
-            this.Namemesh = new THREE.Mesh(this.Namegeometry, this.Namematerial);
-            this.add(this.Namemesh);
-            // render();
-            // this.loadBool = true;
-        // });
 
 
         

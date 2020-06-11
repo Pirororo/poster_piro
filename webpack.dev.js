@@ -4,7 +4,7 @@ const common = require("./webpack.common.js");
 
 const rootDir = path.resolve(__dirname);
 const devServer = {
-  host: "192.168.1.3",
+  host: "192.168.2.104",
   port: 8080
 };
 
