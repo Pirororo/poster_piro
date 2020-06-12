@@ -40,7 +40,6 @@ export class Scene extends THREE.Scene
         //Target指定なので都度１回だけ読むようにする
         this.keyBool_startVRanime = true;
         this.updateBool = false;
-        // this.camTargetBool_SPACE = false;//☆VRでは不要！！！
         this.resetCamTargetBool();
         this.camTargetBool_BACKSPACE = false;
 
@@ -80,29 +79,32 @@ export class Scene extends THREE.Scene
             this.scene0.rotation.y = 45 *Math.PI/180;
             this.scene0.update();
 
-            // //カメラワークの更新
-            // if(this.scene0.scene2.openingUpdateBool == true){
-            //     this.cam_opening();
-            // }
-            // if(this.scene0.scene2.backAnimationUpdateBool == true){
-            //     this.cam_backAnimation();
-            // }
+            //カメラワークの更新
+            if(this.scene0.scene2.openingUpdateBool == true){
+                // this.cam_opening();
+            }
 
-
-            //⬇︎最初はfalseだけどオープニングのthis.framecountがある値にきたらtrueで帰ってくる
-            if (this.scene0.scene2.openingIsEnd == true){
-
-                //VR版でカメラズームアウトするから７枚パネル出してね
-                // console.log("VR_ Show Category!");
-                Action.dispatch(EVENT.ShowCategory ,{mode:"VR"});//送る変数
-
-                // if(this.camTargetBool_SPACE == true){
-                //     this.camTargetBool_SPACE = false;
-                    this.camTarget = this.baseCamTarget;
-
-                    this.openCamTargetBool();
-                    this.scene0.scene2.openingIsEnd = false;
+            //
+            if(this.scene0.scene2.backAnimationUpdateBool == true){
+                // if(this.scene0.scene2.waitingFrame == 240+2){
+                //     this.cam_backAnimation();
                 // }
+            }
+
+            //
+            if(this.scene0.scene2.backAnimationBeforeEndBool == true){
+                this.scene0.scene2.backAnimationBeforeEndBool = false;
+                this.camTarget = this.baseCamTarget;
+            }
+
+            if (this.scene0.scene2.openingIsEnd == true || this.scene0.scene2.backAnimationIsEnd == true){
+                this.scene0.scene2.openingIsEnd = false;
+                this.scene0.scene2.backAnimationIsEnd  = false;
+                
+                console.log("VR_ Show Category!");
+                Action.dispatch(EVENT.ShowCategory ,{mode:"VR"});//送る変数
+                this.openCamTargetBool();
+                
             }
         }
     }
@@ -135,6 +137,7 @@ export class Scene extends THREE.Scene
         if (e.keyCode == KEYCODE.BACKSPACE){
         Action.dispatch(EVENT.BackToCategory, {mode:"VR"});
         }
+
     }
 
 
@@ -184,13 +187,12 @@ export class Scene extends THREE.Scene
                 if(this.camTargetBool_BACKSPACE == true){
                     this.camTargetBool_BACKSPACE = false;
                     this.scene0.scene2.backAnimationUpdateBool = true;
-                    this.scene0.scene2.backAnimationframe = this.scene0.scene2.backAnimationframeStart;
                     this.scene0.scene2.waitingFrame = 0;
-                    this.scene0.scene2.openingUpdateBool = false;
+                    // this.scene0.scene2.openingUpdateBool = false;
 
                     // this.baseCamTarget = new THREE.Vector3(-220-50,-30-25,-300-50);//ここ書かないと書き換えられちゃってるぽい
-                    this.baseCamTarget = new THREE.Vector3(-130-50,-40-25,-180-50);
-                    // this.baseCamTarget = new THREE.Vector3(-50, -40-800, -50);
+                    this.baseCamTarget = new THREE.Vector3(-130-50,-40-25,-130-50);
+                    // this.baseCamTarget = new THREE.Vector3(-50, -40-800, -50);//検証用、真上から。
                     this.camTarget = this.baseCamTarget;
                     console.log("VR_ Back to Category!");
                     this.openCamTargetBool();
@@ -202,9 +204,24 @@ export class Scene extends THREE.Scene
 
 
     cam_opening(){
+        //ここ不要だった、初期設定値だけでokだったので。
     }
 
     cam_backAnimation(){
+
+        // if(this.scene0.scene2.backAnimationframe == 250){
+        //     // this.camTarget = new THREE.Vector3(0, 0, 0);
+        //     this.camTarget = new THREE.Vector3(-150, -50,-50);
+        // }
+        // if(this.scene0.scene2.backAnimationframe == this.scene0.scene2.backAnimationframeStart+2){
+        //     this.camTarget = new THREE.Vector3(-150,-100,-150);
+        // }//この座標が円中心座標
+        // if(this.scene0.scene2.backAnimationframe == 1100){
+        //     this.camTarget = new THREE.Vector3(70, -80,-200);
+        // }
+        // // if(this.scene0.scene2.backAnimationframe == 1350){
+        // //     this.camTarget = new THREE.Vector3(-150,-125,-150);
+        // // }
     }
 
     chooseRoom(camTargetBool,l,message){
@@ -222,6 +239,7 @@ export class Scene extends THREE.Scene
             this.resetCamTargetBool();
 
             // this.scene0.scene2.backAnimationUpdateBool = false;
+            // this.scene0.scene2.backAnimationframe = this.scene0.scene2.backAnimationframeStart;
         }
     }
 
@@ -273,6 +291,7 @@ export class Scene0 extends THREE.Scene
     {
         this.scene1.update();
         this.scene1.rotation.y += 0.004;
+        // this.scene1.objectSet.meshgroup.rotation.y += 0.004;
         this.scene2.update();
     }
 }
