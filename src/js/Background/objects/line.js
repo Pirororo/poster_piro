@@ -50,6 +50,33 @@ export default class Line extends THREE.Object3D {
             //     ['0006','30','42','30','42','30','42','30','42'],
             // ];
 
+
+
+            //マーカー
+            let geometry = new THREE.PlaneGeometry(60,20);
+            let loader = new THREE.TextureLoader();
+            let matIN = new THREE.MeshBasicMaterial({
+                side:THREE.DoubleSide,
+                // color:0xffffff,
+                blending: THREE.AdditiveBlending,
+                map: loader.load( '../img/namePanels/marker_in.png' )
+            });
+            this.meshMarkerIN = new THREE.Mesh(geometry,matIN);
+            this.add(this.meshMarkerIN);
+            this.meshMarkerIN.rotation.y = 180*Math.PI/180;
+
+            let matOUT = new THREE.MeshBasicMaterial({
+                side:THREE.DoubleSide,
+                // color:0xffffff,
+                blending: THREE.AdditiveBlending,
+                map: loader.load( '../img/namePanels/marker_out.png' )
+            });
+            this.meshMarkerOUT = new THREE.Mesh(geometry,matOUT);
+            this.add(this.meshMarkerOUT);
+            this.meshMarkerOUT.rotation.y = 180*Math.PI/180;
+
+
+
         }
 
 
@@ -129,6 +156,10 @@ export default class Line extends THREE.Object3D {
                 geo[ geo.length - 1 ] = geo[ geo.length - 4 ] +this.lineLength;
             }
             g.setGeometry( geo );
+
+            
+            this.nowGeo = new THREE.Vector3(geo[ geo.length - 3 ],geo[ geo.length - 2 ],geo[ geo.length - 1 ]);
+            return this.nowGeo;
         }
 
         getlineLength(){
@@ -174,11 +205,23 @@ export default class Line extends THREE.Object3D {
         }
 
         update(){
+
+            
             if(this.DATAisOK ==  true){
                 if(this.frame < 1800){
                     this.frame += 1;
                     if(this.frame% 2 == 0){//２回に１回
-                        for( var i in this.meshes ) { this.checkIntersection(i); }
+                        for( var i in this.meshes ) { 
+                            this.checkIntersection(i); 
+                            if(!(this.nowGeo.x == 0) && this.frame% 8 == 0){
+                                if(this.inout ==1){
+                                    this.meshMarkerIN.position.set(this.nowGeo.x, this.nowGeo.y+5, this.nowGeo.z);
+                                }
+                                if(this.inout ==2){
+                                    this.meshMarkerOUT.position.set(this.nowGeo.x, this.nowGeo.y+5, this.nowGeo.z);
+                                }
+                            }
+                        }
                     }
                 }else{ 
                     this.frame = 1800 +2;//1800以上は読まないよー あれ、1800だと読んでしまう

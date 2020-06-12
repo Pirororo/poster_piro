@@ -54,7 +54,6 @@ export default class ObjectSet extends THREE.Object3D {
 
         this.circle = new THREE.Mesh( Circlegeometry, Circlematerial );
         this.circle.rotation.x = 90*Math.PI/180;
-        this.circle.rotation.z = -11*Math.PI/180;
         this.add(this.circle);
 
 

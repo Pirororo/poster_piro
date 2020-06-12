@@ -52,7 +52,6 @@ var Stats = function () {
 
 		console.log("dosom");
 		console.log(data[0][0]);
-		// return data;
 	}
 
 
@@ -115,7 +114,6 @@ Stats.Panel = function ( fg, bg ) {
 
 		dom: canvas,
 
-		// update: function ( valueIN, valueOUT ) {
 		update: function ( data ) {
 
 			context.fillStyle = bg;
