@@ -137,7 +137,7 @@ export default class ObjectSet extends THREE.Object3D {
         this.meshgroup = new THREE.Group();
         angleTerm = 0;
         for (let i = 0; i < NAME_NUM; i++) {
-            this.Namegeometry = new THREE.PlaneGeometry(330,127);//350,135
+            this.Namegeometry = new THREE.PlaneGeometry(330,110);//330,127
             this.Namemesh = new THREE.Mesh(this.Namegeometry,this.Namematerial[i]);
 
             if(i%1 == 0){angleTerm += 1;}
