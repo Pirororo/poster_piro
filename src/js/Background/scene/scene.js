@@ -65,64 +65,34 @@ export class Scene extends THREE.Scene
         if (e.keyCode == KEYCODE.K){
         Action.dispatch(EVENT.ShowStartup);
         }
-        if (e.keyCode == KEYCODE.SPACE){
-        Action.dispatch(EVENT.ShowCategory, {category:null, mode:"normal"});//null
-        }
-        if (e.keyCode == KEYCODE.A){
-        Action.dispatch(EVENT.ShowCategory, {category:"A", mode:"normal"});
-        }
-        if (e.keyCode == KEYCODE.B){
-        Action.dispatch(EVENT.ShowCategory, {category:"B", mode:"normal"});
-        }
-        if (e.keyCode == KEYCODE.C){
-        Action.dispatch(EVENT.ShowCategory, {category:"C", mode:"normal"});
-        }
-        if (e.keyCode == KEYCODE.D){
-        Action.dispatch(EVENT.ShowCategory, {category:"D", mode:"normal"});
-        }
-        if (e.keyCode == KEYCODE.E){
-        Action.dispatch(EVENT.ShowCategory, {category:"E", mode:"normal"});
-        }
-        if (e.keyCode == KEYCODE.F){
-        Action.dispatch(EVENT.ShowCategory, {category:"F", mode:"normal"});
-        }
-        if (e.keyCode == KEYCODE.G){
-        Action.dispatch(EVENT.ShowCategory, {category:"G", mode:"normal"});
-        }
-        if (e.keyCode == KEYCODE.BACKSPACE){
-        Action.dispatch(EVENT.BackToCategory, {mode:"normal"});
-        }
-
-        // if (e.keyCode == KEYCODE.K){
-        // Action.dispatch(EVENT.ShowStartup);
-        // }
         // if (e.keyCode == KEYCODE.SPACE){
-        // Action.dispatch(EVENT.ShowCategory, null);//null
+        // Action.dispatch(EVENT.ShowCategory, {category:null, mode:"normal"});//null
         // }
         // if (e.keyCode == KEYCODE.A){
-        // Action.dispatch(EVENT.ShowCategory, "A");
+        // Action.dispatch(EVENT.ShowCategory, {category:"A", mode:"normal"});
         // }
         // if (e.keyCode == KEYCODE.B){
-        // Action.dispatch(EVENT.ShowCategory, "B");
+        // Action.dispatch(EVENT.ShowCategory, {category:"B", mode:"normal"});
         // }
         // if (e.keyCode == KEYCODE.C){
-        // Action.dispatch(EVENT.ShowCategory, "C");
+        // Action.dispatch(EVENT.ShowCategory, {category:"C", mode:"normal"});
         // }
         // if (e.keyCode == KEYCODE.D){
-        // Action.dispatch(EVENT.ShowCategory, "D");
+        // Action.dispatch(EVENT.ShowCategory, {category:"D", mode:"normal"});
         // }
         // if (e.keyCode == KEYCODE.E){
-        // Action.dispatch(EVENT.ShowCategory, "E");
+        // Action.dispatch(EVENT.ShowCategory, {category:"E", mode:"normal"});
         // }
         // if (e.keyCode == KEYCODE.F){
-        // Action.dispatch(EVENT.ShowCategory, "F");
+        // Action.dispatch(EVENT.ShowCategory, {category:"F", mode:"normal"});
         // }
         // if (e.keyCode == KEYCODE.G){
-        // Action.dispatch(EVENT.ShowCategory, "G");
+        // Action.dispatch(EVENT.ShowCategory, {category:"G", mode:"normal"});
         // }
         // if (e.keyCode == KEYCODE.BACKSPACE){
-        // Action.dispatch(EVENT.BackToCategory);
+        // Action.dispatch(EVENT.BackToCategory, {mode:"normal"});
         // }
+
 
     }
 
@@ -146,7 +116,6 @@ export class Scene extends THREE.Scene
 
 
         Action.add(EVENT.ShowCategory, data =>{ //キーの代わりにくる変数
-        // Action.add(EVENT.ShowCategory, category =>{ //キーの代わりにくる変数
 
             if(data.mode == "normal"){
                 switch(data.category){
@@ -186,7 +155,6 @@ export class Scene extends THREE.Scene
 
         Action.add(EVENT.BackToCategory, data =>{ //キーの代わりにくる変数
             if(data.mode == "normal"){
-            // if(this.camTargetBool_openingIsEnd == true){//[SPACE]を[BS]で兼ねるならいれる
                 if(this.camTargetBool_BACKSPACE == true){
                     this.camTargetBool_BACKSPACE = false;
                     this.camera.camTarget = this.baseCamTarget;
@@ -194,7 +162,6 @@ export class Scene extends THREE.Scene
                     console.log("Normal_ Back to Category!");
                     this.openCamTargetBool();
                 }
-            // }
             }
         });
 

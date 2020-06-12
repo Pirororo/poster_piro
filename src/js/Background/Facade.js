@@ -52,7 +52,7 @@ const Facade =
 	
 	onKeyUp(e)
 	{
-		// this.props.instance.onKeyUp(e);
+		this.props.instance.onKeyUp(e);
 	},
 	addEvent()
 	{

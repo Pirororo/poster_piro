@@ -174,67 +174,39 @@ export default class App
 
     onKeyUp(e)
     {
-        if (e.keyCode == KEYCODE.A){
-          Action.dispatch(EVENT.ShowCategory, {category:"A", mode:"normal"});
-        }
-        if (e.keyCode == KEYCODE.B){
-          Action.dispatch(EVENT.ShowCategory, {category:"B", mode:"normal"});
-        }
-        if (e.keyCode == KEYCODE.C){
-          Action.dispatch(EVENT.ShowCategory, {category:"C", mode:"normal"});
-        }
-        if (e.keyCode == KEYCODE.D){
-          Action.dispatch(EVENT.ShowCategory, {category:"D", mode:"normal"});
-        }
-        if (e.keyCode == KEYCODE.E){
-          Action.dispatch(EVENT.ShowCategory, {category:"E", mode:"normal"});
-        }
-        if (e.keyCode == KEYCODE.F){
-          Action.dispatch(EVENT.ShowCategory, {category:"F", mode:"normal"});
-        }
-        if (e.keyCode == KEYCODE.G){
-          Action.dispatch(EVENT.ShowCategory, {category:"G", mode:"normal"});
-        }
-        if (e.keyCode == KEYCODE.BACKSPACE){
-          Action.dispatch(EVENT.BackToCategory, {mode:"normal"});
-        }
-        this._scene.onKeyUp(e);//これがcamTargetBoolをfalseにするから最後にかく
-
-
         // if (e.keyCode == KEYCODE.A){
-        // Action.dispatch(EVENT.ShowCategory, "A");
+        //   Action.dispatch(EVENT.ShowCategory, {category:"A", mode:"normal"});
         // }
         // if (e.keyCode == KEYCODE.B){
-        // Action.dispatch(EVENT.ShowCategory, "B");
+        //   Action.dispatch(EVENT.ShowCategory, {category:"B", mode:"normal"});
         // }
         // if (e.keyCode == KEYCODE.C){
-        // Action.dispatch(EVENT.ShowCategory, "C");
+        //   Action.dispatch(EVENT.ShowCategory, {category:"C", mode:"normal"});
         // }
         // if (e.keyCode == KEYCODE.D){
-        // Action.dispatch(EVENT.ShowCategory, "D");
+        //   Action.dispatch(EVENT.ShowCategory, {category:"D", mode:"normal"});
         // }
         // if (e.keyCode == KEYCODE.E){
-        // Action.dispatch(EVENT.ShowCategory, "E");
+        //   Action.dispatch(EVENT.ShowCategory, {category:"E", mode:"normal"});
         // }
         // if (e.keyCode == KEYCODE.F){
-        // Action.dispatch(EVENT.ShowCategory, "F");
+        //   Action.dispatch(EVENT.ShowCategory, {category:"F", mode:"normal"});
         // }
         // if (e.keyCode == KEYCODE.G){
-        // Action.dispatch(EVENT.ShowCategory, "G");
+        //   Action.dispatch(EVENT.ShowCategory, {category:"G", mode:"normal"});
         // }
         // if (e.keyCode == KEYCODE.BACKSPACE){
-        // Action.dispatch(EVENT.BackToCategory);
+        //   Action.dispatch(EVENT.BackToCategory, {mode:"normal"});
         // }
-        // this._scene.onKeyUp(e);//これがcamTargetBoolをfalseにするから最後にかく
+        this._scene.onKeyUp(e);//これがcamTargetBoolをfalseにするから最後にかく
+
     }
 
 
     addEvent()//グラデめも    0x5de2ff, 0x3333a7
     {   
         Action.add(EVENT.ShowCategory, data =>{//0x730B1E
-        // Action.add(EVENT.ShowCategory, category =>{//0x730B1E
 
-            
             if(data.mode == "normal"){
                 switch(data.category){
                     case "A" :
