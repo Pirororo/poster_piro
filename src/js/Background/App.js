@@ -1,10 +1,10 @@
 import * as THREE from "three";
 import { KEYCODE } from "./utils/props.js";
-import { EVENT, Action } from "../Utils/EventManager"
+import { EVENT, Action } from "../Utils/EventManager";
 
 //fps表示とDAT表示に必要なjs
 // import {GUI} from 'three/examples/jsm/libs/dat.gui.module';
-import Stats from "three/examples/jsm/libs/stats.module";
+// import Stats from "./objects/status";
 // カメラ系に必要なjs
 // import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
@@ -14,7 +14,7 @@ import { MaskPass } from "three/examples/jsm/postprocessing/MaskPass";
 import { ClearPass } from "three/examples/jsm/postprocessing/ClearPass";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass";
 import { BloomPass } from "three/examples/jsm/postprocessing/BloomPass";
-import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer"
+import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer";
 import { CopyShader } from "three/examples/jsm/shaders/CopyShader";
 
 //自作のグラジエントシェーダ
@@ -30,12 +30,12 @@ export default class App
 
         this.masterFrame = 0;
         
-        this._initStats = this._initStats.bind(this);
+        // this._initStats = this._initStats.bind(this);
         this.chooseRoomColor = this.chooseRoomColor.bind(this);
         this.backToColor = this.backToColor.bind(this);
 
-        //fps表示
-        this._stats = this._initStats();
+        // //fps表示
+        // this._stats = this._initStats();
 
         // シーン
         this._scene = sceneInstance;
@@ -145,12 +145,15 @@ export default class App
         // this.orbitControls.update(delta);
 
 
-        // //fps表示の更新
-        // this._stats.update();
+
 
         //２回に１回読む
         this.masterFrame += 1;
         if(this.masterFrame == 2){
+
+            // //fps表示の更新
+            // this._stats.update();
+
             // シーンの更新
             this._scene.update();
             //グラデーションのイージング
@@ -309,20 +312,19 @@ export default class App
         this._scene.camera.updateProjectionMatrix();
     }
 
-    _initStats()
-    {
-        // this._stats = new Stats();
-        // this._stats.setMode(0); // 0: fps, 1: ms
+    // _initStats()
+    // {
+    //     this._stats = new Stats();
+    //     this._stats.setMode(0); 
 
+    //     // Align top-left
+    //     this._stats.domElement.style.position = 'absolute';
+    //     this._stats.domElement.style.left = '20px';
+    //     this._stats.domElement.style.top = '80%';
 
-        // // Align top-left
-        // this._stats.domElement.style.position = 'absolute';
-        // this._stats.domElement.style.left = '0px';
-        // this._stats.domElement.style.top = '0px';
+    //     document.getElementById("Stats-output").appendChild(this._stats.domElement);
 
-        // document.getElementById("Stats-output").appendChild(this._stats.domElement);
-
-        // return this._stats;
-    }
+    //     return this._stats;
+    // }
 
 }

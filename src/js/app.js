@@ -44,8 +44,8 @@ OpenHouse2020.PosterSession.App =
 // Launch app when DOM will be ready
 window.addEventListener("DOMContentLoaded", () =>
 {
-	window.console.log = () => {};
-	window.console.dir = () => {};
+	// window.console.log = () => {};
+	// window.console.dir = () => {};
 
 	const isDebugMode = document.getElementsByTagName("a-scene").length > 0;
 	setDebugMode(isDebugMode);

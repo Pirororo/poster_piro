@@ -4,6 +4,7 @@ import Line from '../objects/line.js';
 import { KEYCODE } from "../utils/props.js";
 import { EVENT, Action } from "../../Utils/EventManager";
 import { isVR, setVRMode } from "../../Utils/Helper";
+import Stats from "../objects/status";
 
 
 /**
@@ -305,7 +306,9 @@ export class Scene2 extends THREE.Scene {
         this.frameSlide = 1260;
 
 
-
+        //データ通信量表示
+        this._initStats = this._initStats.bind(this);
+        this._stats = this._initStats();
 
 
         //プレート
@@ -747,8 +750,36 @@ export class Scene2 extends THREE.Scene {
             if(this.openingIsEnd == false){
                 this.openingIsEnd = true;
             }
+
+            this.frame = 1770;
+
         }
 
+
+        //データ通信量表示の更新は最初のアニメーションのときだけ、それが終わったら見えなくなる
+        if(this.frame < 1770){
+            this._stats.update();
+        }else if (this.frame >= 1770){
+            this._stats.domElement.style.opacity = '0';
+        }
+
+    }
+
+
+    //データ通信量表示の初期化
+    _initStats()
+    {
+        this._stats = new Stats();
+        this._stats.setMode(0); 
+
+        // Align top-left
+        this._stats.domElement.style.position = 'absolute';
+        this._stats.domElement.style.left = '20px';
+        this._stats.domElement.style.top = '80%';
+
+        document.getElementById("Stats-output").appendChild(this._stats.domElement);
+
+        return this._stats;
     }
 
 }
