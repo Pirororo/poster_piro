@@ -113,13 +113,13 @@ export default class ObjectSet extends THREE.Object3D {
             new THREE.MeshBasicMaterial({
                         side: THREE.FrontSide,
                         blending: THREE.AdditiveBlending,
-                        map: loader.load( '../img/namePanels-01.png' )}),
-            new THREE.MeshBasicMaterial({side: THREE.FrontSide,blending: THREE.AdditiveBlending,map: loader.load( '../img/namePanels-02.png' )}),
-            new THREE.MeshBasicMaterial({side: THREE.FrontSide,blending: THREE.AdditiveBlending,map: loader.load( '../img/namePanels-03.png' )}),
-            new THREE.MeshBasicMaterial({side: THREE.FrontSide,blending: THREE.AdditiveBlending,map: loader.load( '../img/namePanels-04.png' )}),
-            new THREE.MeshBasicMaterial({side: THREE.FrontSide,blending: THREE.AdditiveBlending,map: loader.load( '../img/namePanels-05.png' )}),
-            new THREE.MeshBasicMaterial({side: THREE.FrontSide,blending: THREE.AdditiveBlending,map: loader.load( '../img/namePanels-06.png' )}),
-            new THREE.MeshBasicMaterial({side: THREE.FrontSide,blending: THREE.AdditiveBlending,map: loader.load( '../img/namePanels-07.png' )})
+                        map: loader.load( '../img/namePanels/namePanels-01.png' )}),
+            new THREE.MeshBasicMaterial({side: THREE.FrontSide,blending: THREE.AdditiveBlending,map: loader.load( '../img/namePanels/namePanels-02.png' )}),
+            new THREE.MeshBasicMaterial({side: THREE.FrontSide,blending: THREE.AdditiveBlending,map: loader.load( '../img/namePanels/namePanels-03.png' )}),
+            new THREE.MeshBasicMaterial({side: THREE.FrontSide,blending: THREE.AdditiveBlending,map: loader.load( '../img/namePanels/namePanels-04.png' )}),
+            new THREE.MeshBasicMaterial({side: THREE.FrontSide,blending: THREE.AdditiveBlending,map: loader.load( '../img/namePanels/namePanels-05.png' )}),
+            new THREE.MeshBasicMaterial({side: THREE.FrontSide,blending: THREE.AdditiveBlending,map: loader.load( '../img/namePanels/namePanels-06.png' )}),
+            new THREE.MeshBasicMaterial({side: THREE.FrontSide,blending: THREE.AdditiveBlending,map: loader.load( '../img/namePanels/namePanels-07.png' )})
         ];
 
 
