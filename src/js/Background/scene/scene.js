@@ -776,7 +776,7 @@ export class Scene2 extends THREE.Scene {
             this.tSpeed =7.0;
         }
 
-        if(this.frame == 1700){
+        if(this.frame == 1670){
             if(this.openingIsEnd == false){
                 this.openingIsEnd = true;
             }

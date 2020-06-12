@@ -35,7 +35,7 @@ export class Scene extends THREE.Scene
 
         //最初の位置
         this.camPos = new THREE.Vector3(0, -200, -240);//正面中心に収まる位置
-        this.camTarget = new THREE.Vector3(-110, -100, -110);
+        this.camTarget = new THREE.Vector3(-160, -100, -160);
 
         //Target指定なので都度１回だけ読むようにする
         this.keyBool_startVRanime = true;
@@ -71,9 +71,9 @@ export class Scene extends THREE.Scene
         if(this.updateBool == true){
 
             //イージング
-            this.camPos.x += (this.camTarget.x - this.camPos.x) *0.02;
-            this.camPos.y += (this.camTarget.y - this.camPos.y) *0.02;
-            this.camPos.z += (this.camTarget.z - this.camPos.z) *0.02;
+            this.camPos.x += (this.camTarget.x - this.camPos.x) *0.04;
+            this.camPos.y += (this.camTarget.y - this.camPos.y) *0.04;
+            this.camPos.z += (this.camTarget.z - this.camPos.z) *0.04;
             this.scene0.position.set(this.camPos.x,this.camPos.y,this.camPos.z);
 
             //ここはいつもの更新
@@ -319,7 +319,8 @@ export class Scene0 extends THREE.Scene
     update()
     {
         this.scene1.update();
-        // this.scene1.rotation.y += 0.002;
+        this.scene1.rotation.y += 0.004;
+        // this.scene1.objectSet.meshgroup.rotation.y += 0.004;
         this.scene2.update();
     }
 }
@@ -348,9 +349,9 @@ export class Scene1 extends THREE.Scene
 
                 this._line[2*i+j] = new Line(i,j+1);
                 this._line[2*i+j].position.set(
-                    160,
+                    0,//160
                     190,
-                    160
+                    0//160
                 );
                 this.add(this._line[2*i+j]);
             }
@@ -369,12 +370,12 @@ export class Scene1 extends THREE.Scene
     {
         for (let i = 0 ; i < this._line.length ; i++){
             this._line[i].update();
-            // this._line[i].rotation.y += 0.002;
+            // this._line[i].rotation.y += 0.004;
         }
 
         //床とビルのオブジェクトのアップデート
         this.objectSet.update();
-        // this.objectSet.meshgroup.rotation.y += 0.002;
+        // this.objectSet.meshgroup.rotation.y += 0.004;
 
         //ライトバーのアップデート
         this.lightBar.update();

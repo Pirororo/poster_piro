@@ -79,12 +79,12 @@ export default class Line extends THREE.Object3D {
         prepareMesh() {
 
 
-            var geo = new Float32Array( 40 * 3 );//点は40個、長さは/10000000*0.5
+            var geo = new Float32Array( 36 * 3 );//点は40個、長さは/10000000*0.5//40
             for( var j = 0; j < geo.length; j += 3 ) {
                 // //最初の点の位置。全部いれてる
-                geo[ j + 0 ] = 750*Math.sin((((this.where-1)* 51.4286)+ (1.1* j/3)-5.5)* -Math.PI/180);
+                geo[ j + 0 ] = 750*Math.sin((((this.where-1)* 51.4286)+ (1.0* j/3)-5.5)* -Math.PI/180);//1.1//0.9
                 geo[ j + 1 ] = 0;
-                geo[ j + 2 ] = 750*Math.cos((((this.where-1)* 51.4286)+ (1.1* j/3)-5.5)* -Math.PI/180);
+                geo[ j + 2 ] = 750*Math.cos((((this.where-1)* 51.4286)+ (1.0* j/3)-5.5)* -Math.PI/180);
                 // console.log(this.where);
                 // console.log(j/3);
 
@@ -137,7 +137,7 @@ export default class Line extends THREE.Object3D {
         getlineLength(){
 
             if(this.Times > 1400){this.Times = 0;}
-            this.lineLength = this.data[this.Times][2*this.where+ this.inout]*0.5;//長さ調整
+            this.lineLength = this.data[this.Times][2*this.where+ this.inout]*0.4;//長さ調整
 
             this.Times += 1;//0行目を題名にする場合は上のifの前におく
             

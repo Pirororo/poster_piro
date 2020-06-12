@@ -142,12 +142,13 @@ export default class ObjectSet extends THREE.Object3D {
 
             if(i%1 == 0){angleTerm += 1;}
             
+            this.Namemesh.rotation.y = (angleTerm*51.429+180)*Math.PI/180;
             this.Namemesh.position.set(
-                (700*Math.sin((angleTerm*51.4286-7)*Math.PI/180))+(160),
+                (700*Math.sin((angleTerm*51.4286-7)*Math.PI/180))+(0),//-7//-10
                 (i%1)*30+320,
-                (700*Math.cos((angleTerm*51.4286-7)*Math.PI/180))+(160)
+                (700*Math.cos((angleTerm*51.4286-7)*Math.PI/180))+(0)
             );
-            this.Namemesh.rotation.y = (angleTerm*51.429+10+180)*Math.PI/180;
+            
 
             this.meshgroup.add(this.Namemesh);
 

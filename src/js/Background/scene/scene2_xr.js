@@ -492,9 +492,9 @@ export class Scene2 extends THREE.Scene
                         if(i >=80*j+(20*k) && i<80*j+(20*(k+1))){
                             for (let l = 0; l < 10; l++) {
                             if(i >=80*j+(20*k)+(2*l) && i<80*j+(20*k)+(2*(l+1))){
-                                this.posTarget[3*i+ 0] = 120*Math.sin((4*i*Math.PI/180))+120,
-                                this.posTarget[3*i+ 1] = 100*Math.cos((2*20*(j+k+l)*Math.PI/180))+100,
-                                this.posTarget[3*i+ 2] = -120*Math.sin((8*i*Math.PI/180))+120
+                                this.posTarget[3*i+ 0] = 100*Math.sin((4*i*Math.PI/180))+100,
+                                this.posTarget[3*i+ 1] = 80*Math.cos((2*20*(j+k+l)*Math.PI/180))+50,
+                                this.posTarget[3*i+ 2] = -100*Math.sin((8*i*Math.PI/180))+100
                             }
                             }
                         }
@@ -503,12 +503,12 @@ export class Scene2 extends THREE.Scene
                     }
                 }
                 this.easeElapsedTime =0;
-                this.tSpeed =15.0;
+                this.tSpeed =10.0;
             }
         }
 
-        if(this.backAnimationframe == 1150){ this.eansingBool = true;}
-        if(this.backAnimationframe == 1150){
+        if(this.backAnimationframe == 1120){ this.eansingBool = true;}
+        if(this.backAnimationframe == 1120){
             for (let i = 0; i < this.meshList.length; i++) {
                 for (let j = 0; j < 4; j++) {
                 if(i >=80*j && i<80*(j+1)){
@@ -530,7 +530,7 @@ export class Scene2 extends THREE.Scene
             this.tSpeed =7.0;
         }
 
-        if(this.backAnimationframe == 1152){
+        if(this.backAnimationframe == 1122){
             if(this.openingIsEnd == false){
                 this.openingIsEnd = true;
                 this.openingUpdateBool = false;
