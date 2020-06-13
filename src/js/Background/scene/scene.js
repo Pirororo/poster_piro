@@ -451,7 +451,7 @@ export class Scene2 extends THREE.Scene {
                 }
             }
             this.easeElapsedTime =0;
-            this.tSpeed = 5.0;
+            this.tSpeed = 3.0;
         }
 
         if(this.frame == 260){//280
@@ -673,7 +673,7 @@ export class Scene2 extends THREE.Scene {
                 }
             }
             this.easeElapsedTime =0;
-            this.tSpeed =7.0;
+            this.tSpeed =6.0;
         }
 
         if(this.frame == 1080){
@@ -695,7 +695,7 @@ export class Scene2 extends THREE.Scene {
                 }
             }
             this.easeElapsedTime =0;
-            this.tSpeed =4.0;
+            this.tSpeed =3.0;
         }
 
         if(this.frame == 1150){
@@ -721,7 +721,7 @@ export class Scene2 extends THREE.Scene {
                 }
             }
             this.easeElapsedTime =0;
-            this.tSpeed =6.0;
+            this.tSpeed =5.0;
         }
 
         if(this.frame == this.frameSlide){//1260

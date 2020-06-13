@@ -40,9 +40,9 @@ export class Camera extends THREE.PerspectiveCamera{
     if (this.eansingBool == true){
         //イージング
         // this.camPos += (this.camTarget - this.camPos)*0.02;//この書き方動かない！！！！！！！
-        this.camPos.x += (this.camTarget.x - this.camPos.x) *0.008*2;//*2は２倍速
-        this.camPos.y += (this.camTarget.y - this.camPos.y) *0.008*2;//*2は２倍速
-        this.camPos.z += (this.camTarget.z - this.camPos.z) *0.008*2;//*2は２倍速
+        this.camPos.x += (this.camTarget.x - this.camPos.x) *0.01*2;//*2は２倍速
+        this.camPos.y += (this.camTarget.y - this.camPos.y) *0.01*2;//*2は２倍速
+        this.camPos.z += (this.camTarget.z - this.camPos.z) *0.01*2;//*2は２倍速
         this.position.set(this.camPos.x,this.camPos.y,this.camPos.z);
 
         //lookPosイージング
@@ -78,9 +78,9 @@ export class Camera extends THREE.PerspectiveCamera{
       //     this.frame += (780 - 460);
       // }
       // if(this.frame == 380){this.camTarget = new THREE.Vector3(170,150,50);}//800
-      if(this.frame == 450){this.camTarget = new THREE.Vector3(30, 10,60);}
-      if(this.frame == 450){
-          this.frame += 300;
+      if(this.frame == 470){this.camTarget = new THREE.Vector3(30, 10,60);}
+      if(this.frame == 470){
+          this.frame += 280;
       }
       if(this.frame == 900){this.camTarget = new THREE.Vector3(-200, -100,-130);}
 
