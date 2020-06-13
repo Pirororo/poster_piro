@@ -775,7 +775,7 @@ export class Scene2 extends THREE.Scene {
         // Align top-left
         this._stats.domElement.style.position = 'absolute';
         this._stats.domElement.style.left = '20px';
-        this._stats.domElement.style.top = '85%';
+        this._stats.domElement.style.top = '90%';
 
         document.getElementById("Stats-output").appendChild(this._stats.domElement);
 

@@ -159,7 +159,8 @@ Stats.Panel = function ( fg, bg ) {
 								+ data[Times][2*6+2] + '                     '
 								, TEXT_X, TEXT_Y +50 );
 
-			Times += 1;
+			Times += 1;// console.log(Times);//607で止まってる
+			
 		}
 
 	};

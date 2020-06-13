@@ -51,31 +51,38 @@ export default class Line extends THREE.Object3D {
             // ];
 
 
-
             //マーカー
-            let geometry = new THREE.PlaneGeometry(60,20);
-            let loader = new THREE.TextureLoader();
-            let matIN = new THREE.MeshBasicMaterial({
-                side:THREE.DoubleSide,
-                // color:0xffffff,
-                blending: THREE.AdditiveBlending,
-                map: loader.load( '../img/namePanels/marker_in.png' )
-            });
-            this.meshMarkerIN = new THREE.Mesh(geometry,matIN);
-            this.add(this.meshMarkerIN);
-            this.meshMarkerIN.rotation.y = 180*Math.PI/180;
+            // this.showMarkerBool = true;
+            this.matInoutOpacityBool = true;
 
-            let matOUT = new THREE.MeshBasicMaterial({
-                side:THREE.DoubleSide,
-                // color:0xffffff,
-                blending: THREE.AdditiveBlending,
-                map: loader.load( '../img/namePanels/marker_out.png' )
-            });
-            this.meshMarkerOUT = new THREE.Mesh(geometry,matOUT);
-            this.add(this.meshMarkerOUT);
-            this.meshMarkerOUT.rotation.y = 180*Math.PI/180;
+            // if(this.showMarkerBool == true){
 
+            //     this.showMarkerBool = false;
+                let geometry = new THREE.PlaneGeometry(60,20);
+                let loader = new THREE.TextureLoader();
+                this.matIN = new THREE.MeshBasicMaterial({
+                    side:THREE.DoubleSide,
+                    // color:0xffffff,
+                    blending: THREE.AdditiveBlending,
+                    map: loader.load( '../img/namePanels/marker_in.png' ),
+                    needsUpdate: true
+                });
+                this.meshMarkerIN = new THREE.Mesh(geometry,this.matIN);
+                this.add(this.meshMarkerIN);
+                this.meshMarkerIN.rotation.y = 180*Math.PI/180;
 
+                this.matOUT = new THREE.MeshBasicMaterial({
+                    side:THREE.DoubleSide,
+                    // color:0xffffff,
+                    blending: THREE.AdditiveBlending,
+                    map: loader.load( '../img/namePanels/marker_out.png' ),
+                    needsUpdate: true
+                });
+                this.meshMarkerOUT = new THREE.Mesh(geometry,this.matOUT);
+                this.add(this.meshMarkerOUT);
+                this.meshMarkerOUT.rotation.y = 180*Math.PI/180;
+
+            // }
 
         }
 
@@ -206,25 +213,34 @@ export default class Line extends THREE.Object3D {
 
         update(){
 
-            
             if(this.DATAisOK ==  true){
-                if(this.frame < 1800){
+                if(this.frame < 607){
                     this.frame += 1;
                     if(this.frame% 2 == 0){//２回に１回
                         for( var i in this.meshes ) { 
                             this.checkIntersection(i); 
-                            if(!(this.nowGeo.x == 0) && this.frame% 6 == 0){
-                                if(this.inout ==1){
-                                    this.meshMarkerIN.position.set(this.nowGeo.x, this.nowGeo.y+5, this.nowGeo.z);
+                            // if(this.frame<1570){
+                                if(!(this.nowGeo.x == 0) && this.frame% 6 == 0){
+                                    if(this.inout ==1){
+                                        this.meshMarkerIN.position.set(this.nowGeo.x, this.nowGeo.y+5, this.nowGeo.z);
+                                    }
+                                    if(this.inout ==2){
+                                        this.meshMarkerOUT.position.set(this.nowGeo.x, this.nowGeo.y+5, this.nowGeo.z);
+                                    }
                                 }
-                                if(this.inout ==2){
-                                    this.meshMarkerOUT.position.set(this.nowGeo.x, this.nowGeo.y+5, this.nowGeo.z);
-                                }
-                            }
+                            // }else if(this.frame>=1570 && this.frame < 1800){
+                            //     // if(this.matInoutOpacityBool == true){
+                            //     //     this.matInoutOpacityBool = false;
+                            //         this.matIN.opacity = 0;
+                            //         this.matOUT.opacity = 0;
+                            //     // }
+                            // }
                         }
                     }
                 }else{ 
                     this.frame = 1800 +2;//1800以上は読まないよー あれ、1800だと読んでしまう
+                    this.matIN.opacity = 0;
+                    this.matOUT.opacity = 0;
                 }
             }
         }
