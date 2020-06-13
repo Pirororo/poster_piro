@@ -174,6 +174,7 @@ export default class Line extends THREE.Object3D {
                 // console.log(this.data[this.Times][2*this.where + this.inout]*1);
 
                 this.Times += 1;//0行目を題名にする場合は前におく
+                // console.log(this.Times);//303まで！
                 return this.lineLength;
 
         }
@@ -231,8 +232,4 @@ export default class Line extends THREE.Object3D {
                 }
             }
         }
-
-
-    }
-    
-    
+}
