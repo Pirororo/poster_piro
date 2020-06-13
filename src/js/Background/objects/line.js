@@ -64,6 +64,7 @@ export default class Line extends THREE.Object3D {
                 this.meshMarkerIN = new THREE.Mesh(geometry,this.matIN);
                 this.add(this.meshMarkerIN);
                 this.meshMarkerIN.rotation.y = 180*Math.PI/180;
+                this.meshMarkerIN.position.y = 20;
 
                 this.matOUT = new THREE.MeshBasicMaterial({
                     side:THREE.DoubleSide,
@@ -75,6 +76,7 @@ export default class Line extends THREE.Object3D {
                 this.meshMarkerOUT = new THREE.Mesh(geometry,this.matOUT);
                 this.add(this.meshMarkerOUT);
                 this.meshMarkerOUT.rotation.y = 180*Math.PI/180;
+                this.meshMarkerIN.position.y = 20;
 
         }
 
