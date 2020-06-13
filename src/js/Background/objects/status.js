@@ -117,7 +117,7 @@ Stats.Panel = function ( fg, bg ) {
 		update: function ( data ) {
 
 			context.fillStyle = bg;
-			context.globalAlpha = 1;
+			context.globalAlpha = 1.0;
 			context.fillRect( 0, 0, WIDTH, HEIGHT );
 
 			context.fillStyle = fg;

@@ -451,10 +451,10 @@ export class Scene2 extends THREE.Scene {
                 }
             }
             this.easeElapsedTime =0;
-            this.tSpeed = 3.0;
+            this.tSpeed = 5.0;
         }
 
-        if(this.frame == 230){//280
+        if(this.frame == 260){//280
             for (let i = 0; i < this.meshList.length; i++) {
                 for (let j = 0; j < 4; j++) {
                 if(i >=80*j && i<80*(j+1)){
@@ -473,30 +473,30 @@ export class Scene2 extends THREE.Scene {
                 }
             }
             this.easeElapsedTime = 0;
-            this.tSpeed = 3.0;
+            this.tSpeed = 5.0;
         }
 
-        if(this.frame == 310){//430
-            for (let i = 0; i < this.meshList.length; i++) {
-                for (let j = 0; j < 4; j++) {
-                if(i >=80*j && i<80*(j+1)){
-                    for (let k = 0; k < 4; k++) {
-                    if(i >=80*j+(20*k) && i<80*j+(20*(k+1))){
-                        for (let l = 0; l < 10; l++) {
-                        if(i >=80*j+(20*k)+(2*l) && i<80*j+(20*k)+(2*(l+1))){
-                            this.posTarget[3*i+ 0] = 45*j,
-                            this.posTarget[3*i+ 1] = 0,
-                            this.posTarget[3*i+ 2] = 45*k
-                        }
-                        }
-                    }
-                    }
-                }
-                }
-            }
-            this.easeElapsedTime =0;
-            this.tSpeed = 3.0;
-        }
+        // if(this.frame == 310){//430
+        //     for (let i = 0; i < this.meshList.length; i++) {
+        //         for (let j = 0; j < 4; j++) {
+        //         if(i >=80*j && i<80*(j+1)){
+        //             for (let k = 0; k < 4; k++) {
+        //             if(i >=80*j+(20*k) && i<80*j+(20*(k+1))){
+        //                 for (let l = 0; l < 10; l++) {
+        //                 if(i >=80*j+(20*k)+(2*l) && i<80*j+(20*k)+(2*(l+1))){
+        //                     this.posTarget[3*i+ 0] = 45*j,
+        //                     this.posTarget[3*i+ 1] = 0,
+        //                     this.posTarget[3*i+ 2] = 45*k
+        //                 }
+        //                 }
+        //             }
+        //             }
+        //         }
+        //         }
+        //     }
+        //     this.easeElapsedTime =0;
+        //     this.tSpeed = 2.0;
+        // }
 
 
         if(this.frame == 360){//490
@@ -541,13 +541,13 @@ export class Scene2 extends THREE.Scene {
                 }
             }
             this.easeElapsedTime =0;
-            this.tSpeed = 3.0;
+            this.tSpeed = 2.0;
 
         }
 
-        if(this.frame == 460){
+        if(this.frame == 480){
 
-            this.frame += (780 - 460);
+            this.frame += (780 - 480);
         }
 
 
@@ -746,7 +746,7 @@ export class Scene2 extends THREE.Scene {
             this.tSpeed =7.0;
         }
 
-        if(this.frame == 1670){
+        if(this.frame == 1570){
             if(this.openingIsEnd == false){
                 this.openingIsEnd = true;
             }
@@ -775,7 +775,7 @@ export class Scene2 extends THREE.Scene {
         // Align top-left
         this._stats.domElement.style.position = 'absolute';
         this._stats.domElement.style.left = '20px';
-        this._stats.domElement.style.top = '80%';
+        this._stats.domElement.style.top = '85%';
 
         document.getElementById("Stats-output").appendChild(this._stats.domElement);
 

@@ -213,7 +213,7 @@ export default class Line extends THREE.Object3D {
                     if(this.frame% 2 == 0){//２回に１回
                         for( var i in this.meshes ) { 
                             this.checkIntersection(i); 
-                            if(!(this.nowGeo.x == 0) && this.frame% 8 == 0){
+                            if(!(this.nowGeo.x == 0) && this.frame% 6 == 0){
                                 if(this.inout ==1){
                                     this.meshMarkerIN.position.set(this.nowGeo.x, this.nowGeo.y+5, this.nowGeo.z);
                                 }
