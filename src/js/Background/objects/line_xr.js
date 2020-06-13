@@ -136,11 +136,11 @@ export default class Line extends THREE.Object3D {
 
         getlineLength(){
 
-            if(this.Times > 1400){this.Times = 0;}
+            if(this.Times > 303){this.Times = 0;}
             this.lineLength = this.data[this.Times][2*this.where+ this.inout]*0.4;//長さ調整
 
             this.Times += 1;//0行目を題名にする場合は上のifの前におく
-            
+            // console.log(this.Times);//304まで
             return this.lineLength;
 
         }
@@ -148,8 +148,7 @@ export default class Line extends THREE.Object3D {
 
         loadCSVandConvertToArray2D()//2回よばれるの気になる
         {
-
-            loadCSV("../data/kanto_7area.csv", e =>
+            loadCSV("../data/kanto_7area_short.csv", e =>
             {
                 const result = e.result;
                 let data = convertCSVtoArray2D(result);
@@ -161,7 +160,6 @@ export default class Line extends THREE.Object3D {
         doSomething(data){
             this.DATAisOK = true;
             this.data = data;
-            // console.log(this.data[0][0]);
         }
 
 

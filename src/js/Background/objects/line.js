@@ -58,25 +58,23 @@ export default class Line extends THREE.Object3D {
                     side:THREE.DoubleSide,
                     transparent:true,
                     blending: THREE.AdditiveBlending,
-                    map: loader.load( '../img/namePanels/marker_in.png' ),
-                    needsUpdate: true
+                    map: loader.load( '../img/namePanels/marker_in.png' )
                 });
                 this.meshMarkerIN = new THREE.Mesh(geometry,this.matIN);
-                this.add(this.meshMarkerIN);
                 this.meshMarkerIN.rotation.y = 180*Math.PI/180;
                 this.meshMarkerIN.position.y = 20;
+                this.add(this.meshMarkerIN);
 
                 this.matOUT = new THREE.MeshBasicMaterial({
                     side:THREE.DoubleSide,
                     transparent:true,
                     blending: THREE.AdditiveBlending,
-                    map: loader.load( '../img/namePanels/marker_out.png' ),
-                    needsUpdate: true
+                    map: loader.load( '../img/namePanels/marker_out.png' )
                 });
                 this.meshMarkerOUT = new THREE.Mesh(geometry,this.matOUT);
-                this.add(this.meshMarkerOUT);
                 this.meshMarkerOUT.rotation.y = 180*Math.PI/180;
-                this.meshMarkerIN.position.y = 20;
+                this.meshMarkerOUT.position.y = 20;
+                this.add(this.meshMarkerOUT);
 
         }
 
@@ -182,7 +180,7 @@ export default class Line extends THREE.Object3D {
         loadCSVandConvertToArray2D()//2回よばれるの気になる
         {
 
-            loadCSV("../data/kanto_all.csv", e =>
+            loadCSV("../data/kanto_all_short.csv", e =>
             {
                 const result = e.result;
                 let data = convertCSVtoArray2D(result);
@@ -227,8 +225,8 @@ export default class Line extends THREE.Object3D {
                     }
                 }else{ 
                     this.frame = 607 +2;//607以上は読まないよー
-                    this.matIN.opacity = 0;
-                    this.matOUT.opacity = 0;
+                    this.matIN.opacity = 0.0;//this.meshMarkerIN.matIN.opacityはダメだった！
+                    this.matOUT.opacity = 0.0;
                 }
             }
         }

@@ -59,7 +59,6 @@ export class Camera extends THREE.PerspectiveCamera{
       if(this.frame == 20){
         // this.lookTarget = new THREE.Vector3(45, 100, 45);
         // this.camTarget = new THREE.Vector3(-320, -200,200);
-        // this.camTarget = new THREE.Vector3(-470, -200,-600);
       }
       if(this.frame == 50){
         // this.lookTarget = new THREE.Vector3(80, 40, 80);
@@ -79,9 +78,7 @@ export class Camera extends THREE.PerspectiveCamera{
       // }
       // if(this.frame == 380){this.camTarget = new THREE.Vector3(170,150,50);}//800
       if(this.frame == 470){this.camTarget = new THREE.Vector3(30, 10,60);}
-      if(this.frame == 470){
-          this.frame += 280;
-      }
+      if(this.frame == 470){this.frame += 280;}
       if(this.frame == 900){this.camTarget = new THREE.Vector3(-200, -100,-130);}
 
     }

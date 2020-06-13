@@ -37,7 +37,7 @@ var Stats = function () {
 
 
 	function loadCSVandConvertToArray2D(){
-		loadCSV("../data/kanto_7area_raw.csv", e =>
+		loadCSV("../data/kanto_7area_raw_short.csv", e =>
 		{
 			const result = e.result;
 			let getData = convertCSVtoArray2D(result);
@@ -159,8 +159,11 @@ Stats.Panel = function ( fg, bg ) {
 								+ data[Times][2*6+2] + '                     '
 								, TEXT_X, TEXT_Y +50 );
 
-			Times += 1;// console.log(Times);//607で止まってる
-			
+			Times += 1;
+			// console.log(Times);//304+303 = 607で止まる
+
+			if(Times > 303){Times = 0;}//304まで呼ばれてた
+
 		}
 
 	};
