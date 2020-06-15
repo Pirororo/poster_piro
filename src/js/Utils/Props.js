@@ -99,32 +99,37 @@ const COLOR = {
   RaycastFocusOn: 0xFFFFFF
 };
 
-const UA = ((ua) =>
-{
-	return {
-		ua,
-		isIE: (() => ua.indexOf('msie') != -1 || ua.indexOf('trident') != -1)(),
-		isEdge: (() => ua.indexOf('edge') != -1)(),
-		isChrome: (() => ua.indexOf('chrome') != -1)(),
-		isSafari: (() => ua.indexOf('safari') != -1 && ua.indexOf('chrome') == -1)(),
-		isFirefox: (() => ua.indexOf('firefox') != -1)(),
-		isOpera: (() => ua.indexOf('opera') != -1)(),
-		isIOS: /i(phone|pod|pad)/.test(ua),
-		isIOSChrome: /crios/.test(ua),
-		isIPhone: /i(phone|pod)/.test(ua),
-		isIPad: /ipad/.test(ua),
-		isAndroid: /android/.test(ua),
-		isAndroidMobile: /android(.+)?mobile/.test(ua),
-		isTouchDevice: 'ontouchstart' in window,
-		isMobile: /i(phone|pod)/.test(ua)||/android(.+)?mobile/.test(ua),
-		isTablet: /ipad/.test(ua)||/android(.+)(?!mobile)/.test(ua)
-	}
+const UA = ((ua) => {
+  return {
+    ua,
+    isIE: (() => ua.indexOf('msie') != -1 || ua.indexOf('trident') != -1)(),
+    isEdge: (() => ua.indexOf('edge') != -1)(),
+    isChrome: (() => ua.indexOf('chrome') != -1)(),
+    isSafari: (() => ua.indexOf('safari') != -1 && ua.indexOf('chrome') == -1)(),
+    isFirefox: (() => ua.indexOf('firefox') != -1)(),
+    isOpera: (() => ua.indexOf('opera') != -1)(),
+    isIOS: /i(phone|pod|pad)/.test(ua),
+    isIOSChrome: /crios/.test(ua),
+    isIPhone: /i(phone|pod)/.test(ua),
+    isIPad: /ipad/.test(ua),
+    isAndroid: /android/.test(ua),
+    isAndroidMobile: /android(.+)?mobile/.test(ua),
+    isTouchDevice: 'ontouchstart' in window,
+    isMobile: /i(phone|pod)/.test(ua) || /android(.+)?mobile/.test(ua),
+    isTablet: /ipad/.test(ua) || /android(.+)(?!mobile)/.test(ua)
+  }
 })(window.navigator.userAgent.toLowerCase());
 
+// UA.isValid = () => {
+//   const pc = !UA.isMobile && (UA.isChrome || UA.isSafari);
+//   const mobile = UA.isMobile && (UA.isSafari || UA.isChrome)
+// //  console.log(`Result: ${pc || mobile}, PC: ${pc}, Mobile: ${mobile}`);
+//   return pc || mobile;
+// };
+
 UA.isValid = () => {
-  const pc = !UA.isMobile && (UA.isChrome || UA.isSafari);
+  const pc = !UA.isEdge && !UA.isMobile && (UA.isChrome || UA.isSafari);
   const mobile = UA.isMobile && (UA.isSafari || UA.isChrome)
-//  console.log(`Result: ${pc || mobile}, PC: ${pc}, Mobile: ${mobile}`);
   return pc || mobile;
 };
 
@@ -134,9 +139,9 @@ UA.isAndroidChrome = () => {
 
 export {
   DebugMode,
-	KEYCODE,
-	EVENT,
-	VR,
+  KEYCODE,
+  EVENT,
+  VR,
   SELECTORS,
   COMPONENTS,
   BOARD_ID,

@@ -21,7 +21,7 @@ export default class App {
   {
     document.querySelector('body').setAttribute('id', 'pc');
 
-    this.onResize();
+    // this.onResize();
     this.addEvent();
   }
 
@@ -32,17 +32,6 @@ export default class App {
 
   onResize()
   {
-    this.inner_container = this.iframe.contentWindow.document.getElementById('wp-container');
-    if (this.inner_container) {
-      if (window.innerWidth < 750) {
-        this.inner_container.style.width = "90vw";
-        this.inner_container.style.margin = "0 auto";
-      } else {
-        this.inner_container.style.width = "700px";
-      }
-    } else {
-      console.log('no inner_container');
-    }
 
   }
 
@@ -59,13 +48,6 @@ export default class App {
 
     if (e.target.id === 'close_modal') {
       document.getElementById('modal_box').style.display = "none";
-    }
-
-    if (e.target.tagName === 'img') {
-      // e.preventDefault();
-      console.log(e.target.src);
-      this.showModal(e);
-      
     }
   }
 

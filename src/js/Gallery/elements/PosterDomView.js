@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { EVENT, Action } from "./../../Utils/EventManager";
+import { SYNTH } from "./../../Utils/Sound";
 
 export default class PosterDomView {
   constructor(stage, posterData) {
@@ -32,6 +33,10 @@ export default class PosterDomView {
       // categoryContainer.setAttribute('class', 'c' + i);
       this.posterWrapperli[i].appendChild(posterContainer);
       this.posterWrapperli[i].addEventListener("click", e => this.onClick(this.posterWrapperli[i], e));
+
+      setTimeout(() => {
+        SYNTH.categoryIn();
+      }, 1000 + 100 * i);
 
     }
     setTimeout(() => {

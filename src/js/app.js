@@ -16,8 +16,7 @@ OpenHouse2020.PosterSession = OpenHouse2020.PosterSession || {};
 OpenHouse2020.PosterSession.App =
 {
 	delegator: null,
-	init()
-	{
+	init() {
 		this.addExtensions();
 		this.delegator = Composer.init();
 
@@ -27,30 +26,31 @@ OpenHouse2020.PosterSession.App =
 	onMouseMove(e) { this.delegator.onMouseMove(e); },
 	onKeyUp(e) { this.delegator.onKeyUp(e); },
 	onClick(e) { this.delegator.onClick(e); },
-	addEvent()
-	{
+	onTouchStart(e) { this.delegator.onTouchStart(e); },
+	addEvent() {
 		window.addEventListener("resize", () => this.onResize());
 		window.addEventListener("mousemove", e => this.onMouseMove(e));
 		window.addEventListener("keyup", e => this.onKeyUp(e));
 		document.addEventListener("click", e => this.onClick(e), false);
+		document.body.addEventListener("touchstart", e => this.onTouchStart(e), false);
 	},
-	addExtensions()
-	{
+	addExtensions() {
 		ObjectExtenstions.init();
 	},
 };
 
 
+
 // Launch app when DOM will be ready
-window.addEventListener("DOMContentLoaded", () =>
-{
-	// window.console.log = () => {};
-	// window.console.dir = () => {};
+window.addEventListener("DOMContentLoaded", () => {
+	// window.console.info = () => { };
+	// window.console.log = () => { };
+	// window.console.dir = () => { };
 
 	const isDebugMode = document.getElementsByTagName("a-scene").length > 0;
 	setDebugMode(isDebugMode);
 	console.log(`DebugMode: ${isDebugMode}`);
 
-  OpenHouse2020.PosterSession.App.init();
+	OpenHouse2020.PosterSession.App.init();
 });
 

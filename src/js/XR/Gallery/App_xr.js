@@ -120,6 +120,9 @@ export default
         this.category = category;
         this.generatePosters(category);
 
+        category = category == "s" ? "g" : category;
+        console.log(category);
+
         // dispatch for Background
         Action.dispatch(EVENT.ShowCategory, {
           category: category.toUpperCase(),

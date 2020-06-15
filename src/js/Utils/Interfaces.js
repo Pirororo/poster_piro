@@ -18,7 +18,8 @@
   onResize(){},
   onMouseMove(e){},
   onKeyUp(e){},
-  onClick(e){}
+  onClick(e){},
+  onTouchStart(e){}
 };
 
 export {

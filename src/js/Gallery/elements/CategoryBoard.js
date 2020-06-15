@@ -20,7 +20,7 @@ export default class CategoryBoard {
   }
   reset() {
     this.view.reset();
-    console.log('category boar reset');
+    // console.log('category boar reset');
 
   }
 }

@@ -34,8 +34,10 @@
 
     <div id="background_container" class="common_container">
       <div id="posetersession_logo">
-        <div class="posetersession_title">Openhouse 2020</div>
-        <div class="posetersession_copy">Poster Session</div>
+        <a href="https://openhouse.nii.ac.jp/">
+          <div class="posetersession_title">Openhouse 2020</div>
+          <div class="posetersession_copy">Poster Session</div>
+        </a>
       </div>
       <div id="Stats-output"></div>
       <div id="WebGL-output"></div>
@@ -63,7 +65,12 @@
       <div class="common_screen_shade"></div>
       <div id="detail_stage"></div>
       <div id="frame_container">
-        <a href="#" id="close">&times;</a>
+        <a href="#" id="close">
+          <svg viewBox="0 0 33 34" fill="none" xmlns="http://www.w3.org/2000/svg" pointer-events="none">
+            <line x1="0.853553" y1="1.14645" x2="31.8536" y2="32.1464" stroke="white"/>
+            <line x1="31.8536" y1="1.85355" x2="0.853553" y2="32.8536" stroke="white"/>
+          </svg>
+        </a>
         <iframe id="detail_iframe"></iframe>
       </div>
       <div id="modal_box" class="modal">

@@ -13,6 +13,7 @@ export const posterData = {
       './img/A06.png',
       './img/A07.png',
       './img/A08.png',
+      './img/A09.png',
       './img/A10.png',
     ],
     posterTitle: [
@@ -137,7 +138,7 @@ export const posterData = {
     categoryId: 'F',
     categoryEn: 'Society and information',
     categoryJp: '社会と情報',
-    copy: 'サイバー世界と<br>フィジカル世界の融合',
+    copy: 'サイバー世界とフィジカル世界の融合',
     imgPath: [
       './img/F01.png',
       './img/F02.png',

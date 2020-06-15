@@ -193,7 +193,7 @@
 }
 
 // Tablet SP
-@media (max-width: 960px) {
+@media (max-width: 1024px) {
   #pc {
     //category
     #category_container {
@@ -202,7 +202,7 @@
         .category-wrapper {
           width: 100%;
           height: auto;
-          margin: 72px 0 0;
+          margin: 64px 0 0;
           padding: 0 8px;
 
           ul {
@@ -215,26 +215,26 @@
               width: calc(49%);
               height: auto;
               position: static;
-              margin-bottom: 8px;
+              margin-bottom: 4px;
               div {
-                height: 140px;
+                height: 108px;
                 .caterory-label {
-                  font-size: 16px;
-                  padding-top: 4px;
-                  margin-bottom: 4px;
+                  font-size: 14px;
+                  padding-top: 0;
+                  margin-bottom: 2px;
                 }
                 .categoryEn {
-                  font-size: 14px;
+                  font-size: 12px;
                   margin-bottom: 0;
                 }
                 .categoryJp {
-                  font-size: 12px;
-                  top: 72px;
+                  font-size: 11px;
+                  top: 56px;
                   left: 0;
                 }
                 .categoryCopy {
-                  font-size: 13px;
-                  top: 96px;
+                  font-size: 12px;
+                  top: 72px;
                   left: 0;
                 }
               }

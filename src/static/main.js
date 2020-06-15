@@ -9,7 +9,7 @@ import { UA } from "./../js/Utils/Props";
 
 
 window.addEventListener('DOMContentLoaded', (event) => {
-	console.dir(UA);
+	// console.dir(UA);
 
 	const startWrap = document.getElementById('start-wrap');
 	const notification = document.getElementById('notification');

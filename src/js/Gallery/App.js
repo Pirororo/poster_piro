@@ -12,6 +12,7 @@ import { SELECTORS } from "./../Utils/Props";
 import { EVENT, Action } from "./../Utils/EventManager";
 import { show, hide } from "./../Utils/Helper";
 import { SYNTH } from "./../Utils/Sound";
+import { Vector2 } from 'three/build/three';
 
 export default class App {
   constructor() {
@@ -71,12 +72,13 @@ export default class App {
     this.rayReceiveObjects.map(mesh => {
       if (intersects.length > 0 && mesh === intersects[0].object) {
         mesh.material.color.setHex(0xFFFFFF);
-        // targetId = mesh.id;
+        document.querySelector('body,html').style.cursor = 'pointer';
       } else {
         mesh.material.color.setHex(0x222222);
-        // targetId = 0;
+        document.querySelector('body,html').style.cursor = 'default';
       }
     });
+
 
     this.controls.update();
     TWEEN.update();
@@ -97,14 +99,14 @@ export default class App {
     this.renderer.setSize(this.width, this.height);
 
     //ToDo: レスポンシブの対応
-    if (this.width < 768) {
+    if (this.width < 1367) {
       this.isMobile = true;
       this.isWebGLEnable = false;
     } else {
       this.isMobile = false;
       this.isWebGLEnable = true;
     }
-    console.log('isMoble: ' + this.isMobile);
+    console.log('this.width: ' + this.width + 'isMoble: ' + this.isMobile);
 
   }
 
@@ -117,6 +119,15 @@ export default class App {
     } else {
       this.onPosterBackHandler(e);
       this.onPosterRaycasterHandler(e);
+    }
+  }
+
+  onTouchStart(e) {
+    e.preventDefault();
+    const touch = e.changedTouches[0];
+    if (this.mouse3D != null && this.mouse3D instanceof THREE.Vector2) {
+      this.mouse3D.set(touch.pageX, touch.pageY, 0);
+      console.log(`Touch Position: ${touch.pageX + ", " + touch.pageY}`);
     }
   }
 
@@ -149,13 +160,18 @@ export default class App {
     this.setPosterData(this.categoryId);
     this.boardPosRadius = 150; //中心からポスターまでの半径
     const totalAnlge = 180; //円弧の角度
-    this.boardAngle = totalAnlge / this.boardLength; //分割する円弧の角度
+    this.boardAngle = (totalAnlge / this.boardLength) - 2; //分割する円弧の角度
+    // this.halfAngle = totalAnlge + this.boardAngle; //円弧の調整角度
     this.halfAngle = totalAnlge + this.boardAngle; //円弧の調整角度
+    console.log('this.halfAngle' + this.halfAngle, 'this.boardAngle' + this.boardAngle);
 
-    const topPosY = 40;
-    const bottomPosY = -50;
-    const topAxixVec3 = new THREE.Vector3(0, 30, 0);
-    const bottomAxixVec3 = new THREE.Vector3(0, -50, 0);
+    const topPosY = 120;
+    const bottomPosY = 30;
+    const topAxixVec3 = new THREE.Vector3(0, 120, 0);
+    const bottomAxixVec3 = new THREE.Vector3(0, 30, 0);
+
+    //レイキャスターを格納する配列を初期化
+    this.rayReceiveObjects = [];
 
     for (let i = 0; i < this.boardLength; i++) {
       this.board = new PosterBoard(this.scene, this.categoryId, i);
@@ -189,11 +205,11 @@ export default class App {
   setPosterCanvasBoardAnime() {
     for (let i = 0; i < this.boardLength; i++) {
       const startA = {
-        y: this.meshList[i].view.group.position.y - 100,
+        y: this.meshList[i].view.group.position.y - 160,
         alpha: 0
       };
       const targetA = {
-        y: startA.y + 100,
+        y: startA.y + 80,
         alpha: 1
       };
       const startB = {
@@ -218,6 +234,9 @@ export default class App {
       const tweenC = new TWEEN.Tween(startB).to(targetB, 300).easing(TWEEN.Easing.Cubic.InOut).onUpdate(() => {
         this.meshList[i].view.wireMaterial.opacity = startB.alphaOut;
       }).delay(3000 + (i * 20)).start();
+      setTimeout(() => {
+        SYNTH.categoryIn();
+      }, 1000 + 100 * i);
     }
     this.posterFrag = true;
   }
@@ -230,8 +249,12 @@ export default class App {
       for (let i = 0; i < this.meshList.length; i++) {
         this.meshList[i].destroy();
       }
-      this.meshList = [];
-      this.category.reset(); //カテゴリを表示
+
+      setTimeout(() => {
+        this.meshList = [];
+        //Backgroundのアニメーションを2秒待つ
+        this.category.reset(); //カテゴリを表示
+      }, 1000);
       this.posterFrag = false;
     }, 500);
   }
@@ -254,7 +277,7 @@ export default class App {
         alpha: 1,
       };
       const targetB = {
-        y: startB.y - 100,
+        y: startB.y - 160,
         alpha: 0,
       };
       //トゥイーンアニメーション
@@ -269,10 +292,14 @@ export default class App {
         this.meshList[i].view.wireMaterial.opacity = startB.alpha;
       }).delay(300 + (i * 10))
       tweenA.chain(tweenB);
+      // setTimeout(() => {
+      //   SYNTH.categoryIn();
+      // }, 1000 + 100 * i);
     }
     setTimeout(() => {
       this.removePosterCanvasBoard();
     }, 1600);
+
   }
 
   addBackBtn() {
@@ -312,8 +339,8 @@ export default class App {
       posterWrapper.remove();
       this.category.reset(); //再度カテゴリを表示
       this.posterFrag = false;
-
     }, 2000);
+    // }, 2000);
   }
 
 
@@ -375,6 +402,7 @@ export default class App {
       case 'cat2':
         categoryId = "c";
         this.categoryId = categoryId;
+        this.category.destroy();
         this.checkResponsiveBoard();
         Action.dispatch(EVENT.ShowCategory, { category: "C", mode: "normal" });
         break;
@@ -388,6 +416,8 @@ export default class App {
       case 'cat4':
         categoryId = "e";
         this.categoryId = categoryId;
+        this.category.destroy();
+
         this.checkResponsiveBoard();
         Action.dispatch(EVENT.ShowCategory, { category: "E", mode: "normal" });
         break;
@@ -417,6 +447,8 @@ export default class App {
 
 
   checkResponsiveBoard() {
+    console.log('this.isMobile: '+this.isMobile);
+
     //モバイルのチェック
     if (!this.isMobile) {
       this.addPosterCanvasBoard();
@@ -429,6 +461,8 @@ export default class App {
 
 
   onPosterRaycasterHandler(e) {
+    //レイキャスター
+    this.raycaster.setFromCamera(this.mouse3D, this.camera);
     const intersects = this.raycaster.intersectObjects(this.rayReceiveObjects);
     if (intersects.length > 0) {
       const slug = intersects[0].object.slug;
@@ -456,7 +490,6 @@ export default class App {
       }
       this.backBtn.classList.remove('in');
 
-      SYNTH.btnSound();
       Action.dispatch(EVENT.BackToCategory, { mode: "normal" });
 
       setTimeout(() => {

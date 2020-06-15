@@ -11,12 +11,14 @@ import XR from "./XR/Facade"; // will be created by Beharu
 import Startup from "./Startup/Facade";
 
 // import Router from "./Utils/Router";
+import { ICommonFacadeModuleObject } from "./Utils/Interfaces";
 import { isVR, show } from "./Utils/Helper";
 import { SELECTORS } from "./Utils/Props";
 import { EVENT, Action } from "./Utils/EventManager";
 
 const Composer =
 {
+	...ICommonFacadeModuleObject,
 	props: {},
 	instances: {},
 	elements: {},
@@ -61,7 +63,9 @@ const Composer =
 	onClick(e) {
 		this.instances.forIn((k, instance) => instance.onClick(e));
 	},
-
+	onTouchStart(e) {
+		this.instances.forIn((k, instance) => instance.onTouchStart(e));
+	},
 	addEvent()
 	{
 		// Dispath Events for Debug

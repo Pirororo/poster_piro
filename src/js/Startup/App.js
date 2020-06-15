@@ -35,6 +35,7 @@ const App =
 		if (this.props.isSelected) { return; }
 		this.props.isSelected = true;
 		show(SELECTORS.StartupContainer);
+		SYNTH.categoryIn();
 	},
 
 	destroy() {

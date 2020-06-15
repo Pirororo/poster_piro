@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { SYNTH } from "./../../Utils/Sound";
 
 export default class CategoryView {
   constructor(stage, categoryData) {
@@ -46,6 +47,9 @@ export default class CategoryView {
       //div.categoryCopy
       const categoryCopy = this.createDomElement('p', 'categoryCopy', this.categoryData[i].copy);
       categoryContainer.appendChild(categoryCopy);
+      setTimeout(() => {
+        SYNTH.categoryIn();
+      }, 1000 + 100 * i);
     }
 
     setTimeout(() => {
@@ -61,14 +65,20 @@ export default class CategoryView {
 
   }
 
-  reset(){
+  reset() {
     //カテゴリーボードをフェードイン
     this.categoryWrapper.classList.add('fadein');
+    for (let i = 0; i < this.categoryData.length; i++) {
+      setTimeout(() => {
+        SYNTH.categoryIn();
+      }, 10 + 100 * i);
+    }
   }
 
   destroy() {
     //カテゴリーボードをフェードアウト
     this.categoryWrapper.classList.remove('fadein');
+
   }
 
 

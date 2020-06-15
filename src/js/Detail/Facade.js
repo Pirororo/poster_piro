@@ -5,14 +5,16 @@
  */
 
 import { ICommonFacadeModuleObject } from "../Utils/Interfaces";
+import { EVENT, Action } from "./../Utils/EventManager";
+import { isVR } from "./../Utils/Helper";
 import App from "./App";
-import { isVR } from "../Utils/Helper";
 
 const Facade =
 {
 	...ICommonFacadeModuleObject,
 	props: {
-		instance: null
+		instance: null,
+		isEnabled: false
 	},
 	init()
 	{
@@ -22,21 +24,31 @@ const Facade =
   },
 	draw()
 	{
-    if (isVR) { return; }
+		if (!this.props.isEnabled) { return; }
 		this.props.instance.draw();
   },
   onClick(e) {
+		if (!this.props.isEnabled) { return; }
 		this.props.instance.onClick(e);
 	},
-  onResize() { this.props.instance.onResize();
+  onResize() {
+		if (!this.props.isEnabled) { return; }
+		this.props.instance.onResize();
   },
 
-  onKeyUp(e) { this.props.instance.onKeyUp(e);
+  onKeyUp(e) {
+		if (!this.props.isEnabled) { return; }
+		this.props.instance.onKeyUp(e);
   },
   addEvent() {
-		this.props.instance.addEvent();
+		Action.add(EVENT.ShowCategory, data =>{
+			if (data.mode == "normal" && !("category" in data) && !isVR())
+			{
+				this.props.isEnabled = true;
+				this.props.instance.init();
+      }
+    });
 	}
-
 };
 
 export default Facade;
