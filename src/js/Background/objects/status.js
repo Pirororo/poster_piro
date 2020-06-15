@@ -9,30 +9,13 @@ var Stats = function () {
 
 	var container = document.createElement( 'div' );
 	container.style.cssText = 'position:fixed;top:0;left:0;cursor:pointer;opacity:0.9;z-index:10000';
-	container.addEventListener( 'click', function ( event ) {
 
-		event.preventDefault();
-		showPanel( ++ mode % container.children.length );
-
-	}, false );
-
-	//
 
 	function addPanel( panel ) {
 
 		container.appendChild( panel.dom );
 		return panel;
 
-	}
-
-	function showPanel( id ) {
-
-		for ( var i = 0; i < container.children.length; i ++ ) {
-
-			container.children[ i ].style.display = i === id ? 'block' : 'none';
-
-		}
-		mode = id;
 	}
 
 
@@ -49,18 +32,12 @@ var Stats = function () {
 	function doSomething(getData){
 		DATAisOK = true;
 		data = getData;
-
-		console.log("dosom");
-		console.log(data[0][0]);
 	}
 
 
 	var fpsPanel = addPanel( new Stats.Panel( '#E8e8E8', '#000000' ) );
 
-	
 	loadCSVandConvertToArray2D();
-	showPanel( 0 );
-
 
 	return {
 
@@ -69,8 +46,6 @@ var Stats = function () {
 		dom: container,
 
 		addPanel: addPanel,
-		showPanel: showPanel,
-
 
 		update: function () {
 
@@ -80,7 +55,6 @@ var Stats = function () {
 		},
 
 		domElement: container,
-		setMode: showPanel
 
 	};
 

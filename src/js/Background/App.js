@@ -4,7 +4,10 @@ import { EVENT, Action } from "../Utils/EventManager";
 
 //fps表示とDAT表示に必要なjs
 // import {GUI} from 'three/examples/jsm/libs/dat.gui.module';
-// import Stats from "./objects/status";
+import Stats from "./objects/status";
+
+import StatsView from "./objects/statsView";
+
 // カメラ系に必要なjs
 // import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
@@ -30,12 +33,17 @@ export default class App
 
         this.masterFrame = 0;
         
-        // this._initStats = this._initStats.bind(this);
+        this._initStats = this._initStats.bind(this);
         this.chooseRoomColor = this.chooseRoomColor.bind(this);
         this.backToColor = this.backToColor.bind(this);
 
-        // //fps表示
-        // this._stats = this._initStats();
+        //fps表示
+        this._stats = this._initStats();
+
+        // ////データ通信量表示
+        // ////DOMバージョン
+        // this._initStatsView= this._initStatsView.bind(this);
+        // this._statsView = this._initStatsView();
 
         // シーン
         this._scene = sceneInstance;
@@ -145,14 +153,15 @@ export default class App
         // this.orbitControls.update(delta);
 
 
+        // this._statsView.update();
 
 
         //２回に１回読む
         this.masterFrame += 1;
         if(this.masterFrame == 2){
 
-            // //fps表示の更新
-            // this._stats.update();
+            //fps表示の更新
+            this._stats.update();
 
             // シーンの更新
             this._scene.update();
@@ -283,7 +292,9 @@ export default class App
     }
 
 
-    draw(){}
+    draw(){
+
+    }
 
     // /**
     // * マウスイベント
@@ -312,19 +323,33 @@ export default class App
         this._scene.camera.updateProjectionMatrix();
     }
 
-    // _initStats()
+    _initStats()
+    {
+        this._stats = new Stats();
+        // this._stats.setMode(0); 
+
+        // Align top-left
+        this._stats.domElement.style.position = 'absolute';
+        this._stats.domElement.style.left = '20px';
+        this._stats.domElement.style.top = '80%';
+
+        document.getElementById("Stats-output").appendChild(this._stats.domElement);
+
+        return this._stats;
+    }
+
+    // //データ通信量表示の初期化（米倉先生のDOMバージョン）これはupdate()不要
+    // _initStatsView()
     // {
-    //     this._stats = new Stats();
-    //     this._stats.setMode(0); 
+    //     const backgroundEl = document.getElementById('Stats-output');
+    //     this._statsView = new StatsView(backgroundEl);
+    //     this._statsView.setup();
 
-    //     // Align top-left
-    //     this._stats.domElement.style.position = 'absolute';
-    //     this._stats.domElement.style.left = '20px';
-    //     this._stats.domElement.style.top = '80%';
+    //     // this._statsView = new StatsView();
+    //     // this._statsView.setup();//this.statsContainer
+    //     // document.getElementById('background_container').appendChild(this._statsView.statsContainer);
 
-    //     document.getElementById("Stats-output").appendChild(this._stats.domElement);
-
-    //     return this._stats;
+    //     return this._statsView;
     // }
 
 }
