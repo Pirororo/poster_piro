@@ -49,9 +49,6 @@ var Stats = function () {
 	function doSomething(getData){
 		DATAisOK = true;
 		data = getData;
-
-		console.log("dosom");
-		console.log(data[0][0]);
 	}
 
 

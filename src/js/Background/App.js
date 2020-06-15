@@ -5,6 +5,9 @@ import { EVENT, Action } from "../Utils/EventManager";
 //fps表示とDAT表示に必要なjs
 // import {GUI} from 'three/examples/jsm/libs/dat.gui.module';
 // import Stats from "./objects/status";
+
+import StatsView from "./objects/statsView";
+
 // カメラ系に必要なjs
 // import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
@@ -36,6 +39,11 @@ export default class App
 
         // //fps表示
         // this._stats = this._initStats();
+
+        ////データ通信量表示
+        ////DOMバージョン
+        this._initStatsView= this._initStatsView.bind(this);
+        this._statsView = this._initStatsView();
 
         // シーン
         this._scene = sceneInstance;
@@ -145,6 +153,7 @@ export default class App
         // this.orbitControls.update(delta);
 
 
+        this._statsView.update();
 
 
         //２回に１回読む
@@ -283,7 +292,9 @@ export default class App
     }
 
 
-    draw(){}
+    draw(){
+
+    }
 
     // /**
     // * マウスイベント
@@ -326,5 +337,21 @@ export default class App
 
     //     return this._stats;
     // }
+
+    //データ通信量表示の初期化（米倉先生のDOMバージョン）これはupdate()不要
+    _initStatsView()
+    {
+        // const backgroundEl = document.getElementById('background_container');
+        // this._statsView = new StatsView(backgroundEl);
+        // this._statsView.setup();
+
+        this._statsView = new StatsView();
+        this._statsView.setup();//this.statsContainer
+        
+        document.getElementById('background_container').appendChild(this._statsView.statsContainer);
+
+        return this._statsView;
+
+    }
 
 }
