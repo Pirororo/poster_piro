@@ -2,12 +2,13 @@ import * as THREE from "three";
 import { convertCSVtoArray2D, loadCSV } from "../../Utils/AssetsLoader";
 //米倉先生より
 
-export default class statsView  extends THREE.Object3D {
+// export default class statsView extends THREE.Object3D {
+export default class StatsView {
 
     constructor(stage) {
     // constructor() {
 
-        super();
+        // super();
 
         this.loadCSVandConvertToArray2D = this.loadCSVandConvertToArray2D.bind(this);
         this.doSomething = this.doSomething.bind(this);
@@ -77,24 +78,25 @@ export default class statsView  extends THREE.Object3D {
         this.statsList = document.createElement('ul');
         this.statsList.setAttribute('id','stats-list');
 
-        //headlist'IN OUT'
-        this.statsHeadList = document.createElement('li');
-        this.statsHeadList.setAttribute('id','stats-list-head');
-        this.statsList.appendChild(this.statsHeadList);
+        // //headlist'IN OUT'
+        // this.statsHeadList = document.createElement('li');
+        // this.statsHeadList.setAttribute('id','stats-list-head');
+        // this.statsList.appendChild(this.statsHeadList);
 
-        //inout list
-        this.inoutList = document.createElement('ul');
-        this.inList = document.createElement('li');
-        this.inList.appendChild(document.createTextNode('IN'));
-        this.inoutList.appendChild(this.inList);
-        this.outList = document.createElement('li');
-        this.outList.appendChild(document.createTextNode('OUT'));
-        this.inoutList.appendChild(this.outList);
-        this.statsHeadList.appendChild(this.inoutList);
+        // //inout list
+        // this.inoutList = document.createElement('ul');
+        // this.inList = document.createElement('li');
+        // this.inList.appendChild(document.createTextNode('IN'));
+        // this.inoutList.appendChild(this.inList);
+        // this.outList = document.createElement('li');
+        // this.outList.appendChild(document.createTextNode('OUT'));
+        // this.inoutList.appendChild(this.outList);
+        // this.statsHeadList.appendChild(this.inoutList);
 
         //area list
         this.areaListContainer =[];
         this.areaListUl=[];
+
         // this.areaList
         for (let i = 0; i < this.statsData.length; i++) {
             this.areaListContainer[i] = document.createElement('li');
@@ -102,25 +104,25 @@ export default class statsView  extends THREE.Object3D {
 
             this.areaListUl[i] = document.createElement('ul');
             this.areaListContainer[i].appendChild(this.areaListUl[i]);
-            let currentData = {};
-            currentData = this.statsData[i];
+            this.currentData = {};
+            this.currentData = this.statsData[i];
 
-            const elementArea = document.createElement('li');
-            elementArea.appendChild(document.createTextNode(currentData.area));
-            this.areaListUl[i].appendChild(elementArea);
+            this.elementArea = document.createElement('li');
+            this.elementArea.appendChild(document.createTextNode(this.currentData.area));
+            this.areaListUl[i].appendChild(this.elementArea);
 
-            const elementInData = document.createElement('li');
-            elementInData.appendChild(document.createTextNode(currentData.in));
-            this.areaListUl[i].appendChild(elementInData);
+            this.elementInData = document.createElement('li');
+            this.elementInData.appendChild(document.createTextNode(this.currentData.in));
+            this.areaListUl[i].appendChild(this.elementInData);
 
-            const elementOutData = document.createElement('li');
-            elementOutData.appendChild(document.createTextNode(currentData.out));
-            this.areaListUl[i].appendChild(elementOutData);
+            this.elementOutData = document.createElement('li');
+            this.elementOutData.appendChild(document.createTextNode(this.currentData.out));
+            this.areaListUl[i].appendChild(this.elementOutData);
             this.statsList.appendChild(this.areaListContainer[i]);
         }
         this.statsContainer.appendChild(this.statsList);
         this.stage.appendChild(this.statsContainer);
-        // return this.statsContainer;
+
     }
 
 
@@ -142,56 +144,15 @@ export default class statsView  extends THREE.Object3D {
     update(){
         
         if(this.DATAisOK ==  true){
-            // console.log(" update");
-            // console.log(this.data[this.Times][2*0+1]);
 
-            this.statsData =[
-                {
-                area:"HOKKAIDO",
-                in: this.data[this.Times][2*0+1],
-                out:this.data[this.Times][2*0+2]
-                },
-                {
-                area:"CHUBU",
-                in: this.data[this.Times][2*1+1],
-                out:this.data[this.Times][2*1+2]
-                },
-                {
-                area:"KINKI",
-                in: this.data[this.Times][2*2+1],
-                out:this.data[this.Times][2*2+2]
-                },
-                {
-                area:"CHUGOKU/SHIKOKU",
-                in: this.data[this.Times][2*3+1],
-                out:this.data[this.Times][2*3+2]
-                },
-                {
-                area:"KYUSHU",
-                in: this.data[this.Times][2*4+1],
-                out:this.data[this.Times][2*4+2]
-                },
-                {
-                area:"AMSTERDAM",
-                in: this.data[this.Times][2*5+1],
-                out:this.data[this.Times][2*5+2]
-                },
-                {
-                area:"LOSANGELES",
-                in: this.data[this.Times][2*6+1],
-                out:this.data[this.Times][2*6+2]
-                },
-            ];
+            for(let i=0; i<this.statsData.length; i++){
+                this.statsData[i].in = this.data[this.Times][2*i+1];
+                this.statsData[i].out = this.data[this.Times][2*i+2];
+                console.log(this.statsData[i].in);//値の取得はok
+            }
+			this.Times += 1;//304+303 = 607で止まる
 
-			this.Times += 1;
-			// console.log(Times);//304+303 = 607で止まる
-
-			if(this.Times > 303){this.Times = 0;}//304まで呼ばれてた
+            if(this.Times > 303){this.Times = 0;}//304まで呼ばれてた
         }
     }
-
-
-
 }
-
-  

@@ -5,6 +5,7 @@ import { KEYCODE } from "../utils/props.js";
 import { EVENT, Action } from "../../Utils/EventManager";
 import { isVR, setVRMode } from "../../Utils/Helper";
 // import Stats from "../objects/status";
+// import StatsView from "../objects/statsView";
 
 
 /**
@@ -359,6 +360,11 @@ export class Scene2 extends THREE.Scene {
         // this._initStats = this._initStats.bind(this);
         // this._stats = this._initStats();
 
+        // ////米倉先生バージョン
+        // this._initStatsView= this._initStatsView.bind(this);
+        // this._statsView = this._initStatsView();
+        // // this.add(this._statsView);
+
 
     }
 
@@ -678,12 +684,12 @@ export class Scene2 extends THREE.Scene {
         if(this.frame < 1770){
 
             // this._stats.update();
+            // this._statsView.update();
 
         }else if (this.frame >= 1770){
 
             // this._stats.domElement.style.opacity = '0';
         }
-
 
     }
 
@@ -705,5 +711,19 @@ export class Scene2 extends THREE.Scene {
 
     // }
 
+
+    // //データ通信量表示の初期化（米倉先生のDOMバージョン）これはupdate()不要
+    // _initStatsView()
+    // {
+    //     const backgroundEl = document.getElementById('background_container');
+    //     this._statsView = new StatsView(backgroundEl);
+    //     this._statsView.setup();
+
+    // //     // this._statsView = new StatsView();
+    // //     // this._statsView.setup();//this.statsContainer
+    // //     // document.getElementById('background_container').appendChild(this._statsView.statsContainer);
+
+    //     return this._statsView;
+    // }
 
 }
