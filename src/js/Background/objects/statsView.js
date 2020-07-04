@@ -148,7 +148,7 @@ export default class StatsView {
             for(let i=0; i<this.statsData.length; i++){
                 this.statsData[i].in = this.data[this.Times][2*i+1];
                 this.statsData[i].out = this.data[this.Times][2*i+2];
-                console.log(this.statsData[i].in);//値の取得はok
+                // console.log(this.statsData[i].in);//値の取得はok
             }
 			this.Times += 1;//304+303 = 607で止まる
 

@@ -20,6 +20,7 @@ export class Scene extends THREE.Scene
         this.resetCamTargetBool = this.resetCamTargetBool.bind(this);
         this.openCamTargetBool = this.openCamTargetBool.bind(this);
         this.chooseRoom = this.chooseRoom.bind(this);
+        this.skipAnime = this.skipAnime.bind(this);
 
         //mainCamera
         this.camera = new Camera();//最終的にはFacade.jsでsceneにaddする
@@ -31,9 +32,12 @@ export class Scene extends THREE.Scene
 
         //Target指定なので都度１回だけ読むようにする
         this.frameBool_skipAnime = true;
-        this.camTargetBool_openingIsEnd = false;
+        // this.camTargetBool_openingIsEnd = false;//false(7/3修正)
         this.resetCamTargetBool();
         this.camTargetBool_BACKSPACE = false;
+        this.chooseRoomBool = false;
+        this.category = "none";
+        this.changeColorBool = true;
 
         //EVENT.ShowStartupを送信よりさきに受信したとき、送信はしないようにするbool。
         this.ShowStartupBool = true;
@@ -45,17 +49,37 @@ export class Scene extends THREE.Scene
         //this.scene0.scene2.openingIsEndは、最初はfalseだけど
         //オープニングのframecountがある値にきたらtrueになる。
         if (this.scene0.scene2.openingIsEnd == true){
-
-            //OP終わったからVR使うかどうか選択してね
-            if(this.ShowStartupBool == true){
-                this.ShowStartupBool = false;
-                Action.dispatch(EVENT.ShowStartup);//送る変数    ☆ひらく
-                // console.log("Opening is end and Show Startup");
-            }
             this.scene0.scene2.openingIsEnd = false;
-            this.camTargetBool_openingIsEnd = true;
-            // this.camTargetBool_BACKSPACE = true;//[SPACE]を[BS]で兼ねるならいれる
 
+            // if(this.camTargetBool_openingIsEnd == true){
+            //     this.camTargetBool_openingIsEnd = false;
+                this.camera.camTarget = this.baseCamTarget;
+                this.camera.lookTarget = new THREE.Vector3(140, 70, 140);//斜めのときの中心
+                // console.log("continue Normal mode!");//zoom out
+            //     this.openCamTargetBool();
+            // }
+
+            this.openCamTargetBool();
+            this.chooseRoomBool = true;
+            this.changeColorBool = false;
+
+            if(this.category == "A"){
+                Action.dispatch(EVENT.ShowCategory, {category:"A", mode:"normal"});
+            }if(this.category == "B"){
+                Action.dispatch(EVENT.ShowCategory, {category:"B", mode:"normal"});
+            }if(this.category == "C"){
+                Action.dispatch(EVENT.ShowCategory, {category:"C", mode:"normal"});
+            }if(this.category == "D"){
+                Action.dispatch(EVENT.ShowCategory, {category:"D", mode:"normal"});
+            }if(this.category == "E"){
+                Action.dispatch(EVENT.ShowCategory, {category:"E", mode:"normal"});
+            }if(this.category == "F"){
+                Action.dispatch(EVENT.ShowCategory, {category:"F", mode:"normal"});
+            }if(this.category == "G"){
+                Action.dispatch(EVENT.ShowCategory, {category:"G", mode:"normal"});
+            }else{
+                Action.dispatch(EVENT.ShowCategory, {mode:"normal"});
+            }
         }
 
         this.camera.update();//lookAtで中心みてる
@@ -70,87 +94,78 @@ export class Scene extends THREE.Scene
         // if (e.keyCode == KEYCODE.SPACE){
         // Action.dispatch(EVENT.ShowCategory, {category:null, mode:"normal"});//null
         // }
-        // if (e.keyCode == KEYCODE.A){
-        // Action.dispatch(EVENT.ShowCategory, {category:"A", mode:"normal"});
-        // }
-        // if (e.keyCode == KEYCODE.B){
-        // Action.dispatch(EVENT.ShowCategory, {category:"B", mode:"normal"});
-        // }
-        // if (e.keyCode == KEYCODE.C){
-        // Action.dispatch(EVENT.ShowCategory, {category:"C", mode:"normal"});
-        // }
-        // if (e.keyCode == KEYCODE.D){
-        // Action.dispatch(EVENT.ShowCategory, {category:"D", mode:"normal"});
-        // }
-        // if (e.keyCode == KEYCODE.E){
-        // Action.dispatch(EVENT.ShowCategory, {category:"E", mode:"normal"});
-        // }
-        // if (e.keyCode == KEYCODE.F){
-        // Action.dispatch(EVENT.ShowCategory, {category:"F", mode:"normal"});
-        // }
-        // if (e.keyCode == KEYCODE.G){
-        // Action.dispatch(EVENT.ShowCategory, {category:"G", mode:"normal"});
-        // }
-        // if (e.keyCode == KEYCODE.BACKSPACE){
-        // Action.dispatch(EVENT.BackToCategory, {mode:"normal"});
-        // }
-
-
+        if (e.keyCode == KEYCODE.A){
+        Action.dispatch(EVENT.ShowCategory, {category:"A", mode:"normal"});
+        }
+        if (e.keyCode == KEYCODE.B){
+        Action.dispatch(EVENT.ShowCategory, {category:"B", mode:"normal"});
+        }
+        if (e.keyCode == KEYCODE.C){
+        Action.dispatch(EVENT.ShowCategory, {category:"C", mode:"normal"});
+        }
+        if (e.keyCode == KEYCODE.D){
+        Action.dispatch(EVENT.ShowCategory, {category:"D", mode:"normal"});
+        }
+        if (e.keyCode == KEYCODE.E){
+        Action.dispatch(EVENT.ShowCategory, {category:"E", mode:"normal"});
+        }
+        if (e.keyCode == KEYCODE.F){
+        Action.dispatch(EVENT.ShowCategory, {category:"F", mode:"normal"});
+        }
+        if (e.keyCode == KEYCODE.G){
+        Action.dispatch(EVENT.ShowCategory, {category:"G", mode:"normal"});
+        }
+        if (e.keyCode == KEYCODE.BACKSPACE){
+        Action.dispatch(EVENT.BackToCategory, {mode:"normal"});
+        }
     }
 
 
     addEvent()
     {
-        Action.add(EVENT.ShowStartup, () =>{//キーの代わりにくる変数
-            if(this.frameBool_skipAnime == true 
-                && this.scene0.scene2.frame < this.scene0.scene2.frameSlide-2){//ここ斜めになるtargetPosの時間の一歩手前！！
-                this.frameBool_skipAnime = false;
-                this.camera.frame = this.scene0.scene2.frameSlide-2;
-                this.scene0.scene2.frame = this.scene0.scene2.frameSlide-2;
-                // console.log("skip animation !");
-
-                if(this.ShowStartupBool == true){
-                    this.ShowStartupBool = false;
-                    // console.log("Got signal [EVENT.ShowStartup] already!");
-                }
-            }
-        });
-
+        // Action.add(EVENT.ShowStartup, () =>{//キーの代わりにくる変数
+        //         if(this.ShowStartupBool == true){
+        //             this.ShowStartupBool = false;
+        //             // console.log("Got signal [EVENT.ShowStartup] already!");
+        //         }
+        //     }
+        // });
 
         Action.add(EVENT.ShowCategory, data =>{ //キーの代わりにくる変数
 
             if(data.mode == "normal"){
+                
                 switch(data.category){
                     case "A" :
-                        this.chooseRoom(this.camTargetBool_A, 0, "Go to room_A!");
+                        this.chooseRoom(this.camTargetBool_A, 0, data.category, "Go to room_A!");
                         break;
                     case "B" :
-                        this.chooseRoom(this.camTargetBool_B, 1, "Go to room_B!");
+                        this.chooseRoom(this.camTargetBool_B, 1, data.category, "Go to room_B!");
                         break;
                     case "C" :
-                        this.chooseRoom(this.camTargetBool_C, 3, "Go to room_C!");
+                        this.chooseRoom(this.camTargetBool_C, 3, data.category, "Go to room_C!");
                         break;
                     case "D" :
-                        this.chooseRoom(this.camTargetBool_D, 4, "Go to room_D!");
+                        this.chooseRoom(this.camTargetBool_D, 4, data.category, "Go to room_D!");
                         break;
                     case "E" :
-                        this.chooseRoom(this.camTargetBool_E, 6, "Go to room_E!");
+                        this.chooseRoom(this.camTargetBool_E, 6, data.category, "Go to room_E!");
                         break;
                     case "F" :
-                        this.chooseRoom(this.camTargetBool_F, 7, "Go to room_F!");
+                        this.chooseRoom(this.camTargetBool_F, 7, data.category, "Go to room_F!");
                         break;
                     case "G" :
-                        this.chooseRoom(this.camTargetBool_G, 9, "Go to room_G!");
+                        this.chooseRoom(this.camTargetBool_G, 9, data.category, "Go to room_G!");
                         break;
-                    default :
-                        if(this.camTargetBool_openingIsEnd == true){
-                            this.camTargetBool_openingIsEnd = false;
-                            this.camera.camTarget = this.baseCamTarget;
-                            this.camera.lookTarget = new THREE.Vector3(140, 70, 140);//斜めのときの中心
-                            // console.log("continue Normal mode!");//zoom out
-                            this.openCamTargetBool();
-                        }
-                        break;
+                    // default :
+                    //     if(this.camTargetBool_openingIsEnd == true){
+                    //         this.camTargetBool_openingIsEnd = false;
+                    //         this.camera.camTarget = this.baseCamTarget;
+                    //         this.camera.lookTarget = new THREE.Vector3(140, 70, 140);//斜めのときの中心
+                    //         // console.log("continue Normal mode!");//zoom out
+                    //         this.openCamTargetBool();
+                    //     }
+                    //     break;
                 }
             }
         });
@@ -169,18 +184,24 @@ export class Scene extends THREE.Scene
 
     }
 
-    chooseRoom(camTargetBool,l,message){
-        if(camTargetBool == true){
-            camTargetBool = false;
-            this.camera.lookTarget = new THREE.Vector3(
-                25*(1.5+l),8+(15*l),25*(1.5+l)
-            );
-            this.baseCamTarget = new THREE.Vector3(-200,70,400);//ここ書かないと書き換えられちゃってるぽい
-            this.camera.camTarget.subVectors(this.camera.lookTarget, this.baseCamTarget);
-            this.camera.camTarget.multiplyScalar(0.9);
-            this.camera.camTarget.add(this.baseCamTarget);
-            console.log("Normal_ " + message);
-            this.resetCamTargetBool();
+    chooseRoom(camTargetBool,l,category,message){
+        this.changeColorBool = true;
+        if(this.chooseRoomBool == false){
+            this.category = category;
+            this.skipAnime();
+        }else{
+            if(camTargetBool == true){
+                camTargetBool = false;
+                this.camera.lookTarget = new THREE.Vector3(
+                    25*(1.5+l),8+(15*l),25*(1.5+l)
+                );
+                this.baseCamTarget = new THREE.Vector3(-200,70,400);//ここ書かないと書き換えられちゃってるぽい
+                this.camera.camTarget.subVectors(this.camera.lookTarget, this.baseCamTarget);
+                this.camera.camTarget.multiplyScalar(0.9);
+                this.camera.camTarget.add(this.baseCamTarget);
+                console.log("Normal_ " + message);
+                this.resetCamTargetBool();
+            }
         }
     }
 
@@ -206,6 +227,16 @@ export class Scene extends THREE.Scene
         this.camTargetBool_G = true;
     }
 
+    skipAnime(){
+        if(this.frameBool_skipAnime == true 
+            && this.scene0.scene2.frame < this.scene0.scene2.frameSlide-2){
+            //[frameSlide-2]:斜めになるtargetPosの時間の一歩手前！！
+            this.frameBool_skipAnime = false;
+            this.camera.frame = this.scene0.scene2.frameSlide-2;
+            this.scene0.scene2.frame = this.scene0.scene2.frameSlide-2;
+            // console.log("skip animation !");
+        }
+    }
 
 }
 
@@ -672,21 +703,21 @@ export class Scene2 extends THREE.Scene {
             this.tSpeed =7.0;
         }
 
-        if(this.frame == 1570){
+        if(this.frame == 1370){
             if(this.openingIsEnd == false){
                 this.openingIsEnd = true;
             }
-            this.frame = 1770;
+            this.frame = 1470;
         }
 
 
         //データ通信量表示の更新は最初のアニメーションのときだけ、それが終わったら見えなくなる
-        if(this.frame < 1770){
+        if(this.frame < 1470){
 
             // this._stats.update();
             // this._statsView.update();
 
-        }else if (this.frame >= 1770){
+        }else if (this.frame >= 1470){
 
             // this._stats.domElement.style.opacity = '0';
         }

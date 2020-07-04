@@ -26,10 +26,10 @@ const Composer =
 	{
 		// Router.init();
 		this.instances.background = Background.init();
-		this.instances.startup = Startup.init()
-		this.instances.gallery = Gallery.init();
-		this.instances.detail = Detail.init();
-		this.instances.xr = XR.init();
+		// this.instances.startup = Startup.init()
+		// this.instances.gallery = Gallery.init();
+		// this.instances.detail = Detail.init();
+		// this.instances.xr = XR.init();
 
 		show(SELECTORS.BackgroundContainer);
 

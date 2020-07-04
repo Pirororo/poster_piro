@@ -150,7 +150,6 @@ export default class App
         // var delta = this.clock.getDelta();
         // this.orbitControls.update(delta);
 
-
         this._statsView.update();
 
 
@@ -184,30 +183,30 @@ export default class App
 
     onKeyUp(e)
     {
-        // if (e.keyCode == KEYCODE.A){
-        //   Action.dispatch(EVENT.ShowCategory, {category:"A", mode:"normal"});
-        // }
-        // if (e.keyCode == KEYCODE.B){
-        //   Action.dispatch(EVENT.ShowCategory, {category:"B", mode:"normal"});
-        // }
-        // if (e.keyCode == KEYCODE.C){
-        //   Action.dispatch(EVENT.ShowCategory, {category:"C", mode:"normal"});
-        // }
-        // if (e.keyCode == KEYCODE.D){
-        //   Action.dispatch(EVENT.ShowCategory, {category:"D", mode:"normal"});
-        // }
-        // if (e.keyCode == KEYCODE.E){
-        //   Action.dispatch(EVENT.ShowCategory, {category:"E", mode:"normal"});
-        // }
-        // if (e.keyCode == KEYCODE.F){
-        //   Action.dispatch(EVENT.ShowCategory, {category:"F", mode:"normal"});
-        // }
-        // if (e.keyCode == KEYCODE.G){
-        //   Action.dispatch(EVENT.ShowCategory, {category:"G", mode:"normal"});
-        // }
-        // if (e.keyCode == KEYCODE.BACKSPACE){
-        //   Action.dispatch(EVENT.BackToCategory, {mode:"normal"});
-        // }
+        if (e.keyCode == KEYCODE.A){
+          Action.dispatch(EVENT.ShowCategory, {category:"A", mode:"normal"});
+        }
+        if (e.keyCode == KEYCODE.B){
+          Action.dispatch(EVENT.ShowCategory, {category:"B", mode:"normal"});
+        }
+        if (e.keyCode == KEYCODE.C){
+          Action.dispatch(EVENT.ShowCategory, {category:"C", mode:"normal"});
+        }
+        if (e.keyCode == KEYCODE.D){
+          Action.dispatch(EVENT.ShowCategory, {category:"D", mode:"normal"});
+        }
+        if (e.keyCode == KEYCODE.E){
+          Action.dispatch(EVENT.ShowCategory, {category:"E", mode:"normal"});
+        }
+        if (e.keyCode == KEYCODE.F){
+          Action.dispatch(EVENT.ShowCategory, {category:"F", mode:"normal"});
+        }
+        if (e.keyCode == KEYCODE.G){
+          Action.dispatch(EVENT.ShowCategory, {category:"G", mode:"normal"});
+        }
+        if (e.keyCode == KEYCODE.BACKSPACE){
+          Action.dispatch(EVENT.BackToCategory, {mode:"normal"});
+        }
         this._scene.onKeyUp(e);//これがcamTargetBoolをfalseにするから最後にかく
 
     }
@@ -268,25 +267,27 @@ export default class App
     }
 
     chooseRoomColor(camTargetBool,targetGradColor1,targetGradColor2){
-        if(camTargetBool == true){//これはsceneで読むからfalseにしない
+        console.log(this._scene.changeColorBool);
+        if(this._scene.changeColorBool == true){
             this.gradeColorBool = true;
             this.colorify.uniforms.color.value = new THREE.Color(this.gradColor1);
             this.colorify.uniforms.color2.value = new THREE.Color(this.gradColor2);
             this.colorify.uniforms.targetColor.value = new THREE.Color(targetGradColor1);
             this.colorify.uniforms.targetColor2.value = new THREE.Color(targetGradColor2);
-        }
         this.saveColor1 = targetGradColor1;
         this.saveColor2 = targetGradColor2;
+        }
     }
 
     backToColor(camTargetBool){
-        if(camTargetBool == true){//これはsceneで読むからfalseにしない
+        // if(camTargetBool == true){//これはsceneで読むからfalseにしない
             this.gradeColorBool = true;
             this.colorify.uniforms.color.value = new THREE.Color(this.saveColor1);
             this.colorify.uniforms.color2.value = new THREE.Color(this.saveColor2);
             this.colorify.uniforms.targetColor.value = new THREE.Color(this.gradColor1);
             this.colorify.uniforms.targetColor2.value = new THREE.Color(this.gradColor2);
-        }
+        // }
+
     }
 
 
