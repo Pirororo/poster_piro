@@ -64,19 +64,19 @@ export class Scene extends THREE.Scene
             this.changeColorBool = false;
 
             if(this.category == "A"){
-                Action.dispatch(EVENT.ShowCategory, {category:"A", mode:"normal"});
+                Action.dispatch(EVENT.ShowCategory, {category:"reA", mode:"normal"});
             }if(this.category == "B"){
-                Action.dispatch(EVENT.ShowCategory, {category:"B", mode:"normal"});
+                Action.dispatch(EVENT.ShowCategory, {category:"reB", mode:"normal"});
             }if(this.category == "C"){
-                Action.dispatch(EVENT.ShowCategory, {category:"C", mode:"normal"});
+                Action.dispatch(EVENT.ShowCategory, {category:"reC", mode:"normal"});
             }if(this.category == "D"){
-                Action.dispatch(EVENT.ShowCategory, {category:"D", mode:"normal"});
+                Action.dispatch(EVENT.ShowCategory, {category:"reD", mode:"normal"});
             }if(this.category == "E"){
-                Action.dispatch(EVENT.ShowCategory, {category:"E", mode:"normal"});
+                Action.dispatch(EVENT.ShowCategory, {category:"reE", mode:"normal"});
             }if(this.category == "F"){
-                Action.dispatch(EVENT.ShowCategory, {category:"F", mode:"normal"});
+                Action.dispatch(EVENT.ShowCategory, {category:"reF", mode:"normal"});
             }if(this.category == "G"){
-                Action.dispatch(EVENT.ShowCategory, {category:"G", mode:"normal"});
+                Action.dispatch(EVENT.ShowCategory, {category:"reG", mode:"normal"});
             }else{
                 Action.dispatch(EVENT.ShowCategory, {mode:"normal"});
             }
@@ -137,24 +137,31 @@ export class Scene extends THREE.Scene
                 
                 switch(data.category){
                     case "A" :
+                    case "reA" :
                         this.chooseRoom(this.camTargetBool_A, 0, data.category, "Go to room_A!");
                         break;
                     case "B" :
+                    case "reB" :
                         this.chooseRoom(this.camTargetBool_B, 1, data.category, "Go to room_B!");
                         break;
                     case "C" :
+                    case "reC" :
                         this.chooseRoom(this.camTargetBool_C, 3, data.category, "Go to room_C!");
                         break;
                     case "D" :
+                    case "reD" :
                         this.chooseRoom(this.camTargetBool_D, 4, data.category, "Go to room_D!");
                         break;
                     case "E" :
+                    case "reE" :
                         this.chooseRoom(this.camTargetBool_E, 6, data.category, "Go to room_E!");
                         break;
                     case "F" :
+                    case "reF" :
                         this.chooseRoom(this.camTargetBool_F, 7, data.category, "Go to room_F!");
                         break;
                     case "G" :
+                    case "reG" :
                         this.chooseRoom(this.camTargetBool_G, 9, data.category, "Go to room_G!");
                         break;
                     // default :
