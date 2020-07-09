@@ -77,8 +77,6 @@ export class Scene extends THREE.Scene
                 Action.dispatch(EVENT.ShowCategory, {category:"reF", mode:"normal"});
             }if(this.category == "G"){
                 Action.dispatch(EVENT.ShowCategory, {category:"reG", mode:"normal"});
-            }else{
-                Action.dispatch(EVENT.ShowCategory, {mode:"normal"});
             }
         }
 

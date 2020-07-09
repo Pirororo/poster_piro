@@ -6,6 +6,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const rootDir = path.resolve(__dirname);
 const devServer = {
   host: "192.168.2.104",
+  // host: "192.168.100.103",
+  // host: "172.20.0.107",
   port: 8080
 };
 
