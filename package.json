@@ -44,7 +44,7 @@
     "@tweenjs/tween.js": "^18.5.0",
     "aframe-html-shader": "^0.2.0",
     "aframe-state-component": "^7.0.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "gsap": "^3.2.6",
     "html2canvas": "^1.0.0-rc.5",
     "pdfjs-dist": "^2.3.200",
