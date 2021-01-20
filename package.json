@@ -45,7 +45,7 @@
     "aframe-html-shader": "^0.2.0",
     "aframe-state-component": "^7.0.0",
     "axios": "^0.19.2",
-    "gsap": "^3.2.6",
+    "gsap": "^3.6.0",
     "html2canvas": "^1.0.0-rc.5",
     "pdfjs-dist": "^2.3.200",
     "react": "^16.13.1",
