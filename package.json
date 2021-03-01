@@ -52,7 +52,7 @@
     "react-dom": "^16.13.1",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "three": "^0.116.1",
+    "three": "^0.125.0",
     "three.meshline": "^1.2.0",
     "tone": "^13.8.25",
     "vanilla-router": "^1.2.8"
